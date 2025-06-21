@@ -781,6 +781,15 @@ html {
           margin-bottom: 15px;
         }
       }
+      @media (max-width: 600px) {
+  .butz {
+    display: flex;
+    flex-direction: row;
+  }
+  .contact-btn {
+    padding: 8px;
+  }
+}
 
     </style>
     
@@ -886,7 +895,7 @@ html {
         
       
       <!-- Buttons -->
-      <div class="flex flex-col md:flex-row gap-4 justify-center md:justify-start">
+      <div class="flex flex-col md:flex-row gap-4 justify-center md:justify-start butz">
         <!-- <a href="#projects" class="px-6 py-3 rounded-full bg-blue-500 hover:bg-blue-600 transition duration-300 text-white font-semibold shadow-md">View My Work</a>
         <a href="#contact" class="px-6 py-3 rounded-full border border-white hover:bg-white hover:text-slate-800 transition duration-300 font-semibold shadow-md">Hire Me</a> -->
         <a href="#projects"><button class="contact-btn">View my work</button></a>
@@ -895,7 +904,7 @@ html {
     </div>
     <!-- Hero Image -->
     <div class="flex-1 flex justify-center favz">
-      <img src="Images/favicon.png" alt="Beng Brandon Che" class="w-72 h-72 rounded-full object-cover border-4 border-blue-400 shadow-xl hover:scale-105 transition duration-500">
+      <img src="Images/favicon.png" alt="Beng Brandon Che" class="w-72 h-72 rounded-full object-cover  hover:scale-105 transition duration-500">
     </div>
 
   </div>
