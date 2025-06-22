@@ -61,12 +61,16 @@ html {
 }
 @keyframes glow {
   0% {
-    color: #38bdf8;
-    text-shadow: 0 0 0 #38bdf8, 0 0 5px gold;
+    color: green;
+    text-shadow: 0 0 0 green, 0 0 5px green;
+  }
+  50% {
+    color: red;
+    text-shadow: 0 0 0 red, 0 0 10px red;
   }
   100% {
-    color: gold;
-    text-shadow: 0 0 0 gold, 0 0 10px #38bdf8;
+    color: yellow;
+    text-shadow: 0 0 0 yellow, 0 0 10px yellow;
   }
 }
 .hero-text h1 {
@@ -1346,7 +1350,7 @@ html {
   <script>
     const typed = new Typed('#element', {
       strings: [`Hi, I'm <span class="text-blue-400">Beng Brandon Che</span>, <span class="job">a Web Developer!</span><br />
-        Welcome to <span class="text-yellow-300">BranCodeX</span>
+        Welcome to <span class="text-yellow-300"><span class="bran">Bran</span><span class="code">Code</span><span class="x">X</span></span>
       </h1><h3 class="text-lg md:text-xl font-light italic text-gray-300">
         From pixels to perfection - I craft websites that work, wow, and win.
       </h3>`],
