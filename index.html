@@ -787,6 +787,25 @@ html {
   font-size: 0.9rem;
   color: #94a3b8;
 }
+.butz{
+  opacity: 0;
+  transform: translateY(100px);
+  transition: opacity 1s, transform 2s;
+}
+.butz.show-butz{
+  opacity:1;
+  transform: translateY(0);
+}
+
+.heroz{
+  opacity: 0;
+  transform: translateY(-100px);
+  transition: opacity 1s, transform 2s;
+}
+.heroz.show-heroz{
+  opacity:1;
+  transform: translateY(100);
+}
      
       .heroz{
         
@@ -1660,6 +1679,32 @@ const aboutObserver = new IntersectionObserver(
   { threshold: 0.3 }
 );
 aboutObserver.observe(aboutSection);
+
+
+const butz = document.querySelectorAll(".butz");
+const butzObserver = new IntersectionObserver((entries, observer)=>{
+  entries.forEach((entry)=>{
+    if(entry.isIntersecting){
+      entry.target.classList.add("show-butz")
+    }else{entry.target.classList.remove("show-butz")}
+  })
+}, {threshold:0.3})
+butz.forEach((but)=>{
+  butzObserver.observe(but)
+});
+
+
+const heroz = document.querySelectorAll(".heroz");
+const herozObserver = new IntersectionObserver((entries, observer)=>{
+  entries.forEach((entry)=>{
+    if(entry.isIntersecting){
+      entry.target.classList.add("show-heroz")
+    }else{entry.target.classList.remove("show-heroz")}
+  })
+}, {threshold:0.3})
+heroz.forEach((hero)=>{
+  butzObserver.observe(hero)
+})
 
       </script>
   </body>
