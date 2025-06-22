@@ -207,7 +207,7 @@ html {
   box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2);
   transition: transform 0.3s ease, box-shadow 0.3s ease;
   color: #f1f5f9;
-  transition: opacity 1s, transform 1s;
+  transition: opacity 1s, transform 3s;
   opacity: 0;
   transform: rotateY(90deg);
 }
@@ -1657,7 +1657,7 @@ const aboutObserver = new IntersectionObserver(
       }
     });
   },
-  { threshold: 0.35 }
+  { threshold: 0.3 }
 );
 aboutObserver.observe(aboutSection);
 
