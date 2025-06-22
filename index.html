@@ -807,9 +807,7 @@ html {
   transform: translateY(0);
 }
      
-      .heroz{
-        
-      }
+      
       @media (max-width: 700px){
         .linz{
           margin-top: 300px;
@@ -1694,7 +1692,7 @@ butz.forEach((but)=>{
 });
 
 
-const heroz = document.querySelectorAll(".heroz");
+const heroz = document.querySelector(".heroz");
 const herozObserver = new IntersectionObserver((entries, observer)=>{
   entries.forEach((entry)=>{
     if(entry.isIntersecting){
@@ -1702,9 +1700,9 @@ const herozObserver = new IntersectionObserver((entries, observer)=>{
     }else{entry.target.classList.remove("show-heroz")}
   })
 }, {threshold:0.3})
-heroz.forEach((hero)=>{
-  butzObserver.observe(hero)
-})
+
+  herozObserver.observe(heroz)
+
 
       </script>
   </body>
