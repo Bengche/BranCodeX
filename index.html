@@ -145,6 +145,13 @@ html {
   border-radius: 1rem;
   margin: 2rem auto;
   max-width: 800px;
+  opacity: 0;
+  transform: translateY(150px);
+  transition: opacity 1s, transform 1s;
+}
+.about-section.show-about {
+  opacity: 1;
+  transform: translateY(0);
 }
 .section-title {
   color: white;
@@ -1638,6 +1645,21 @@ const serviceObserver = new IntersectionObserver(
 serviceCard.forEach((service) => {
   serviceObserver.observe(service);
 });
+
+const aboutSection = document.querySelector(".about-section");
+const aboutObserver = new IntersectionObserver(
+  (entries, observer) => {
+    entries.forEach((entry) => {
+      if (entry.isIntersecting) {
+        entry.target.classList.add("show-about");
+      } else {
+        entry.target.classList.remove("show-about");
+      }
+    });
+  },
+  { threshold: 0.35 }
+);
+aboutObserver.observe(aboutSection);
 
       </script>
   </body>
