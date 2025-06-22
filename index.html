@@ -200,6 +200,13 @@ html {
   box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2);
   transition: transform 0.3s ease, box-shadow 0.3s ease;
   color: #f1f5f9;
+  transition: opacity 1s, transform 1s;
+  opacity: 0;
+  transform: rotateY(90deg);
+}
+      .service-card.show-service {
+  opacity: 1;
+  transform: rotateY(0deg);
 }
 
 .service-card:hover {
@@ -1614,6 +1621,23 @@ const observer = new IntersectionObserver(
 document
   .querySelectorAll(".skill-circle")
   .forEach((el) => observer.observe(el));
+
+const serviceCard = document.querySelectorAll(".service-card");
+const serviceObserver = new IntersectionObserver(
+  (entries, observer) => {
+    entries.forEach((entry) => {
+      if (entry.isIntersecting) {
+        entry.target.classList.add("show-service");
+      } else {
+        entry.target.classList.remove("show-service");
+      }
+    });
+  },
+  { threshold: 0.3 }
+);
+serviceCard.forEach((service) => {
+  serviceObserver.observe(service);
+});
 
       </script>
   </body>
