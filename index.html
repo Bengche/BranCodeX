@@ -1258,20 +1258,20 @@ html {
       I'd love to hear from you. Fill out the form and let’s build something amazing!
     </p>
 
-    <form class="contact-form" onsubmit="sendMessage(event)">
+    <form id="contact-form" class="contact-form" onsubmit="sendMessage(event)">
       <div class="form-group">
         <label for="name"><i class="fas fa-user"></i> Your Name</label>
-        <input type="text" id="name" required placeholder="Enter your name" />
+        <input type="text" id="name" required placeholder="Enter your name" name="name" />
       </div>
 
       <div class="form-group">
         <label for="email"><i class="fas fa-envelope"></i> Your Email</label>
-        <input type="email" id="email" required placeholder="Enter your email" />
+        <input type="email" id="email" required placeholder="Enter your email" name="email"/>
       </div>
 
       <div class="form-group">
         <label for="message"><i class="fas fa-comment-dots"></i> Message</label>
-        <textarea id="message" rows="5" required placeholder="What's on your mind?"></textarea>
+        <textarea id="message" rows="5" required placeholder="What's on your mind?" name="message"></textarea>
       </div>
       <button type="submit" class="contact-btn">
         <i class="fas fa-paper-plane"></i> Send Message
@@ -1337,7 +1337,33 @@ html {
   </div>
 </footer>
 
+<script>
+  (function () {
+    emailjs.init("JwE9TMk7vUP9adouM"); // Replace with your actual *Public Key*
+  })();
 
+  // Function to send the email
+  function sendEmail(e) {
+    e.preventDefault(); // Prevent form submission refresh
+
+    emailjs.sendForm("service_4i8dgy8", "template_cncjp0c", "#contact-form")
+      .then(function (response) {
+        console.log("SUCCESS!", response.status, response.text);
+        alert("✅ Message sent successfully!");
+        document.getElementById("contact-form").reset();
+      }, function (error) {
+        console.log("FAILED...", error);
+        alert("❌ Failed to send message. Please try again.");
+      });
+  }
+
+  // Attach to form
+  window.onload = function () {
+    document
+      .getElementById("contact-form")
+      .addEventListener("submit", sendEmail);
+  };
+</script>
 
   <!-- Load library from the CDN -->
   <script src="https://unpkg.com/typed.js@2.1.0/dist/typed.umd.js"></script>
