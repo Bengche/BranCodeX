@@ -56,7 +56,62 @@
     />
     <link rel="stylesheet" href="CSS/playground.css" />
     <link rel="stylesheet" href="CSS/index.css" />
-    <!-- Navbar -->
+    
+    
+      
+
+
+  </head>
+  <header>
+    <!-- Tailwind CSS and Font Awesome -->
+
+ <div data-aos="fade-right" ...> <!-- your logo --> </div>
+  </header>
+    <style>
+      summary::-webkit-details-marker {
+        display: none;
+      }
+      details[open] summary i:last-child {
+        transform: rotate(180deg);
+      }
+      .faq-content {
+        max-height: 0;
+        opacity: 0;
+        overflow: hidden;
+        transition: max-height 0.5s cubic-bezier(0.4, 0, 0.2, 1), opacity 0.4s;
+        padding-top: 0;
+        padding-bottom: 0;
+      }
+      details[open] .faq-content {
+        max-height: 400px;
+        opacity: 1;
+        padding-top: 1rem;
+        padding-bottom: 1rem;
+        animation: fadeInAccordion 0.5s;
+      }
+      @keyframes fadeInAccordion {
+        from {
+          opacity: 0;
+          transform: translateY(-10px);
+        }
+        to {
+          opacity: 1;
+          transform: translateY(0);
+        }
+      }
+      .faqz{
+        margin-top: 50px;
+      }
+      /* @media (max-width: 800px) {
+  #mobile-menu {
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: flex-start;
+  }
+} */
+    </style>
+  <!-- Navbar -->
 <nav id="navbar" class="sticky top-0 left-0 w-full z-50 backdrop-blur bg-slate-900/80 text-white shadow-md transition-all duration-500">
   <div class="max-w-7xl mx-auto px-6 py-4 flex items-center justify-between">
     
@@ -120,60 +175,6 @@
     </div>
   </div>
 </nav>
-    
-      
-
-
-  </head>
-  <header>
-    <!-- Tailwind CSS and Font Awesome -->
-
- <div data-aos="fade-right" ...> <!-- your logo --> </div>
-  </header>
-    <style>
-      summary::-webkit-details-marker {
-        display: none;
-      }
-      details[open] summary i:last-child {
-        transform: rotate(180deg);
-      }
-      .faq-content {
-        max-height: 0;
-        opacity: 0;
-        overflow: hidden;
-        transition: max-height 0.5s cubic-bezier(0.4, 0, 0.2, 1), opacity 0.4s;
-        padding-top: 0;
-        padding-bottom: 0;
-      }
-      details[open] .faq-content {
-        max-height: 400px;
-        opacity: 1;
-        padding-top: 1rem;
-        padding-bottom: 1rem;
-        animation: fadeInAccordion 0.5s;
-      }
-      @keyframes fadeInAccordion {
-        from {
-          opacity: 0;
-          transform: translateY(-10px);
-        }
-        to {
-          opacity: 1;
-          transform: translateY(0);
-        }
-      }
-      .faqz{
-        margin-top: 50px;
-      }
-      /* @media (max-width: 800px) {
-  #mobile-menu {
-    display: flex;
-    flex-direction: column;
-    justify-content: flex-start;
-    align-items: flex-start;
-  }
-} */
-    </style>
   </head>
   <body
     class="bg-gradient-to-br from-gray-950 via-gray-900 to-black text-white min-h-screen"
