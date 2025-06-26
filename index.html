@@ -148,7 +148,7 @@ html {
   margin: 2rem auto;
   max-width: 800px;
   opacity: 0;
-  transform: translateY(200px);
+  transform: translateY(300px);
   transition: opacity 1s, transform 2s;
 }
 .about-section.show-about {
@@ -1713,7 +1713,7 @@ const aboutObserver = new IntersectionObserver(
       }
     });
   },
-  { threshold: 0.3 }
+  { threshold: 0.2 }
 );
 aboutObserver.observe(aboutSection);
 
