@@ -1263,6 +1263,322 @@ html {
   </div>
 </div>
 
+    <!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>BranCodeX Testimonials</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Firebase SDKs -->
+    <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-firestore-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-storage-compat.js"></script>
+    <style>
+      @keyframes fade-in {
+        from {
+          opacity: 0;
+          transform: scale(0.96);
+        }
+        to {
+          opacity: 1;
+          transform: scale(1);
+        }
+      }
+      .animate-fade-in {
+        animation: fade-in 0.2s ease;
+      }
+    </style>
+  </head>
+  <body class="bg-gray-900 text-white min-h-screen">
+    <nav
+      class="sticky top-0 left-0 w-full z-50 bg-slate-900/80 text-white shadow-md"
+    >
+      <div
+        class="max-w-7xl mx-auto px-6 py-4 flex items-center justify-between"
+      >
+        <div class="flex items-center space-x-2">
+          <span class="font-bold text-xl tracking-wide">BranCodeX</span>
+        </div>
+        <button
+          id="openModal"
+          type="button"
+          class="bg-blue-500 px-4 py-2 rounded text-white font-semibold hover:bg-blue-600 transition"
+        >
+          ➕ Add Testimonial
+        </button>
+      </div>
+    </nav>
+
+    <!-- Testimonials Section -->
+    <section id="testimonials" class="max-w-2xl mx-auto py-12 px-4">
+      <h2 class="text-3xl font-bold mb-4 text-center">💬 What People Say</h2>
+      <div id="testimonialList" class="space-y-6"></div>
+    </section>
+
+    <!-- Modal Form -->
+    <div
+      id="testimonialModal"
+      class="fixed inset-0 z-50 bg-black bg-opacity-60 flex items-center justify-center hidden"
+    >
+      <div
+        class="bg-white text-gray-900 rounded-xl shadow-2xl p-8 w-full max-w-md relative animate-fade-in"
+      >
+        <button
+          id="closeModal"
+          type="button"
+          class="absolute top-3 right-3 text-gray-400 hover:text-red-500 text-2xl font-bold transition"
+        >
+          &times;
+        </button>
+        <h3 class="text-2xl font-bold mb-6 text-center text-blue-600">
+          📝 Add Your Testimonial
+        </h3>
+        <form id="testimonialForm" class="space-y-5">
+          <div>
+            <label for="name" class="block font-semibold mb-1">Name</label>
+            <input
+              type="text"
+              id="name"
+              placeholder="Your Name"
+              class="w-full px-4 py-2 border border-gray-300 rounded focus:outline-none focus:ring-2 focus:ring-blue-400"
+              required
+            />
+          </div>
+          <div>
+            <label for="review" class="block font-semibold mb-1">Review</label>
+            <textarea
+              id="review"
+              placeholder="Your Review"
+              class="w-full px-4 py-2 border border-gray-300 rounded focus:outline-none focus:ring-2 focus:ring-blue-400"
+              required
+            ></textarea>
+          </div>
+          <div>
+            <label for="photo" class="block font-semibold mb-1">Photo</label>
+            <input type="file" id="photo" accept="image/*" class="w-full" />
+            <img
+              id="photoPreview"
+              class="mt-2 w-16 h-16 rounded-full object-cover border-2 border-blue-400 hidden"
+            />
+          </div>
+          <div>
+            <label class="block font-semibold mb-1">Rating</label>
+            <div
+              id="starRating"
+              class="flex space-x-1 text-2xl cursor-pointer select-none"
+            >
+              <span
+                data-value="1"
+                class="star text-gray-400 hover:text-yellow-400"
+                >&#9733;</span
+              >
+              <span
+                data-value="2"
+                class="star text-gray-400 hover:text-yellow-400"
+                >&#9733;</span
+              >
+              <span
+                data-value="3"
+                class="star text-gray-400 hover:text-yellow-400"
+                >&#9733;</span
+              >
+              <span
+                data-value="4"
+                class="star text-gray-400 hover:text-yellow-400"
+                >&#9733;</span
+              >
+              <span
+                data-value="5"
+                class="star text-gray-400 hover:text-yellow-400"
+                >&#9733;</span
+              >
+            </div>
+            <input type="hidden" id="rating" required />
+          </div>
+          <div class="flex gap-3 mt-6">
+            <button
+              type="submit"
+              class="flex-1 bg-blue-500 hover:bg-blue-600 text-white py-2 rounded font-semibold transition"
+            >
+              ✅ Add Review
+            </button>
+            <button
+              type="button"
+              id="closeModal2"
+              class="flex-1 bg-gray-200 hover:bg-gray-300 text-gray-700 py-2 rounded font-semibold transition"
+            >
+              ❌ Close
+            </button>
+          </div>
+        </form>
+      </div>
+    </div>
+
+    <script>
+      // Firebase config (replace with your own if needed)
+      const firebaseConfig = {
+        apiKey: "AIzaSyAZ0JsRMTQPdnR3TDBvtvBvKc55e-60utg",
+        authDomain: "brancodex-reviews.firebaseapp.com",
+        projectId: "brancodex-reviews",
+        storageBucket: "brancodex-reviews.appspot.com",
+        messagingSenderId: "454617750713",
+        appId: "1:454617750713:web:abec6a788794707981cf68",
+      };
+      firebase.initializeApp(firebaseConfig);
+      const db = firebase.firestore();
+      const storage = firebase.storage();
+
+      // Modal logic
+      const modal = document.getElementById("testimonialModal");
+      document
+        .getElementById("openModal")
+        .addEventListener("click", function () {
+          modal.classList.remove("hidden");
+        });
+      document
+        .getElementById("closeModal")
+        .addEventListener("click", function () {
+          modal.classList.add("hidden");
+        });
+      document
+        .getElementById("closeModal2")
+        .addEventListener("click", function () {
+          modal.classList.add("hidden");
+        });
+      modal.addEventListener("mousedown", function (e) {
+        if (e.target === modal) modal.classList.add("hidden");
+      });
+
+      // Star rating logic
+      const stars = document.querySelectorAll("#starRating .star");
+      const ratingInput = document.getElementById("rating");
+      stars.forEach((star) => {
+        star.addEventListener("mouseenter", function () {
+          const val = Number(this.dataset.value);
+          stars.forEach((s, i) =>
+            s.classList.toggle("text-yellow-400", i < val)
+          );
+        });
+        star.addEventListener("mouseleave", function () {
+          const val = Number(ratingInput.value);
+          stars.forEach((s, i) =>
+            s.classList.toggle("text-yellow-400", i < val)
+          );
+        });
+        star.addEventListener("click", function () {
+          const val = Number(this.dataset.value);
+          ratingInput.value = val;
+          stars.forEach((s, i) =>
+            s.classList.toggle("text-yellow-400", i < val)
+          );
+        });
+      });
+      document
+        .getElementById("testimonialForm")
+        .addEventListener("reset", () => {
+          ratingInput.value = "";
+          stars.forEach((s) => s.classList.remove("text-yellow-400"));
+          document.getElementById("photoPreview").classList.add("hidden");
+        });
+
+      // Photo preview
+      document.getElementById("photo").addEventListener("change", function (e) {
+        const file = e.target.files[0];
+        const preview = document.getElementById("photoPreview");
+        if (file) {
+          const reader = new FileReader();
+          reader.onload = function (evt) {
+            preview.src = evt.target.result;
+            preview.classList.remove("hidden");
+          };
+          reader.readAsDataURL(file);
+        } else {
+          preview.classList.add("hidden");
+        }
+      });
+
+      // Submit testimonial
+      document
+        .getElementById("testimonialForm")
+        .addEventListener("submit", async function (e) {
+          e.preventDefault();
+          const name = document.getElementById("name").value.trim();
+          const review = document.getElementById("review").value.trim();
+          const rating = document.getElementById("rating").value;
+          const photoFile = document.getElementById("photo").files[0];
+
+          if (!rating) {
+            alert("Please select a rating by clicking the stars.");
+            return;
+          }
+
+          let photoURL = "";
+          if (photoFile) {
+            const storageRef = storage.ref(
+              "testimonials/" + Date.now() + "_" + photoFile.name
+            );
+            await storageRef.put(photoFile);
+            photoURL = await storageRef.getDownloadURL();
+          }
+
+          await db.collection("testimonials").add({
+            name,
+            review,
+            rating,
+            photoURL,
+            timestamp: firebase.firestore.FieldValue.serverTimestamp(),
+          });
+
+          alert("✅ Testimonial submitted!");
+          this.reset();
+          document.getElementById("photoPreview").classList.add("hidden");
+          modal.classList.add("hidden");
+          loadTestimonials();
+        });
+
+      // Load testimonials
+      async function loadTestimonials() {
+        const testimonialList = document.getElementById("testimonialList");
+        testimonialList.innerHTML =
+          "<div class='text-center text-gray-400'>Loading...</div>";
+        const querySnapshot = await db
+          .collection("testimonials")
+          .orderBy("timestamp", "desc")
+          .get();
+        testimonialList.innerHTML = "";
+        querySnapshot.forEach((doc) => {
+          const data = doc.data();
+          testimonialList.innerHTML += `
+            <div class="bg-slate-800 rounded-lg p-6 shadow flex flex-col md:flex-row items-center gap-4">
+              <img src="${
+                data.photoURL ||
+                "https://ui-avatars.com/api/?name=" +
+                  encodeURIComponent(data.name)
+              }" alt="User Photo" class="w-16 h-16 rounded-full object-cover border-2 border-blue-400" />
+              <div class="flex-1">
+                <div class="flex items-center gap-2">
+                  <strong class="text-lg">${data.name}</strong>
+                  <span class="text-yellow-400">${"★".repeat(
+                    Number(data.rating)
+                  )}</span>
+                </div>
+                <p class="mt-2 text-gray-200">${data.review}</p>
+              </div>
+            </div>
+          `;
+        });
+        if (!testimonialList.innerHTML) {
+          testimonialList.innerHTML =
+            "<div class='text-center text-gray-400'>No testimonials yet.</div>";
+        }
+      }
+      loadTestimonials();
+    </script>
+  </body>
+</html>
+
+
 <section id="contact" class="contact-section" data-aos="fade-up">
   <div class="contact-container">
     <h2>💌 Let's Connect</h2>
