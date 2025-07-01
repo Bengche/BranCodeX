@@ -916,18 +916,27 @@ iframe {
     <div class="editor-container">
       <div class="editor">
         <label>HTML</label>
-        <textarea id="html"></textarea>
+        <textarea
+          id="html"
+          class="w-full min-w-0 resize-y overflow-x-auto bg-black-900 text-white"
+        ></textarea>
         <label>CSS</label>
-        <textarea id="css"></textarea>
+        <textarea
+          id="css"
+          class="w-full min-w-0 resize-y overflow-x-auto bg-black-900 text-white"
+        ></textarea>
         <label>JavaScript</label>
-        <textarea id="js"></textarea>
+        <textarea
+          id="js"
+          class="w-full min-w-0 resize-y overflow-x-auto bg-black-900 text-white"
+        ></textarea>
       </div>
+    <button class="run-code">▶ Run code</button>
       <div class="output-container">
         <div id="error" class="error"></div>
         <iframe id="preview"></iframe>
       </div>
     </div>
-    <button class="run-code">▶ Run code</button>
 
     <footer class="footer-section" data-aos="fade-up">
       <div class="footer-container">
