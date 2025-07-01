@@ -1109,9 +1109,10 @@ body:not(.overlay-done) > *:not(#welcome-overlay) {
 <div id="tsparticles" style="position:absolute; inset:0; width:100vw; height:100vh; z-index:0;"></div>
     <canvas id="particles-bg"></canvas>
     <div class="welcome-content">
-      <h1 class="welcome-title">Welcome to <span class="brancodex">BranCodeX</span></h1>
-      <button id="explore-btn" class="explore-btn" disabled style="opacity:0.5;pointer-events:none;">✨ Explore BranCodeX ✨</button>
+<!--       <h1 class="welcome-title">Welcome to <span class="brancodex">BranCodeX</span></h1> -->
       <div id="typewriter" class="typewriter"></div>
+      <button id="explore-btn" class="explore-btn" disabled style="opacity:0.5;pointer-events:none;">✨ Explore <span style="background-color: green;">Bran</span><span style="background-color: red;">Code</span><span style="background-color: yellow;">X</span> ✨</button>
+      
     </div>
   </div>
 </div>
@@ -1727,7 +1728,7 @@ body:not(.overlay-done) > *:not(#welcome-overlay) {
     document.body.classList.remove('overlay-done');
     const btn = document.getElementById('explore-btn');
     const tw = document.getElementById('typewriter');
-    const message = `Welcome to BranCodeX! 🚀\n\nGet ready to explore stunning web projects, creative solutions, and interactive experiences crafted with passion and precision.\n\nLet's build something amazing together!`;
+    const message = `Hello, and welcome to <span style="background-color: green;">Bran</span><span style="background-color: red;">Code</span><span style="background-color: yellow;">X</span>! 🚀\n\nGet ready to explore stunning web projects, creative solutions, and interactive experiences crafted with passion and precision.\n\nLet's build something amazing together!`;
     // Start typing on load
     typeWriter(message, tw, 28, () => {
       btn.disabled = false;
