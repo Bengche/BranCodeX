@@ -8,6 +8,7 @@
     <!-- Tailwind CSS CDN -->
 <script src="https://cdn.tailwindcss.com"></script>
 
+
 <link rel="icon" type="image/png" sizes="32x32" href="Images/favicon.png">
 <link rel="icon" type="image/png" sizes="16x16" href="Images/favicon.png">
 <!-- AOS CSS -->
@@ -19,6 +20,64 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
 
     <style>
+.testimonial-img {
+        width: 56px;
+        height: 56px;
+        border-radius: 9999px;
+        object-fit: cover;
+        border: 3px solid #fbbf24;
+        box-shadow: 0 2px 8px #0002;
+      }
+      .testimonial-card {
+        background: linear-gradient(135deg, #1e293b 80%, #334155 100%);
+        border-radius: 1.25rem;
+        box-shadow: 0 6px 32px #0004;
+        transition: transform 0.3s, box-shadow 0.3s;
+        border: 1.5px solid #334155;
+        padding: 2rem 1.5rem 1.5rem 1.5rem;
+        position: relative;
+        overflow: hidden;
+        opacity: 0;
+        transform: translateY(40px) scale(0.98);
+        transition: opacity 0.7s cubic-bezier(0.4, 2, 0.6, 1),
+          transform 0.7s cubic-bezier(0.4, 2, 0.6, 1);
+      }
+      .testimonial-card.visible {
+        opacity: 1;
+        transform: translateY(0) scale(1);
+      }
+      .testimonial-card:hover {
+        transform: translateY(-6px) scale(1.03);
+        box-shadow: 0 12px 40px #0006;
+        border-color: #fbbf24;
+      }
+      .testimonial-quote {
+        position: absolute;
+        top: 1.2rem;
+        right: 1.5rem;
+        font-size: 2.5rem;
+        color: #fbbf24;
+        opacity: 0.15;
+        pointer-events: none;
+      }
+      .testimonial-stars {
+        letter-spacing: 0.1em;
+        font-size: 1.2rem;
+      }
+      .filter-btn.active,
+      .filter-btn:focus {
+        background: #fbbf24;
+        color: #1e293b;
+        border-color: #fbbf24;
+      }
+      .btn-disabled,
+      .btn-disabled:hover {
+        opacity: 0.6;
+        pointer-events: none;
+        background: #fbbf24 !important;
+        color: #1e293b !important;
+        cursor: not-allowed;
+      }
       .hero {
   position: relative;
   display: flex;
@@ -1206,7 +1265,146 @@ html {
 </section>
 
 
-<section id="testimonials" class="testimonials-section">
+    <section class="bg-gray-900 text-white min-h-screen">
+    <div class="max-w-4xl mx-auto py-12 px-4">
+      <div class="flex items-center justify-between mb-6">
+        <h2 class="text-3xl md:text-4xl font-extrabold tracking-tight">
+          🌟 Testimonials
+        </h2>
+        <button
+          id="openModal"
+          class="bg-yellow-400 hover:bg-yellow-500 text-gray-900 font-bold px-5 py-2 rounded-lg shadow transition"
+        >
+          ➕ Add Testimonial
+        </button>
+      </div>
+      <!-- Filter Buttons -->
+      <div class="flex flex-wrap gap-3 mb-8">
+        <button
+          class="filter-btn active flex items-center gap-2 px-4 py-2 rounded-lg border border-gray-600 bg-gray-800 hover:bg-yellow-400 hover:text-gray-900 transition font-semibold"
+          data-filter="all"
+        >
+          <span>🌐</span> All
+        </button>
+        <button
+          class="filter-btn flex items-center gap-2 px-4 py-2 rounded-lg border border-gray-600 bg-gray-800 hover:bg-yellow-400 hover:text-gray-900 transition font-semibold"
+          data-filter="1"
+        >
+          <span>⭐</span> 1 Star
+        </button>
+        <button
+          class="filter-btn flex items-center gap-2 px-4 py-2 rounded-lg border border-gray-600 bg-gray-800 hover:bg-yellow-400 hover:text-gray-900 transition font-semibold"
+          data-filter="2"
+        >
+          <span>⭐⭐</span> 2 Stars
+        </button>
+        <button
+          class="filter-btn flex items-center gap-2 px-4 py-2 rounded-lg border border-gray-600 bg-gray-800 hover:bg-yellow-400 hover:text-gray-900 transition font-semibold"
+          data-filter="3"
+        >
+          <span>⭐⭐⭐</span> 3 Stars
+        </button>
+        <button
+          class="filter-btn flex items-center gap-2 px-4 py-2 rounded-lg border border-gray-600 bg-gray-800 hover:bg-yellow-400 hover:text-gray-900 transition font-semibold"
+          data-filter="4"
+        >
+          <span>⭐⭐⭐⭐</span> 4 Stars
+        </button>
+        <button
+          class="filter-btn flex items-center gap-2 px-4 py-2 rounded-lg border border-gray-600 bg-gray-800 hover:bg-yellow-400 hover:text-gray-900 transition font-semibold"
+          data-filter="5"
+        >
+          <span>⭐⭐⭐⭐⭐</span> 5 Stars
+        </button>
+      </div>
+      <!-- Scrollable testimonials area, all testimonials loaded inside -->
+      <div class="relative">
+        <div
+          id="testimonialScrollArea"
+          style="max-height: 80vh; overflow-y: auto; padding-right: 0.5rem"
+        >
+          <div
+            id="testimonialList"
+            class="grid grid-cols-1 md:grid-cols-2 gap-8"
+          ></div>
+        </div>
+        <div id="loadingMore" class="text-center text-gray-400 py-4 hidden">
+          Loading testimonials...
+        </div>
+      </div>
+    </div>
+
+    <!-- Modal Form -->
+    <div
+      id="testimonialModal"
+      class="modal-overlay fixed inset-0 z-50 bg-black bg-opacity-70 flex items-center justify-center hidden"
+    >
+      <div
+        class="modal-content bg-gray-800 rounded-2xl shadow-2xl p-8 w-full max-w-md relative"
+      >
+        <button
+          type="button"
+          id="closeModal"
+          class="absolute top-3 right-3 text-gray-400 hover:text-red-500 text-2xl font-bold transition"
+        >
+          &times;
+        </button>
+        <h3 class="text-2xl font-bold mb-6 text-center text-yellow-400">
+          📝 Add Your Testimonial
+        </h3>
+        <form id="testimonialForm" class="space-y-5">
+          <div>
+            <label for="name" class="block font-semibold mb-1">Name</label>
+            <input
+              type="text"
+              id="name"
+              placeholder="Your Name"
+              class="w-full px-4 py-2 border border-gray-600 rounded focus:outline-none focus:ring-2 focus:ring-yellow-400 bg-gray-900 text-white"
+              required
+            />
+          </div>
+          <div>
+            <label for="review" class="block font-semibold mb-1">Review</label>
+            <textarea
+              id="review"
+              placeholder="Your Review"
+              class="w-full px-4 py-2 border border-gray-600 rounded focus:outline-none focus:ring-2 focus:ring-yellow-400 bg-gray-900 text-white"
+              required
+            ></textarea>
+          </div>
+          <div>
+            <label for="photo" class="block font-semibold mb-1">Photo</label>
+            <input type="file" id="photo" accept="image/*" class="w-full" />
+            <img id="photoPreview" class="mt-2 testimonial-img hidden" />
+          </div>
+          <div>
+            <label class="block font-semibold mb-1">Rating</label>
+            <select
+              id="rating"
+              required
+              class="w-full px-4 py-2 border border-gray-600 rounded bg-gray-900 text-white"
+            >
+              <option value="">Select</option>
+              <option value="1">⭐</option>
+              <option value="2">⭐⭐</option>
+              <option value="3">⭐⭐⭐</option>
+              <option value="4">⭐⭐⭐⭐</option>
+              <option value="5">⭐⭐⭐⭐⭐</option>
+            </select>
+          </div>
+          <button
+            type="submit"
+            id="addReviewBtn"
+            class="w-full bg-yellow-400 hover:bg-yellow-500 text-gray-900 py-2 rounded font-bold transition"
+          >
+            ✅ Add Review
+          </button>
+        </form>
+      </div>
+    </div>
+  </section>
+
+<!-- <section id="testimonials" class="testimonials-section">
   <h2 class="section-title">💬 What People Say</h2>
   <p class="section-subtitle">Share your experience with BranCodeX – I’d love to hear from you!</p>
 
@@ -1217,14 +1415,14 @@ html {
   <button class="filter-btn" onclick="filterTestimonials('5')">🌟 5★ Only</button>
 </div>
   <div id="testimonialList" class="testimonial-list"></div>
-</section>
+</section> -->
 
 
 <!-- Modal Form -->
 
 
 
-<div id="testimonialModal" class="modal-overlay">
+<!-- <div id="testimonialModal" class="modal-overlay">
   <div class="modal-content">
     <h3>📝 Submit Your Testimonial</h3>
     
@@ -1255,13 +1453,11 @@ html {
       
        <button type="button" id="closeModal" class="close-btn">❌ Cancel</button>
        <div class="testimonial-filters">
-  <!-- <button onclick="filterTestimonials('all')">🔄 All</button>
-  <button onclick="filterTestimonials('4')">🌟 4★ & Up</button>
-  <button onclick="filterTestimonials('5')">🌟 5★ Only</button> -->
+  
 </div>
     </form>
   </div>
-</div>
+</div> -->
 
     
 
@@ -1466,137 +1662,137 @@ window.onclick = (e) => {
   }
 };
 
-const modal = document.getElementById("testimonialModal");
-const openModalBtn = document.getElementById("openModal");
-const closeModalBtn = document.getElementById("closeModal");
-const testimonialForm = document.getElementById("testimonialForm");
-const testimonialList = document.getElementById("testimonialList");
-const photoInput = document.getElementById("photo");
-const photoPreview = document.getElementById("photoPreview");
+// const modal = document.getElementById("testimonialModal");
+// const openModalBtn = document.getElementById("openModal");
+// const closeModalBtn = document.getElementById("closeModal");
+// const testimonialForm = document.getElementById("testimonialForm");
+// const testimonialList = document.getElementById("testimonialList");
+// const photoInput = document.getElementById("photo");
+// const photoPreview = document.getElementById("photoPreview");
 
 // Assign unique ID to session if not already
-if (!sessionStorage.getItem("userId")) {
-  sessionStorage.setItem("userId", Date.now().toString());
-}
+// if (!sessionStorage.getItem("userId")) {
+//   sessionStorage.setItem("userId", Date.now().toString());
+// }
 
-let userId = sessionStorage.getItem("userId");
-let testimonials = JSON.parse(localStorage.getItem("testimonials")) || [];
+// let userId = sessionStorage.getItem("userId");
+// let testimonials = JSON.parse(localStorage.getItem("testimonials")) || [];
 
-let currentEditIndex = null;
-let uploadedImage = "";
+// let currentEditIndex = null;
+// let uploadedImage = "";
 
 // Preview uploaded image
-photoInput.addEventListener("change", function () {
-  const file = this.files[0];
-  const reader = new FileReader();
-  reader.onload = function (e) {
-    uploadedImage = e.target.result;
-    photoPreview.src = uploadedImage;
-    photoPreview.style.display = "block";
-  };
-  if (file) reader.readAsDataURL(file);
-});
+// photoInput.addEventListener("change", function () {
+//   const file = this.files[0];
+//   const reader = new FileReader();
+//   reader.onload = function (e) {
+//     uploadedImage = e.target.result;
+//     photoPreview.src = uploadedImage;
+//     photoPreview.style.display = "block";
+//   };
+//   if (file) reader.readAsDataURL(file);
+// });
 // Open modal
-openModalBtn.addEventListener("click", () => {
-  modal.style.display = "flex";
-  testimonialForm.reset();
-  photoPreview.style.display = "none";
-  uploadedImage = "";
-  currentEditIndex = null;
-});
+// openModalBtn.addEventListener("click", () => {
+//   modal.style.display = "flex";
+//   testimonialForm.reset();
+//   photoPreview.style.display = "none";
+//   uploadedImage = "";
+//   currentEditIndex = null;
+// });
 
 // Close modal
-closeModalBtn.addEventListener("click", () => (modal.style.display = "none"));
+// closeModalBtn.addEventListener("click", () => (modal.style.display = "none"));
 
-testimonialForm.addEventListener("submit", function (e) {
-  e.preventDefault();
+// testimonialForm.addEventListener("submit", function (e) {
+//   e.preventDefault();
 
-  const name = document.getElementById("name").value;
-  const review = document.getElementById("review").value;
-  const rating = parseInt(document.getElementById("rating").value);
+//   const name = document.getElementById("name").value;
+//   const review = document.getElementById("review").value;
+//   const rating = parseInt(document.getElementById("rating").value);
 
-  const testimonialData = {
-    name,
-    review,
-    rating,
-    photo: uploadedImage || "https://i.pravatar.cc/100",
-    userId,
-  };
+//   const testimonialData = {
+//     name,
+//     review,
+//     rating,
+//     photo: uploadedImage || "https://i.pravatar.cc/100",
+//     userId,
+//   };
 
-  if (currentEditIndex !== null) {
-    testimonials[currentEditIndex] = testimonialData;
-  } else {
-    testimonials.unshift(testimonialData);
-  }
-  localStorage.setItem("testimonials", JSON.stringify(testimonials));
-  displayTestimonials(testimonials);
-  testimonialForm.reset();
-  photoPreview.style.display = "none";
-  modal.style.display = "none";
-});
+//   if (currentEditIndex !== null) {
+//     testimonials[currentEditIndex] = testimonialData;
+//   } else {
+//     testimonials.unshift(testimonialData);
+//   }
+//   localStorage.setItem("testimonials", JSON.stringify(testimonials));
+//   displayTestimonials(testimonials);
+//   testimonialForm.reset();
+//   photoPreview.style.display = "none";
+//   modal.style.display = "none";
+// });
 
-function displayTestimonials(list) {
-  testimonialList.innerHTML = "";
+// function displayTestimonials(list) {
+//   testimonialList.innerHTML = "";
 
-  list.forEach((t, index) => {
-    const card = document.createElement("div");
-    card.className = "testimonial-card";
-    card.setAttribute("data-aos", "fade-up");
-    card.setAttribute("data-aos-delay", index * 100);
+//   list.forEach((t, index) => {
+//     const card = document.createElement("div");
+//     card.className = "testimonial-card";
+//     card.setAttribute("data-aos", "fade-up");
+//     card.setAttribute("data-aos-delay", index * 100);
 
-    card.innerHTML = `
-        <img src="${t.photo}" alt="${t.name}" />
-        <h4>${t.name}</h4>
-        <div class="stars">${"⭐".repeat(t.rating)}</div>
-        <p>${t.review}</p>
-        ${
-          t.userId === userId
-            ? `
-          <div class="card-actions">
-            <button onclick="editTestimonial(${index})" class="edit-btn">✏ Edit</button>
-            <button onclick="deleteTestimonial(${index})" class="delete-btn">🗑 Delete</button>
-          </div>`
-            : ""
-        }
-      `;
+//     card.innerHTML = `
+//         <img src="${t.photo}" alt="${t.name}" />
+//         <h4>${t.name}</h4>
+//         <div class="stars">${"⭐".repeat(t.rating)}</div>
+//         <p>${t.review}</p>
+//         ${
+//           t.userId === userId
+//             ? `
+//           <div class="card-actions">
+//             <button onclick="editTestimonial(${index})" class="edit-btn">✏ Edit</button>
+//             <button onclick="deleteTestimonial(${index})" class="delete-btn">🗑 Delete</button>
+//           </div>`
+//             : ""
+//         }
+//       `;
 
-    testimonialList.appendChild(card);
-  });
-  AOS.refresh();
-}
+//     testimonialList.appendChild(card);
+//   });
+//   AOS.refresh();
+// }
 
-function deleteTestimonial(index) {
-  if (confirm("Are you sure you want to delete this review?")) {
-    testimonials.splice(index, 1);
-    localStorage.setItem("testimonials", JSON.stringify(testimonials));
-    displayTestimonials(testimonials);
-  }
-}
+// function deleteTestimonial(index) {
+//   if (confirm("Are you sure you want to delete this review?")) {
+//     testimonials.splice(index, 1);
+//     localStorage.setItem("testimonials", JSON.stringify(testimonials));
+//     displayTestimonials(testimonials);
+//   }
+// }
 
-function editTestimonial(index) {
-  const t = testimonials[index];
-  document.getElementById("name").value = t.name;
-  document.getElementById("review").value = t.review;
-  document.getElementById("rating").value = t.rating;
-  photoPreview.src = t.photo;
-  photoPreview.style.display = "block";
-  uploadedImage = t.photo;
-  currentEditIndex = index;
-  modal.style.display = "flex";
-}
+// function editTestimonial(index) {
+//   const t = testimonials[index];
+//   document.getElementById("name").value = t.name;
+//   document.getElementById("review").value = t.review;
+//   document.getElementById("rating").value = t.rating;
+//   photoPreview.src = t.photo;
+//   photoPreview.style.display = "block";
+//   uploadedImage = t.photo;
+//   currentEditIndex = index;
+//   modal.style.display = "flex";
+// }
 
-function filterTestimonials(filter) {
-  if (filter === "all") {
-    displayTestimonials(testimonials);
-  } else {
-    const minRating = parseInt(filter);
-    const filtered = testimonials.filter((t) => t.rating >= minRating);
-    displayTestimonials(filtered);
-  }
-}
+// function filterTestimonials(filter) {
+//   if (filter === "all") {
+//     displayTestimonials(testimonials);
+//   } else {
+//     const minRating = parseInt(filter);
+//     const filtered = testimonials.filter((t) => t.rating >= minRating);
+//     displayTestimonials(filtered);
+//   }
+// }
 
 // Initial Load
-displayTestimonials(testimonials);
+// displayTestimonials(testimonials);
 
 function sendMessage(e) {
   e.preventDefault();
@@ -1744,6 +1940,225 @@ const herozObserver = new IntersectionObserver((entries, observer)=>{
 }, {threshold:0.3})
 
   herozObserver.observe(heroz)
+
+
+// SheetDB and imgbb config
+      const SHEETDB_URL = "https://sheetdb.io/api/v1/2wmi54lm74tyn";
+      const IMGBB_API_KEY = "69c45289e2873d6bd5719277ac377ceb";
+      let allTestimonials = [];
+      let currentFilter = "all";
+
+      document.addEventListener("DOMContentLoaded", function () {
+        // Modal logic
+        const openModalBtn = document.getElementById("openModal");
+        const closeModalBtn = document.getElementById("closeModal");
+        const modal = document.getElementById("testimonialModal");
+        openModalBtn.addEventListener("click", () =>
+          modal.classList.remove("hidden")
+        );
+        closeModalBtn.addEventListener("click", () =>
+          modal.classList.add("hidden")
+        );
+        modal.addEventListener("mousedown", function (e) {
+          if (e.target === modal) modal.classList.add("hidden");
+        });
+
+        // Photo preview
+        document
+          .getElementById("photo")
+          .addEventListener("change", function (e) {
+            const file = e.target.files[0];
+            const preview = document.getElementById("photoPreview");
+            if (file) {
+              const reader = new FileReader();
+              reader.onload = (evt) => {
+                preview.src = evt.target.result;
+                preview.classList.remove("hidden");
+              };
+              reader.readAsDataURL(file);
+            } else {
+              preview.classList.add("hidden");
+            }
+          });
+
+        // Submit testimonial
+        document
+          .getElementById("testimonialForm")
+          .addEventListener("submit", async function (e) {
+            e.preventDefault();
+            const addBtn = document.getElementById("addReviewBtn");
+            addBtn.classList.add("btn-disabled");
+            addBtn.disabled = true;
+            addBtn.innerHTML = "⏳ Submitting...";
+
+            const name = document.getElementById("name").value.trim();
+            const review = document.getElementById("review").value.trim();
+            const rating = document.getElementById("rating").value;
+            const photoFile = document.getElementById("photo").files[0];
+
+            if (!rating) {
+              alert("Please select a rating.");
+              addBtn.classList.remove("btn-disabled");
+              addBtn.disabled = false;
+              addBtn.innerHTML = "✅ Add Review";
+              return;
+            }
+
+            let photo_url = "";
+            try {
+              if (photoFile) {
+                // Upload image to imgbb.com
+                const formData = new FormData();
+                formData.append("image", photoFile);
+                const res = await fetch(
+                  `https://api.imgbb.com/1/upload?key=${IMGBB_API_KEY}`,
+                  {
+                    method: "POST",
+                    body: formData,
+                  }
+                );
+                const data = await res.json();
+                if (data && data.data && data.data.url) {
+                  photo_url = data.data.url;
+                }
+              }
+
+              // Save to Google Sheets via SheetDB
+              await fetch(SHEETDB_URL, {
+                method: "POST",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify({
+                  data: [
+                    {
+                      name,
+                      review,
+                      rating,
+                      photo_url,
+                      created_at: new Date().toISOString(),
+                    },
+                  ],
+                }),
+              });
+
+              alert("✅ Testimonial submitted!");
+              this.reset();
+              document.getElementById("photoPreview").classList.add("hidden");
+              modal.classList.add("hidden");
+              // Reload all testimonials
+              loadAllTestimonials();
+            } catch (err) {
+              alert("❌ Submission failed. Please try again.");
+              addBtn.classList.remove("btn-disabled");
+              addBtn.disabled = false;
+              addBtn.innerHTML = "✅ Add Review";
+              return;
+            }
+            // Always re-enable and reset button after submission (success or fail)
+            addBtn.classList.remove("btn-disabled");
+            addBtn.disabled = false;
+            addBtn.innerHTML = "✅ Add Review";
+          });
+
+        // Filter button logic
+        document.querySelectorAll(".filter-btn").forEach((btn) => {
+          btn.addEventListener("click", function () {
+            document
+              .querySelectorAll(".filter-btn")
+              .forEach((b) => b.classList.remove("active"));
+            this.classList.add("active");
+            currentFilter = this.getAttribute("data-filter");
+            renderTestimonials();
+            revealOnScroll();
+          });
+        });
+
+        // Initial load
+        loadAllTestimonials();
+      });
+
+      // Fetch and display all testimonials at once inside the scroll area
+      async function loadAllTestimonials() {
+        const testimonialList = document.getElementById("testimonialList");
+        const loadingMore = document.getElementById("loadingMore");
+        testimonialList.innerHTML =
+          "<div class='text-center text-gray-400'>Loading...</div>";
+        loadingMore.classList.remove("hidden");
+        try {
+          const res = await fetch(SHEETDB_URL);
+          let testimonials = await res.json();
+          testimonials.reverse(); // Most recent first
+          allTestimonials = testimonials;
+          renderTestimonials();
+          loadingMore.classList.add("hidden");
+          revealOnScroll();
+        } catch (err) {
+          testimonialList.innerHTML =
+            "<div class='text-center text-red-400'>Failed to load testimonials.</div>";
+          loadingMore.classList.add("hidden");
+        }
+      }
+
+      // Render testimonials based on current filter
+      function renderTestimonials() {
+        const testimonialList = document.getElementById("testimonialList");
+        let filtered = allTestimonials;
+        if (currentFilter !== "all") {
+          filtered = allTestimonials.filter(
+            (t) => String(t.rating) === String(currentFilter)
+          );
+        }
+        if (filtered.length === 0) {
+          testimonialList.innerHTML =
+            "<div class='text-center text-gray-400 col-span-2'>No testimonials found for this filter.</div>";
+          return;
+        }
+        let html = "";
+        filtered.forEach((t, i) => {
+          html += `
+            <div class="testimonial-card flex flex-col md:flex-row items-center gap-4">
+              <span class="testimonial-quote">“</span>
+              <img src="${
+                t.photo_url ||
+                "https://ui-avatars.com/api/?name=" + encodeURIComponent(t.name)
+              }" class="testimonial-img mb-2 md:mb-0" alt="User Photo"/>
+              <div class="flex-1">
+                <div class="flex items-center gap-2 mb-1">
+                  <strong class="text-lg">${t.name}</strong>
+                  <span class="testimonial-stars text-yellow-400">${"★".repeat(
+                    Number(t.rating)
+                  )}</span>
+                </div>
+                <p class="italic text-gray-200 mb-2">"${t.review}"</p>
+                <div class="text-xs text-gray-400">${new Date(
+                  t.created_at
+                ).toLocaleString()}</div>
+              </div>
+            </div>
+          `;
+        });
+        testimonialList.innerHTML = html;
+        revealOnScroll();
+      }
+
+      // Intersection Observer for scroll-in animation
+      function revealOnScroll() {
+        const cards = document.querySelectorAll(".testimonial-card");
+        const observer = new window.IntersectionObserver(
+          (entries, obs) => {
+            entries.forEach((entry) => {
+              if (entry.isIntersecting) {
+                entry.target.classList.add("visible");
+                obs.unobserve(entry.target);
+              }
+            });
+          },
+          { threshold: 0.15 }
+        );
+        cards.forEach((card) => {
+          card.classList.remove("visible");
+          observer.observe(card);
+        });
+      }
 
 
       </script>
