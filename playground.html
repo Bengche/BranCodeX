@@ -266,7 +266,7 @@ header {
   font-weight: bolder;
 }
 textarea {
-  flex: 1;
+/*   flex: 1; */
   padding: 1rem;
   /* background: #2d2d2d; */
   background: #000;
@@ -277,7 +277,7 @@ textarea {
   font-size: 1rem;
   border-top: 1px solid #444;
   border: 5px solid green;
-  height: 35px;
+  height: auto;
   font-weight: lighter;
 }
 iframe {
@@ -918,17 +918,17 @@ iframe {
         <label>HTML</label>
         <textarea
           id="html"
-          class="w-full min-w-0 resize-y overflow-x-auto bg-black-900 text-white"
+          class="w-full min-w-0 resize-y overflow-x-auto bg-black-900 text-white h-64"
         ></textarea>
         <label>CSS</label>
         <textarea
           id="css"
-          class="w-full min-w-0 resize-y overflow-x-auto bg-black-900 text-white"
+          class="w-full min-w-0 resize-y overflow-x-auto bg-black-900 text-white h-64"
         ></textarea>
         <label>JavaScript</label>
         <textarea
           id="js"
-          class="w-full min-w-0 resize-y overflow-x-auto bg-black-900 text-white"
+          class="w-full min-w-0 resize-y overflow-x-auto bg-black-900 text-white h-64"
         ></textarea>
       </div>
     <button class="run-code">▶ Run code</button>
