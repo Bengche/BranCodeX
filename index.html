@@ -1374,9 +1374,19 @@ body:not(.overlay-done) > *:not(#welcome-overlay) {
 </section>
 
 
-<section id="projects" class="projects-section">
-  <h2 class="section-title">🚀 Projects</h2>
 
+<!-- Projects Intro Section -->
+<section id="projects" style="padding: 80px 20px; background: linear-gradient(to right, #f5f7fa, #c3cfe2); text-align: center;">
+  <div style="max-width: 900px; margin: auto;">
+    <h2 id="projects-heading" style="font-family: 'Playfair Display', serif; font-size: 2.8rem; color: #3d3d5c; margin-bottom: 20px;">
+      Projects That Speak Code and Creativity
+    </h2>
+    <p id="projects-description" style="font-size: 1.15rem; color: #555; line-height: 1.8;">
+      <em>Each pixel. Each line of code. Every detail in these projects reflects not just what I build - but how I think.</em><br><br>
+      Welcome to the <strong>BranCodeX experience</strong> - a curated collection of digital creations where design meets purpose, and functionality fuels elegance.
+      From problem-solving apps to immersive user interfaces, these works are more than just portfolio items - they are <strong>solutions</strong> crafted with vision, precision, and relentless creativity.
+    </p>
+  </div>
   <!-- Filter Buttons -->
   <div class="filter-buttons">
     <button class="filter-btn active" data-filter="all">All</button>
@@ -1384,9 +1394,24 @@ body:not(.overlay-done) > *:not(#welcome-overlay) {
     <button class="filter-btn" data-filter="js">JavaScript</button>
     <button class="filter-btn" data-filter="wp">WordPress</button>
   </div>
+</section>
+
+<!-- GSAP Animation Script -->
+
+    
+<section id="projects" class="projects-section">
+  <h2 class="section-title">🚀 Projects</h2>
+
+  <!-- Filter Buttons -->
+<!--   <div class="filter-buttons">
+    <button class="filter-btn active" data-filter="all">All</button>
+    <button class="filter-btn" data-filter="html">HTML/CSS</button>
+    <button class="filter-btn" data-filter="js">JavaScript</button>
+    <button class="filter-btn" data-filter="wp">WordPress</button>
+  </div> -->
 
   <!-- Projects Grid -->
-  <h3 class="projects-NB">Please note that some of these projects have been Hosted on Github, and due to some restrictions in certain countries (Cameroon, for example), users will need to use a VPN connction inorder to access these sites.</h3>
+  <h3 class="projects-NB">Please note that some of these projects have been Hosted on Github, and due to some restrictions in certain countries (Cameroon, for example), users will need to use a VPN connction in another country (USA, for example) inorder to access these sites.</h3>
   <div class="projects-grid">
 
     <div class="project-card filter-item html js project">
@@ -1728,6 +1753,10 @@ body:not(.overlay-done) > *:not(#welcome-overlay) {
   </div>
 </footer>
 
+    <!-- Include GSAP in your <head> or before closing </body> -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js"></script>
+
     </script>
 <script src="https://cdn.jsdelivr.net/npm/tsparticles@3.3.0/tsparticles.bundle.min.js"></script>
 
@@ -2059,6 +2088,8 @@ window.onclick = (e) => {
 
 // Initial Load
 // displayTestimonials(testimonials);
+
+        
 
 function sendMessage(e) {
   e.preventDefault();
@@ -2428,5 +2459,32 @@ const herozObserver = new IntersectionObserver((entries, observer)=>{
 
 
       </script>
+    <script>
+  gsap.registerPlugin(ScrollTrigger);
+
+  gsap.from("#projects-heading", {
+    scrollTrigger: {
+      trigger: "#projects-heading",
+      start: "top 80%",
+    },
+    y: -50,
+    opacity: 0,
+    duration: 1,
+    ease: "power3.out"
+  });
+
+  gsap.from("#projects-description", {
+    scrollTrigger: {
+      trigger: "#projects-description",
+      start: "top 85%",
+    },
+    y: 50,
+    opacity: 0,
+    duration: 1.2,
+    delay: 0.2,
+    ease: "power2.out"
+  });
+</script>
+
   </body>
 </html>
