@@ -1001,6 +1001,61 @@ body:not(.overlay-done) > *:not(#welcome-overlay) {
   display: none !important;
 }
 
+.projects-grid {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  margin: 25px;
+}
+.project {
+  color: white;
+  margin-top: 20px;
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+  margin-right: 25px;
+  text-align: center;
+  margin-bottom: 50px;
+  background-color: #0f172a;
+  padding: 20px;
+  border-radius: 10px;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.7);
+  transition: transform 0.3s ease;
+}
+.project:hover {
+  transform: translateY(-10px);
+}
+
+.project-image {
+  margin-bottom: 20px;
+  width: 100%;
+  height: 350px;
+  border-radius: 5px;
+  transition: transform 0.3s ease;
+}
+.view-live {
+  display: inline-block;
+  margin-top: 10px;
+  padding: 10px 20px;
+  background-color: #14b8a6;
+  color: white;
+  text-decoration: none;
+  border-radius: 5px;
+  transition: background-color 0.3s ease;
+}
+.view-live:hover {
+  background-color: #0ea5e9;
+}
+.projects-NB {
+  padding: 25px;
+}
+@media (max-width: 700px) {
+  .project-grid {
+    display: flex;
+    flex-direction: column;
+  }
+}
+
     </style>
 
     
@@ -1331,25 +1386,37 @@ body:not(.overlay-done) > *:not(#welcome-overlay) {
   </div>
 
   <!-- Projects Grid -->
+  <h3 class="projects-NB">Please note that some of these projects have been Hosted on Github, and due to some restrictions in certain countries (Cameroon, for example), users will need to use a VPN connction inorder to access these sites.</h3>
   <div class="projects-grid">
 
-    <div class="project-card filter-item html js">
-      <img src="project1.jpg" alt="Project 1" class="lightbox-trigger">
+    <div class="project-card filter-item html js project">
+      <img src="Images/country-information-searcher.jpg" alt="Project 1" class="lightbox-trigger project-image">
+      
+      <div class="project-info">
+        <h3>Country information Searcher</h3>
+        <span class="tag">HTML, CSS, JavaScript</span>
+        <p>Get information about Countries, as well as her neighbours. Built with HTML, CSS, and JavaScript.</p>
+        <a href="https://bengche.github.io/Brandon/" class="project-btn view-live" target="_blank">View Live</a>
+      </div>
+    </div>
+
+    <div class="project-card filter-item html js project">
+      <img src="Images/coming_soon.jpg" alt="Project 2" class="lightbox-trigger project-image">
       <div class="project-info">
         <h3>E-Commerce Website</h3>
         <span class="tag">JavaScript</span>
         <p>High-ticket spare parts store built with HTML, CSS, and JS.</p>
-        <a href="#" class="project-btn" target="_blank">View Live</a>
+        <a  class="project-btn view-live" target="_blank">Coming Soon</a>
       </div>
     </div>
 
-    <div class="project-card filter-item html wp">
-      <img src="project2.jpg" alt="Project 2" class="lightbox-trigger">
+    <div class="project-card filter-item html wp project">
+      <img src="Images/coming_soon.jpg" alt="Project 3" class="lightbox-trigger project-image">
       <div class="project-info">
         <h3>Personal Portfolio</h3>
         <span class="tag">WordPress</span>
         <p>Portfolio site designed with WordPress + HTML/CSS foundation.</p>
-        <a href="#" class="project-btn" target="_blank">View Live</a>
+        <a  class="project-btn view-live" target="_blank">Coming Soon</a>
       </div>
     </div>
 
