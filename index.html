@@ -903,6 +903,104 @@ html {
       } */
 }
 
+
+
+#welcome-overlay {
+  position: fixed;
+  inset: 0;
+  width: 100vw;
+  height: 100vh;
+  background: linear-gradient(135deg, #1e293b 60%, #14b8a6 100%);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: opacity 1s;
+  z-index: 99999;
+}
+.welcome-bg {
+  position: relative;
+  width: 100vw;
+  height: 100vh;
+  overflow: hidden;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+#welcome-overlay.hidden { display: none; }
+#particles-bg {
+  position: absolute;
+  width: 100vw;
+  height: 100vh;
+  top: 0; left: 0;
+  z-index: 1;
+  pointer-events: none;
+}
+.welcome-content {
+  position: relative;
+  z-index: 2;
+  text-align: center;
+  color: #fff;
+  padding: 2rem;
+}
+.welcome-title {
+  font-size: 2.5rem;
+  font-weight: bold;
+  margin-bottom: 2rem;
+  letter-spacing: 2px;
+  text-shadow: 0 4px 24px #0008;
+}
+.brancodex {
+  color: #fbbf24;
+  text-shadow: 0 0 10px #14b8a6;
+}
+.explore-btn {
+  background: linear-gradient(90deg, #fbbf24, #14b8a6, #0ea5e9);
+  color: #1e293b;
+  font-size: 1.3rem;
+  font-weight: bold;
+  padding: 1rem 2.5rem;
+  border: none;
+  border-radius: 40px;
+  box-shadow: 0 8px 32px #0005;
+  cursor: pointer;
+  margin-bottom: 2rem;
+  transition: transform 0.2s, box-shadow 0.2s, opacity 0.3s;
+  outline: none;
+}
+.explore-btn:disabled {
+  opacity: 0.5;
+  pointer-events: none;
+}
+.explore-btn:not(:disabled):hover {
+  transform: scale(1.07) rotate(-2deg);
+  box-shadow: 0 12px 40px #14b8a6;
+  background: linear-gradient(90deg, #0ea5e9, #fbbf24, #14b8a6);
+}
+.typewriter {
+  font-size: 1.4rem;
+  color: #fff;
+  min-height: 2.5em;
+  margin-top: 2rem;
+  font-family: 'Fira Mono', 'Consolas', monospace;
+  letter-spacing: 1px;
+  white-space: pre-line;
+  text-shadow: 0 2px 8px #0008;
+  border-right: 2px solid #fbbf24;
+  overflow: hidden;
+  width: 100%;
+  max-width: 600px;
+  margin-left: auto;
+  margin-right: auto;
+  animation: blink-caret 1s step-end infinite;
+}
+@keyframes blink-caret {
+  0%, 100% { border-color: #fbbf24; }
+  50% { border-color: transparent; }
+}
+body:not(.overlay-done) > *:not(#welcome-overlay) {
+  display: none !important;
+}
+
     </style>
 
     
@@ -1003,6 +1101,20 @@ html {
           <img class="beng-brandon-che" src="/Images/Beng_Brandon_Che.png" alt="Beng Brandon Che" />
         </div> -->
         </header>
+
+    <!-- Welcome Overlay -->
+<div id="welcome-overlay">
+  <div class="welcome-bg">
+    <!-- Techy Particles Background -->
+<div id="tsparticles" style="position:absolute; inset:0; width:100vw; height:100vh; z-index:0;"></div>
+    <canvas id="particles-bg"></canvas>
+    <div class="welcome-content">
+      <h1 class="welcome-title">Welcome to <span class="brancodex">BranCodeX</span></h1>
+      <button id="explore-btn" class="explore-btn" disabled style="opacity:0.5;pointer-events:none;">✨ Explore BranCodeX ✨</button>
+      <div id="typewriter" class="typewriter"></div>
+    </div>
+  </div>
+</div>
     
 
         <header id="hero" class="w-full min-h-screen bg-gradient-to-r from-slate-900 to-slate-800 text-white flex items-center px-6 md:px-20">
@@ -1547,6 +1659,92 @@ html {
     <p>&copy; <span id="year"></span> Beng Brandon Che | All Rights Reserved.</p>
   </div>
 </footer>
+
+    </script>
+<script src="https://cdn.jsdelivr.net/npm/tsparticles@3.3.0/tsparticles.bundle.min.js"></script>
+
+<script>
+  // Floating particles background
+  function floatingParticles() {
+    const canvas = document.getElementById('particles-bg');
+    if (!canvas) return;
+    const ctx = canvas.getContext('2d');
+    let w = canvas.width = window.innerWidth;
+    let h = canvas.height = window.innerHeight;
+    let particles = [];
+    for (let i = 0; i < 40; i++) {
+      particles.push({
+        x: Math.random() * w,
+        y: Math.random() * h,
+        r: 16 + Math.random() * 24,
+        dx: (Math.random() - 0.5) * 0.7,
+        dy: (Math.random() - 0.5) * 0.7,
+        color: `hsla(${Math.random()*360}, 80%, 60%, 0.13)`
+      });
+    }
+    function draw() {
+      ctx.clearRect(0, 0, w, h);
+      for (let p of particles) {
+        ctx.beginPath();
+        ctx.arc(p.x, p.y, p.r, 0, 2 * Math.PI);
+        ctx.fillStyle = p.color;
+        ctx.fill();
+        p.x += p.dx;
+        p.y += p.dy;
+        if (p.x < -p.r) p.x = w + p.r;
+        if (p.x > w + p.r) p.x = -p.r;
+        if (p.y < -p.r) p.y = h + p.r;
+        if (p.y > h + p.r) p.y = -p.r;
+      }
+      requestAnimationFrame(draw);
+    }
+    draw();
+    window.addEventListener('resize', () => {
+      w = canvas.width = window.innerWidth;
+      h = canvas.height = window.innerHeight;
+    });
+  }
+  window.addEventListener('DOMContentLoaded', floatingParticles);
+
+  // Typewriter effect
+  function typeWriter(text, el, speed = 40, cb) {
+    let i = 0;
+    function typing() {
+      if (i <= text.length) {
+        el.innerHTML = text.slice(0, i) + '<span style="opacity:0.5;">|</span>';
+        i++;
+        setTimeout(typing, speed + Math.random()*30);
+      } else {
+        el.innerHTML = text;
+        if (cb) setTimeout(cb, 900);
+      }
+    }
+    typing();
+  }
+
+  // Overlay logic
+  window.addEventListener('DOMContentLoaded', function() {
+    document.body.classList.remove('overlay-done');
+    const btn = document.getElementById('explore-btn');
+    const tw = document.getElementById('typewriter');
+    const message = `Welcome to BranCodeX! 🚀\n\nGet ready to explore stunning web projects, creative solutions, and interactive experiences crafted with passion and precision.\n\nLet's build something amazing together!`;
+    // Start typing on load
+    typeWriter(message, tw, 28, () => {
+      btn.disabled = false;
+      btn.style.opacity = 1;
+      btn.style.pointerEvents = 'auto';
+    });
+
+    btn.onclick = function() {
+      document.getElementById('welcome-overlay').style.opacity = 0;
+      setTimeout(() => {
+        document.getElementById('welcome-overlay').classList.add('hidden');
+        document.body.classList.add('overlay-done');
+      }, 900);
+    };
+  });
+</script>
+
 
 <script>
   (function () {
