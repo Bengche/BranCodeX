@@ -297,6 +297,12 @@ iframe {
   font-size: 0.9rem;
   display: none;
 }
+iframe#preview {
+  width: 100%;
+  min-height: 100px;
+  border: none;
+  transition: height 0.2s;
+}
 .light-theme body {
   background-color: #ffffff;
   color: #000;
@@ -3022,6 +3028,48 @@ runbtn.addEventListener("click", () => {
 });
 
 // End of live-code-editor.js
+
+function updateIframeHeight() {
+  const iframe = document.getElementById('preview');
+  if (!iframe) return;
+  // Wait for the iframe to render content
+  setTimeout(() => {
+    try {
+      const doc = iframe.contentDocument || iframe.contentWindow.document;
+      if (doc && doc.body) {
+        iframe.style.height = doc.body.scrollHeight + 'px';
+      }
+    } catch (e) {
+      // Ignore cross-origin errors
+    }
+  }, 50);
+}
+
+// Call this function every time you update the iframe content
+// For example, after setting iframe.srcdoc or writing to the iframe:
+function runCode() {
+  const html = document.getElementById('html').value;
+  const css = document.getElementById('css').value;
+  const js = document.getElementById('js').value;
+  const iframe = document.getElementById('preview');
+  iframe.srcdoc = `
+    <html>
+      <head>
+        <style>${css}</style>
+      </head>
+      <body>
+        ${html}
+        <script>
+          ${js}
+        <\/script>
+      </body>
+    </html>
+  `;
+  updateIframeHeight();
+}
+
+// If you have a "Run code" button, make sure it calls runCode()
+document.querySelector('.run-code').onclick = runCode;
 
     </script>
     <script src="JAVASCRIPT/index.js"></script>
