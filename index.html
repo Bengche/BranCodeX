@@ -1435,10 +1435,10 @@ body:not(.overlay-done) > *:not(#welcome-overlay) {
     <button class="filter-btn" data-filter="js">JavaScript</button>
     <button class="filter-btn" data-filter="wp">WordPress</button>
   </div> -->
-<div style="background-color: rgb(83, 9, 9); color: white; font-weight: bolder; padding: 10px; border-radius: 3px; width: fit-content; margin-left: 25px;">🚨 IMPORTANT!</div>
+<!-- <div style="background-color: rgb(83, 9, 9); color: white; font-weight: bolder; padding: 10px; border-radius: 3px; width: fit-content; margin-left: 25px;">🚨 IMPORTANT!</div> -->
   <!-- Projects Grid -->
-  <h3 class="projects-NB">Please note that some of these projects are being hosted on Github, and due to restrictions in certain countries (Cameroon, for example), users will need to download, and connect their VPN to another country (USA, for example) inorder to access these sites.</h3>
-  <div class="filter-buttons">
+<!--   <h3 class="projects-NB">Please note that some of these projects are being hosted on Github, and due to restrictions in certain countries (Cameroon, for example), users will need to download, and connect their VPN to another country (USA, for example) inorder to access these sites.</h3>
+  <div class="filter-buttons"> -->
     <button class="filter-btn active" data-filter="all">All</button>
     <button class="filter-btn" data-filter="html">HTML/CSS</button>
     <button class="filter-btn" data-filter="js">JavaScript</button>
@@ -1447,13 +1447,21 @@ body:not(.overlay-done) > *:not(#welcome-overlay) {
   <div class="projects-grid">
 
     <div class="project-card filter-item html js project">
-      <img src="Images/country-information-searcher.jpg" alt="Project 1" class="lightbox-trigger project-image">
+<!--       <img src="Images/country-information-searcher.jpg" alt="Project 1" class="lightbox-trigger project-image"> -->
+      <iframe 
+  src="https://country-info-searcher.netlify.app/" 
+  width="560" 
+  height="315" 
+  frameborder="0" 
+  allowfullscreen
+  title="country-information-searcher">
+</iframe>
       
       <div class="project-info">
         <h3>Country information Searcher</h3>
         <span class="tag">HTML, CSS, JavaScript</span>
         <p>Get information about Countries, as well as her neighbours. Built with HTML, CSS, and JavaScript.</p>
-        <a href="https://bengche.github.io/Brandon/" class="project-btn view-live" target="_blank">View Live</a>
+        <a href="https://country-info-searcher.netlify.app/" class="project-btn view-live" target="_blank">View Live</a>
       </div>
     </div>
 
