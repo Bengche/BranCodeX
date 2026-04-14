@@ -19,41 +19,27 @@ const tabs = [
 
 const skillGroups = {
   frontend: [
-    { name: 'HTML5', icon: 'fa-brands fa-html5' },
-    { name: 'CSS3', icon: 'fa-brands fa-css3-alt' },
-    { name: 'JavaScript', icon: 'fa-brands fa-js' },
-    { name: 'React', icon: 'fa-brands fa-react' },
-    { name: 'Next.js', icon: 'fa-solid fa-n' },
-    { name: 'Tailwind CSS', icon: 'fa-solid fa-wind' },
-    { name: 'Bootstrap', icon: 'fa-brands fa-bootstrap' },
-    { name: 'Responsive Design', icon: 'fa-solid fa-mobile-screen' },
-    { name: 'SEO Optimization', icon: 'fa-solid fa-magnifying-glass-chart' },
+    { name: 'JavaScript', icon: 'fab fa-js-square', color: 'text-yellow-400' },
+    { name: 'React', icon: 'fab fa-react', color: 'text-blue-400' },
+    { name: 'Next.js', icon: 'fab fa-js', color: 'text-white' },
+    { name: 'Tailwind', icon: 'fas fa-wind', color: 'text-teal-400' },
+    { name: 'HTML5', icon: 'fab fa-html5', color: 'text-orange-500' },
+    { name: 'CSS3', icon: 'fab fa-css3-alt', color: 'text-blue-500' },
   ],
   backend: [
-    { name: 'Node.js', icon: 'fa-brands fa-node-js' },
-    { name: 'Express.js', icon: 'fa-solid fa-server' },
-    { name: 'REST APIs', icon: 'fa-solid fa-plug' },
-    { name: 'PostgreSQL', icon: 'fa-solid fa-database' },
-    { name: 'Authentication & JWT', icon: 'fa-solid fa-lock' },
-    { name: 'Performance Optimization', icon: 'fa-solid fa-gauge-high' },
+    { name: 'Node.js', icon: 'fab fa-node-js', color: 'text-green-500' },
+    { name: 'Express', icon: 'fas fa-server', color: 'text-gray-300' },
+    { name: 'PostgreSQL', icon: 'fas fa-database', color: 'text-blue-500' },
   ],
   tools: [
-    { name: 'Git & GitHub', icon: 'fa-brands fa-git-alt' },
-    { name: 'WordPress', icon: 'fa-brands fa-wordpress' },
-    { name: 'Figma', icon: 'fa-brands fa-figma' },
-    { name: 'VS Code', icon: 'fa-solid fa-code' },
-    { name: 'Jira', icon: 'fa-brands fa-jira' },
-    { name: 'Elementor', icon: 'fa-solid fa-paint-roller' },
-    { name: 'WooCommerce', icon: 'fa-brands fa-shopify' },
+    { name: 'Git & GitHub', icon: 'fab fa-git-alt', color: 'text-red-500' },
+    { name: 'WordPress', icon: 'fab fa-wordpress', color: 'text-blue-700' },
   ],
   soft: [
-    { name: 'Problem Solving', icon: 'fa-solid fa-brain' },
-    { name: 'Clear Communication', icon: 'fa-solid fa-comments' },
-    { name: 'Team Collaboration', icon: 'fa-solid fa-people-group' },
-    { name: 'Time Management', icon: 'fa-solid fa-clock' },
-    { name: 'Client Empathy', icon: 'fa-solid fa-handshake' },
-    { name: 'Adaptability', icon: 'fa-solid fa-arrows-rotate' },
-    { name: 'Continuous Learning', icon: 'fa-solid fa-book-open' },
+    { name: 'Comm.', icon: 'fas fa-comments', color: 'text-yellow-500' },
+    { name: 'Problem-Solving', icon: 'fas fa-lightbulb', color: 'text-yellow-300' },
+    { name: 'Teamwork', icon: 'fas fa-users', color: 'text-green-500' },
+    { name: 'Time Mgt.', icon: 'fas fa-clock', color: 'text-orange-400' },
   ],
 };
 
@@ -93,7 +79,7 @@ export default function Skills() {
         <div className="skill-pills-grid" data-aos="fade-up" data-aos-delay="200">
           {skillGroups[activeTab].map((skill) => (
             <div className="skill-pill" key={skill.name}>
-              <i className={skill.icon}></i>
+              <i className={`${skill.icon} text-2xl ${skill.color || ''}`}></i>
               <span>{skill.name}</span>
             </div>
           ))}
