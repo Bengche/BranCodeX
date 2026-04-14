@@ -55,7 +55,7 @@ export default function Navbar() {
         {/* ── Logo ───────────────────────────────────────────────────────── */}
         <div className="flex items-center space-x-2 mr-10">
           <Image
-            src="favicon.png"
+            src="/images/favicon.png"
             alt="BranCodeX Logo"
             width={32}
             height={32}
