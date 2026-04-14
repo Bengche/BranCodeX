@@ -1,188 +1,146 @@
-/**
- * components/Projects.jsx
- *
- * 'use client' — slider scroll + iframe live-preview on demand.
- */
-
 "use client";
 
-import { useRef } from "react";
-import Image from "next/image";
-
-// ─── Data ──────────────────────────────────────────────────────────────────
-
-const projects = [
-  {
-    id: "njimbong",
-    title: "Njimbong Marketplace",
-    description:
-      "A full-featured e-commerce platform connecting local Cameroon vendors with buyers. Built with Next.js, PostgreSQL, and MoMo payment integration.",
-    tags: ["E-Commerce", "Next.js", "PostgreSQL"],
-    previewUrl: "https://njimbong.com",
-    thumbnail: "/images/coder.jpg",
-    live: true,
-  },
-  {
-    id: "fonlok",
-    title: "Fonlok Escrow",
-    description:
-      "A secure escrow service app that holds funds in trust for Cameroon online transactions. Reduces fraud and builds buyer-seller trust.",
-    tags: ["FinTech", "React", "Node.js"],
-    previewUrl: "https://fonlok.com",
-    thumbnail: "/images/coder.jpg",
-    live: true,
-  },
-  {
-    id: "jobfinder",
-    title: "Job Finder App",
-    description:
-      "A job listing platform tailored for Cameroon and Central Africa. Companies post vacancies; job seekers filter by city, sector, and experience level.",
-    tags: ["Job Board", "React", "REST API"],
-    previewUrl: "https://jobfinder.brancodex.com",
-    thumbnail: "/images/coder.jpg",
-    live: true,
-  },
-  {
-    id: "countryinfo",
-    title: "Country Information App",
-    description:
-      "A React-based app using the Rest Countries API to display flag, population, currency, languages, and bordering nations for every country in the world.",
-    tags: ["React", "REST API", "Education"],
-    previewUrl: "https://countries.brancodex.com",
-    thumbnail: "/images/country-information-searcher.jpg",
-    live: true,
-  },
-  {
-    id: "schoolmgmt",
-    title: "School Management System",
-    description:
-      "An academic management platform for Cameroon secondary schools — student records, fee tracking, results, timetables, and teacher dashboards.",
-    tags: ["EdTech", "Node.js", "PostgreSQL"],
-    previewUrl: null,
-    thumbnail: "/images/coming_soon.jpg",
-    live: false,
-  },
-];
-
-// ─── Component ───────────────────────────────────────────────────────────────
+import { useRef, useState } from "react";
 
 export default function Projects() {
   const viewportRef = useRef(null);
-  const iframeContainers = useRef({});
+  const [loadedIframes, setLoadedIframes] = useState({});
 
-  /** Horizontal scroll for the card strip. */
   function scrollSlider(direction) {
-    if (!viewportRef.current) return;
-    const cardWidth =
-      viewportRef.current.querySelector(".project-card")?.offsetWidth ?? 340;
-    const gap = 20;
-    viewportRef.current.scrollBy({
-      left: direction === "next" ? cardWidth + gap : -(cardWidth + gap),
-      behavior: "smooth",
-    });
+    const viewport = viewportRef.current;
+    const card = viewport ? viewport.querySelector(".project-card") : null;
+    if (viewport && card) {
+      const scrollAmount = card.offsetWidth + 20;
+      viewport.scrollBy({ left: direction * scrollAmount, behavior: "smooth" });
+    }
   }
 
-  /** Replace the thumbnail with a live iframe on click. */
   function loadIframe(id, url) {
-    const container = iframeContainers.current[id];
-    if (!container || !url) return;
-    container.innerHTML = `<iframe
-      src="${url}"
-      title="Live preview"
-      loading="lazy"
-      class="project-iframe"
-      sandbox="allow-scripts allow-same-origin allow-forms"
-    ></iframe>`;
+    setLoadedIframes((prev) => ({ ...prev, [id]: url }));
   }
 
   return (
-    <section id="projects" className="projects-section" data-aos="fade-up">
-      <h2 className="section-title" data-aos="fade-up">
-        Projects &amp; Case Studies
-      </h2>
-      <p className="projects-intro" data-aos="fade-up" data-aos-delay="100">
-        Real products built for real clients — from Cameroon-focused platforms
-        to global-ready web applications.
-      </p>
-
-      {/* Slider */}
-      <div className="projects-slider-wrapper">
-        <button
-          className="proj-ctrl-btn left"
-          type="button"
-          aria-label="Scroll left"
-          onClick={() => scrollSlider("prev")}
-        >
-          <i className="fa fa-chevron-left"></i>
-        </button>
-
+    <section id="projects" className="projects-section py-16 bg-gray-900 text-white overflow-hidden mt-6">
+      <div className="max-w-7xl mx-auto px-4">
+        <div className="text-center mb-10">
+          <h2 className="text-4xl font-bold mb-4" style={{ fontFamily: "'Playfair Display', serif", color: "yellow" }}>Projects</h2>
+          <p className="text-gray-300 max-w-2xl mx-auto">Focused results, clean UX, and fast performance for clients in Bamenda, Cameroon, and the world.</p>
+        </div>
         <div className="projects-viewport" ref={viewportRef}>
-          <div className="projects-track">
-            {projects.map((project) => (
-              <div key={project.id} className="project-card">
-                {/* Media area */}
-                <div
-                  className="project-media"
-                  ref={(el) => (iframeContainers.current[project.id] = el)}
-                >
-                  <Image
-                    src={project.thumbnail}
-                    alt={`${project.title} screenshot`}
-                    fill
-                    sizes="340px"
-                    style={{ objectFit: "cover" }}
-                    className="project-thumb"
-                  />
-                  {project.live && (
-                    <button
-                      type="button"
-                      className="preview-overlay-btn"
-                      onClick={() => loadIframe(project.id, project.previewUrl)}
-                    >
-                      <i className="fa fa-play-circle"></i> Load Preview
-                    </button>
-                  )}
-                  {!project.live && (
-                    <span className="coming-soon-label">Coming Soon</span>
-                  )}
-                </div>
+          <div className="projects-track" id="projectTrack">
 
-                {/* Info */}
-                <div className="project-info">
-                  <h3 className="project-title">{project.title}</h3>
-                  <p className="project-desc">{project.description}</p>
-                  <div className="project-tags">
-                    {project.tags.map((tag) => (
-                      <span key={tag} className="project-tag">
-                        {tag}
-                      </span>
-                    ))}
-                  </div>
-                  {project.live && project.previewUrl && (
-                    <a
-                      href={project.previewUrl}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className="view-live-link"
-                    >
-                      View live{" "}
-                      <i className="fa fa-arrow-up-right-from-square"></i>
-                    </a>
-                  )}
-                </div>
+            {/* Card 1: Njimbong */}
+            <div className="project-card">
+              <div className="media-container" id="media-njimbong">
+                {loadedIframes["media-njimbong"] ? (
+                  <iframe src={loadedIframes["media-njimbong"]} title="Njimbong" className="w-full h-full" sandbox="allow-scripts allow-same-origin allow-forms" />
+                ) : (
+                  <>
+                    <div className="overlay-play" onClick={() => loadIframe("media-njimbong", "https://www.njimbong.com/")}>
+                      <i className="fas fa-play-circle text-5xl"></i>
+                      <span className="mt-2 font-bold">Interact with Site</span>
+                    </div>
+                    <img src="/images/coder.jpg" alt="Njimbong" className="w-full h-full object-cover" />
+                  </>
+                )}
               </div>
-            ))}
+              <div className="p-6">
+                <h3 className="text-xl font-bold">Njimbong Marketplace</h3>
+                <span className="text-xs bg-blue-600 px-2 py-1 rounded">Next.js + Node.js</span>
+                <p className="text-gray-400 text-sm mt-3">Secure buy-and-sell platform for the Cameroonian market.</p>
+                <a href="https://www.njimbong.com/" target="_blank" rel="noopener noreferrer" className="mt-4 block text-center bg-yellow-500 text-black py-2 rounded font-bold">View Live</a>
+              </div>
+            </div>
+
+            {/* Card 2: Fonlok */}
+            <div className="project-card">
+              <div className="media-container" id="media-fonlok">
+                {loadedIframes["media-fonlok"] ? (
+                  <iframe src={loadedIframes["media-fonlok"]} title="Fonlok" className="w-full h-full" sandbox="allow-scripts allow-same-origin allow-forms" />
+                ) : (
+                  <>
+                    <div className="overlay-play" onClick={() => loadIframe("media-fonlok", "https://www.fonlok.com/")}>
+                      <i className="fas fa-play-circle text-5xl"></i>
+                      <span className="mt-2 font-bold">Interact with Site</span>
+                    </div>
+                    <img src="/images/coder.jpg" alt="Fonlok" className="w-full h-full object-cover" />
+                  </>
+                )}
+              </div>
+              <div className="p-6">
+                <h3 className="text-xl font-bold">Fonlok Escrow</h3>
+                <span className="text-xs bg-green-600 px-2 py-1 rounded">FinTech</span>
+                <p className="text-gray-400 text-sm mt-3">Trust-as-a-service middleman for MoMo transactions.</p>
+                <a href="https://www.fonlok.com/" target="_blank" rel="noopener noreferrer" className="mt-4 block text-center bg-yellow-500 text-black py-2 rounded font-bold">View Live</a>
+              </div>
+            </div>
+
+            {/* Card 3: Job Finder */}
+            <div className="project-card">
+              <div className="media-container" id="media-jobvibe">
+                {loadedIframes["media-jobvibe"] ? (
+                  <iframe src={loadedIframes["media-jobvibe"]} title="Job Vibe" className="w-full h-full" sandbox="allow-scripts allow-same-origin allow-forms" />
+                ) : (
+                  <>
+                    <div className="overlay-play" onClick={() => loadIframe("media-jobvibe", "https://jobvibe.netlify.app/")}>
+                      <i className="fas fa-play-circle text-5xl"></i>
+                      <span className="mt-2 font-bold">Interact with Site</span>
+                    </div>
+                    <img src="/images/coder.jpg" alt="Job Vibe" className="w-full h-full object-cover" />
+                  </>
+                )}
+              </div>
+              <div className="p-6">
+                <h3 className="text-xl font-bold">Job Finder App</h3>
+                <span className="text-xs bg-purple-600 px-2 py-1 rounded">React</span>
+                <p className="text-gray-400 text-sm mt-3">Global job search tool with real-time API filtering.</p>
+                <a href="https://jobvibe.netlify.app/" target="_blank" rel="noopener noreferrer" className="mt-4 block text-center bg-yellow-500 text-black py-2 rounded font-bold">View Live</a>
+              </div>
+            </div>
+
+            {/* Card 4: Country */}
+            <div className="project-card">
+              <div className="media-container" id="media-country">
+                {loadedIframes["media-country"] ? (
+                  <iframe src={loadedIframes["media-country"]} title="Country Search" className="w-full h-full" sandbox="allow-scripts allow-same-origin allow-forms" />
+                ) : (
+                  <>
+                    <div className="overlay-play" onClick={() => loadIframe("media-country", "https://country-info-searcher.netlify.app/")}>
+                      <i className="fas fa-play-circle text-5xl"></i>
+                      <span className="mt-2 font-bold">Interact with Site</span>
+                    </div>
+                    <img src="/images/country-information-searcher.jpg" alt="Country Search" className="w-full h-full object-cover" />
+                  </>
+                )}
+              </div>
+              <div className="p-6">
+                <h3 className="text-xl font-bold">Country Information</h3>
+                <span className="text-xs bg-orange-600 px-2 py-1 rounded">JS API</span>
+                <p className="text-gray-400 text-sm mt-3">Data visualization tool for global geographic stats.</p>
+                <a href="https://country-info-searcher.netlify.app/" target="_blank" rel="noopener noreferrer" className="mt-4 block text-center bg-yellow-500 text-black py-2 rounded font-bold">View Live</a>
+              </div>
+            </div>
+
+            {/* Card 5: School */}
+            <div className="project-card">
+              <div className="media-container">
+                <div className="coming-soon">Coming Soon</div>
+                <img src="/images/coming_soon.jpg" alt="School System" className="w-full h-full object-cover opacity-50" />
+              </div>
+              <div className="p-6">
+                <h3 className="text-xl font-bold">School Management</h3>
+                <span className="text-xs bg-gray-600 px-2 py-1 rounded">Next.js</span>
+                <p className="text-gray-400 text-sm mt-3">Enterprise-grade admin tool for educational centers.</p>
+                <button className="mt-4 w-full bg-gray-700 text-gray-400 py-2 rounded cursor-not-allowed">In Development</button>
+              </div>
+            </div>
+
           </div>
         </div>
-
-        <button
-          className="proj-ctrl-btn right"
-          type="button"
-          aria-label="Scroll right"
-          onClick={() => scrollSlider("next")}
-        >
-          <i className="fa fa-chevron-right"></i>
-        </button>
+        <div className="flex justify-center items-center gap-6 mt-10">
+          <button className="slider-nav" onClick={() => scrollSlider(-1)}>❮</button>
+          <button className="slider-nav" onClick={() => scrollSlider(1)}>❯</button>
+        </div>
       </div>
     </section>
   );

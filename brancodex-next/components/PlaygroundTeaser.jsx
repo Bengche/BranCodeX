@@ -1,56 +1,14 @@
-/**
- * components/PlaygroundTeaser.jsx
- *
- * Server Component — simple feature-highlight linking to /playground.
- */
-
-import Link from "next/link";
-
-const features = [
-  {
-    icon: "fa-solid fa-face-grin-squint",
-    title: "Random Jokes",
-    desc: "Fetch real jokes from the internet and laugh a little.",
-  },
-  {
-    icon: "fa-solid fa-brain",
-    title: "General Quiz",
-    desc: "Test your knowledge on Cameroon history, science, sports, and more.",
-  },
-  {
-    icon: "fa-solid fa-code",
-    title: "Live Code Editor",
-    desc: "Write HTML, CSS, and JavaScript in-browser and preview it instantly.",
-  },
-];
-
 export default function PlaygroundTeaser() {
   return (
-    <section
-      id="playground-teaser"
-      className="playground-teaser-section"
-      data-aos="fade-up"
-    >
-      <div className="playground-teaser-inner">
-        <h2 className="section-title">Interactive Playground</h2>
-        <p className="playground-teaser-intro">
-          Beyond just showcasing work — BranCodeX gives you tools to learn,
-          explore, and have fun.
+    <section className="text-white py-20 px-6 playground" id="playground">
+      <div className="max-w-5xl mx-auto text-center" data-aos="zoom-in">
+        <h2 className="text-4xl md:text-5xl font-extrabold mb-6">Welcome to the Playground 🎮</h2>
+        <p className="text-lg md:text-xl max-w-3xl mx-auto text-gray-300 mb-10 leading-relaxed">
+          Dive into the world of creativity and fun! Here you&#39;ll find interactive <span className="text-yellow-400 font-semibold">quizzes</span>, clever <span className="text-yellow-400 font-semibold">coding challenges</span>, fun <span className="text-yellow-400 font-semibold">games</span>, random <span className="text-yellow-400 font-semibold">developer jokes</span>, and a live playground where you can write and run <span className="text-yellow-400 font-semibold">HTML, CSS &amp; JavaScript</span> code instantly, you can even build another website inside this website 😉. Whether you&#39;re here to hire, learn, laugh, or test your skills - you&#39;re in the right place!
         </p>
-
-        <div className="playground-features-grid">
-          {features.map((f) => (
-            <div key={f.title} className="playground-feature-card">
-              <i className={f.icon}></i>
-              <h3>{f.title}</h3>
-              <p>{f.desc}</p>
-            </div>
-          ))}
-        </div>
-
-        <Link href="/playground" className="go-playground-btn">
-          Explore the Playground
-        </Link>
+        <a href="/playground" className="inline-block mt-6 px-8 py-4 text-lg font-semibold bg-yellow-400 text-black hover:bg-yellow-500 transition-all rounded-full shadow-lg hover:scale-105 focus:outline-none focus:ring-4 focus:ring-yellow-300">
+          Take Me There
+        </a>
       </div>
     </section>
   );

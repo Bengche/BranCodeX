@@ -1,431 +1,263 @@
-/**
- * components/Testimonials.jsx
- *
- * 'use client' — reads/writes localStorage for user-submitted reviews.
- * Features: add, edit, delete own reviews; star-rating filter; photo upload.
- */
+﻿"use client";
 
-"use client";
+import { useState, useEffect } from "react";
 
-import { useState, useEffect, useRef } from "react";
-import Image from "next/image";
+export default function Testimonials() {
+  const [testimonials, setTestimonials] = useState([]);
+  const [userId, setUserId] = useState("");
+  const [showModal, setShowModal] = useState(false);
+  const [filter, setFilter] = useState("all");
+  const [currentEditIndex, setCurrentEditIndex] = useState(null);
+  const [formName, setFormName] = useState("");
+  const [formReview, setFormReview] = useState("");
+  const [formRating, setFormRating] = useState("");
+  const [uploadedImage, setUploadedImage] = useState("");
 
-// ─── Helpers ─────────────────────────────────────────────────────────────────
+  useEffect(() => {
+    const stored = JSON.parse(localStorage.getItem("testimonials") || "[]");
+    setTestimonials(stored);
+    if (!sessionStorage.getItem("userId")) {
+      sessionStorage.setItem("userId", Date.now().toString());
+    }
+    setUserId(sessionStorage.getItem("userId"));
+  }, []);
 
-function generateId() {
-  return Math.random().toString(36).slice(2, 10);
-}
-
-function getStoredTestimonials() {
-  try {
-    return JSON.parse(localStorage.getItem("testimonials") || "[]");
-  } catch {
-    return [];
-  }
-}
-
-function saveTestimonials(list) {
-  localStorage.setItem("testimonials", JSON.stringify(list));
-}
-
-/** Fallback avatar using the user's initials. */
-function InitialsAvatar({ name }) {
-  const initials = name
-    .split(" ")
-    .slice(0, 2)
-    .map((w) => w[0]?.toUpperCase() ?? "")
-    .join("");
-  return (
-    <div className="testimonial-initials-avatar" aria-hidden="true">
-      {initials}
-    </div>
-  );
-}
-
-// ─── Star rating picker ───────────────────────────────────────────────────────
-
-function StarPicker({ value, onChange }) {
-  return (
-    <div className="star-picker" role="radiogroup" aria-label="Star rating">
-      {[1, 2, 3, 4, 5].map((n) => (
-        <button
-          key={n}
-          type="button"
-          role="radio"
-          aria-checked={value === n}
-          aria-label={`${n} star${n !== 1 ? "s" : ""}`}
-          className={`star-pick-btn${value >= n ? " filled" : ""}`}
-          onClick={() => onChange(n)}
-        >
-          &#9733;
-        </button>
-      ))}
-    </div>
-  );
-}
-
-// ─── Individual card ─────────────────────────────────────────────────────────
-
-function TestimonialCard({ testimonial, ownerId, onEdit, onDelete }) {
-  const isOwner = testimonial.userId === ownerId;
-  const stars = Array.from({ length: 5 }, (_, i) => i < testimonial.stars);
-
-  return (
-    <article className="testimonial-card" data-aos="fade-up">
-      <div className="tc-header">
-        <div className="tc-avatar">
-          {testimonial.photo ? (
-            <Image
-              src={testimonial.photo}
-              alt={`${testimonial.name} photo`}
-              width={52}
-              height={52}
-              className="rounded-full object-cover"
-              unoptimized /* base64 data URIs only */
-            />
-          ) : (
-            <InitialsAvatar name={testimonial.name} />
-          )}
-        </div>
-        <div>
-          <p className="tc-name">{testimonial.name}</p>
-          <p className="tc-role">{testimonial.role || "Client"}</p>
-        </div>
-        {isOwner && (
-          <div className="tc-owner-actions" aria-label="Manage your review">
-            <button
-              type="button"
-              className="tc-action-btn"
-              title="Edit review"
-              onClick={() => onEdit(testimonial)}
-            >
-              <i className="fa fa-pen"></i>
-            </button>
-            <button
-              type="button"
-              className="tc-action-btn delete"
-              title="Delete review"
-              onClick={() => onDelete(testimonial.id)}
-            >
-              <i className="fa fa-trash"></i>
-            </button>
-          </div>
-        )}
-      </div>
-
-      <div
-        className="tc-stars"
-        aria-label={`${testimonial.stars} out of 5 stars`}
-      >
-        {stars.map((filled, i) => (
-          <span key={i} className={`star-icon${filled ? " filled" : ""}`}>
-            &#9733;
-          </span>
-        ))}
-      </div>
-
-      <blockquote className="tc-text">
-        &ldquo;{testimonial.text}&rdquo;
-      </blockquote>
-      <p className="tc-date">{testimonial.date}</p>
-    </article>
-  );
-}
-
-// ─── Modal (add / edit) ───────────────────────────────────────────────────────
-
-const emptyForm = { name: "", role: "", stars: 5, text: "", photo: "" };
-
-function TestimonialModal({ editing, onClose, onSubmit }) {
-  const [form, setForm] = useState(editing ? { ...editing } : { ...emptyForm });
-  const fileInputRef = useRef(null);
-
-  function handleField(field, val) {
-    setForm((prev) => ({ ...prev, [field]: val }));
+  function openModal() {
+    setFormName("");
+    setFormReview("");
+    setFormRating("");
+    setUploadedImage("");
+    setCurrentEditIndex(null);
+    setShowModal(true);
   }
 
-  function handlePhoto(e) {
+  function closeModal() {
+    setShowModal(false);
+    setCurrentEditIndex(null);
+  }
+
+  function handlePhotoChange(e) {
     const file = e.target.files?.[0];
     if (!file) return;
     const reader = new FileReader();
-    reader.onload = (ev) => handleField("photo", ev.target.result);
+    reader.onload = (ev) => setUploadedImage(ev.target.result);
     reader.readAsDataURL(file);
   }
 
   function handleSubmit(e) {
     e.preventDefault();
-    const trimmedText = form.text.trim();
-    const trimmedName = form.name.trim();
-    if (!trimmedName || !trimmedText) return;
-    if (trimmedText.length < 20) {
-      alert("Please write at least 20 characters in your review.");
-      return;
-    }
-    onSubmit(form);
-  }
-
-  /* Lock body scroll while modal is open */
-  useEffect(() => {
-    document.body.style.overflow = "hidden";
-    return () => {
-      document.body.style.overflow = "";
+    const testimonialData = {
+      name: formName,
+      review: formReview,
+      rating: parseInt(formRating),
+      photo: uploadedImage || "https://i.pravatar.cc/100",
+      userId,
     };
-  }, []);
-
-  return (
-    <div
-      className="modal-overlay"
-      role="dialog"
-      aria-modal="true"
-      aria-label={editing ? "Edit your review" : "Add a review"}
-      onClick={(e) => {
-        if (e.target === e.currentTarget) onClose();
-      }}
-    >
-      <div className="modal-content">
-        <button
-          type="button"
-          className="modal-close-btn"
-          aria-label="Close modal"
-          onClick={onClose}
-        >
-          &times;
-        </button>
-
-        <h2 className="modal-heading">
-          {editing ? "Edit Your Review" : "Share Your Experience"}
-        </h2>
-
-        <form onSubmit={handleSubmit} noValidate>
-          {/* Name */}
-          <label className="modal-label">
-            Your full name *
-            <input
-              className="modal-input"
-              type="text"
-              value={form.name}
-              maxLength={60}
-              required
-              onChange={(e) => handleField("name", e.target.value)}
-              placeholder="e.g. Amina Tabi"
-            />
-          </label>
-
-          {/* Role / company */}
-          <label className="modal-label">
-            Role / company (optional)
-            <input
-              className="modal-input"
-              type="text"
-              value={form.role}
-              maxLength={80}
-              onChange={(e) => handleField("role", e.target.value)}
-              placeholder="e.g. CEO at StartupCM"
-            />
-          </label>
-
-          {/* Stars */}
-          <div className="modal-label">
-            Rating *
-            <StarPicker
-              value={form.stars}
-              onChange={(v) => handleField("stars", v)}
-            />
-          </div>
-
-          {/* Review text */}
-          <label className="modal-label">
-            Your review *
-            <textarea
-              className="modal-input modal-textarea"
-              value={form.text}
-              minLength={20}
-              maxLength={500}
-              required
-              rows={4}
-              onChange={(e) => handleField("text", e.target.value)}
-              placeholder="Tell us about your experience (min. 20 characters)..."
-            />
-          </label>
-
-          {/* Photo upload */}
-          <div className="modal-label">
-            Profile photo (optional)
-            <button
-              type="button"
-              className="upload-photo-btn"
-              onClick={() => fileInputRef.current?.click()}
-            >
-              {form.photo ? "Change photo" : "Upload photo"}
-            </button>
-            <input
-              ref={fileInputRef}
-              type="file"
-              accept="image/*"
-              style={{ display: "none" }}
-              onChange={handlePhoto}
-            />
-            {form.photo && (
-              <Image
-                src={form.photo}
-                alt="Preview"
-                width={48}
-                height={48}
-                className="photo-preview"
-                unoptimized
-              />
-            )}
-          </div>
-
-          <button type="submit" className="modal-submit-btn">
-            {editing ? "Save changes" : "Submit review"}
-          </button>
-        </form>
-      </div>
-    </div>
-  );
-}
-
-// ─── Main component ───────────────────────────────────────────────────────────
-
-export default function Testimonials() {
-  const [items, setItems] = useState([]);
-  const [filterStars, setFilterStars] = useState(0); // 0 = all
-  const [showModal, setShowModal] = useState(false);
-  const [editing, setEditing] = useState(null);
-  const [userId, setUserId] = useState("");
-
-  /* Load from localStorage on mount; set or read a per-session user ID. */
-  useEffect(() => {
-    setItems(getStoredTestimonials());
-    let uid = sessionStorage.getItem("bx_uid");
-    if (!uid) {
-      uid = generateId();
-      sessionStorage.setItem("bx_uid", uid);
-    }
-    setUserId(uid);
-  }, []);
-
-  const displayed =
-    filterStars === 0 ? items : items.filter((t) => t.stars === filterStars);
-
-  function handleSubmit(form) {
-    if (editing) {
-      // Update existing
-      const updated = items.map((t) =>
-        t.id === editing.id ? { ...t, ...form } : t,
-      );
-      setItems(updated);
-      saveTestimonials(updated);
+    let updated;
+    if (currentEditIndex !== null) {
+      updated = [...testimonials];
+      updated[currentEditIndex] = testimonialData;
     } else {
-      // Add new
-      const newItem = {
-        ...form,
-        id: generateId(),
-        userId,
-        date: new Date().toLocaleDateString("en-GB", {
-          day: "numeric",
-          month: "short",
-          year: "numeric",
-        }),
-      };
-      const updated = [newItem, ...items];
-      setItems(updated);
-      saveTestimonials(updated);
+      updated = [testimonialData, ...testimonials];
     }
+    setTestimonials(updated);
+    localStorage.setItem("testimonials", JSON.stringify(updated));
     closeModal();
   }
 
-  function handleDelete(id) {
-    if (!window.confirm("Delete this review?")) return;
-    const updated = items.filter((t) => t.id !== id);
-    setItems(updated);
-    saveTestimonials(updated);
-  }
-
-  function openEdit(testimonial) {
-    setEditing(testimonial);
+  function editTestimonial(index) {
+    const t = testimonials[index];
+    setFormName(t.name);
+    setFormReview(t.review);
+    setFormRating(String(t.rating));
+    setUploadedImage(t.photo);
+    setCurrentEditIndex(index);
     setShowModal(true);
   }
 
-  function closeModal() {
-    setEditing(null);
-    setShowModal(false);
+  function deleteTestimonial(index) {
+    if (!confirm("Are you sure you want to delete this review?")) return;
+    const updated = [...testimonials];
+    updated.splice(index, 1);
+    setTestimonials(updated);
+    localStorage.setItem("testimonials", JSON.stringify(updated));
   }
 
   return (
-    <section id="testimonials" className="testimonials-section">
-      <h2 className="section-title" data-aos="fade-up">
-        What Clients Say
-      </h2>
-      <p className="testimonials-intro" data-aos="fade-up" data-aos-delay="100">
-        Real feedback from real clients. Every review stored locally — no
-        account required.
-      </p>
-
-      {/* Controls row */}
-      <div className="testi-controls" data-aos="fade-up" data-aos-delay="150">
-        {/* Star filter */}
-        <div className="testi-filter">
-          <label htmlFor="star-filter" className="testi-filter-label">
-            Filter by:
-          </label>
-          <select
-            id="star-filter"
-            className="testi-filter-select"
-            value={filterStars}
-            onChange={(e) => setFilterStars(Number(e.target.value))}
+    <section id="testimonials" className="bg-gray-900 mb-16 mt-16 text-white min-h-screen">
+      <div className="max-w-4xl mx-auto py-12 px-4">
+        <div className="flex items-center justify-between mb-6">
+          <h2 className="text-3xl md:text-4xl font-extrabold tracking-tight">
+            🌟 Reviews
+          </h2>
+          <button
+            id="openModal"
+            className="bg-yellow-400 hover:bg-yellow-500 text-gray-900 font-bold px-5 py-2 rounded-lg shadow transition"
+            onClick={openModal}
           >
-            <option value={0}>All reviews</option>
-            <option value={5}>5 stars</option>
-            <option value={4}>4 stars</option>
-            <option value={3}>3 stars</option>
-            <option value={2}>2 stars</option>
-            <option value={1}>1 star</option>
+            ➕ Add a Review
+          </button>
+        </div>
+
+        <div className="flex flex-wrap gap-3 mb-8">
+          <select
+            id="testimonialFilter"
+            className="bg-yellow-400 hover:bg-yellow-500 text-gray-900 font-bold px-5 py-2 rounded-lg shadow transition"
+            value={filter}
+            onChange={(e) => setFilter(e.target.value)}
+          >
+            <option
+              className="filter-btn active flex items-center gap-2 px-4 py-2 rounded-lg border border-gray-600 bg-gray-800 hover:bg-yellow-400 hover:text-gray-900 transition font-semibold"
+              value="all"
+            >
+               All
+            </option>
+            <option
+              className="filter-btn flex items-center gap-2 px-4 py-2 rounded-lg border border-gray-600 bg-gray-800 hover:bg-yellow-400 hover:text-gray-900 transition font-semibold"
+              value="1"
+            >
+              ⭐1 Star
+            </option>
+            <option
+              className="filter-btn flex items-center gap-2 px-4 py-2 rounded-lg border border-gray-600 bg-gray-800 hover:bg-yellow-400 hover:text-gray-900 transition font-semibold"
+              value="2"
+            >
+              ⭐2 Stars
+            </option>
+            <option
+              className="filter-btn flex items-center gap-2 px-4 py-2 rounded-lg border border-gray-600 bg-gray-800 hover:bg-yellow-400 hover:text-gray-900 transition font-semibold"
+              value="3"
+            >
+              ⭐3 Stars
+            </option>
+            <option
+              className="filter-btn flex items-center gap-2 px-4 py-2 rounded-lg border border-gray-600 bg-gray-800 hover:bg-yellow-400 hover:text-gray-900 transition font-semibold"
+              value="4"
+            >
+              ⭐4 Stars
+            </option>
+            <option
+              className="filter-btn flex items-center gap-2 px-4 py-2 rounded-lg border border-gray-600 bg-gray-800 hover:bg-yellow-400 hover:text-gray-900 transition font-semibold"
+              value="5"
+            >
+              ⭐5 Stars
+            </option>
           </select>
         </div>
 
-        {/* Add review button */}
-        <button
-          type="button"
-          className="add-review-btn"
-          onClick={() => {
-            setEditing(null);
-            setShowModal(true);
-          }}
-        >
-          <i className="fa fa-plus"></i> Add your review
-        </button>
+        <div className="relative">
+          <div
+            id="testimonialScrollArea"
+            style={{ maxHeight: "80vh", overflowY: "auto", paddingRight: "0.5rem" }}
+          >
+            <div
+              id="testimonialList"
+              className="grid grid-cols-1 md:grid-cols-2 gap-8"
+            >
+              {testimonials.map((t, index) => {
+                if (filter !== "all" && t.rating < parseInt(filter)) return null;
+                return (
+                  <div
+                    className="testimonial-card"
+                    key={index}
+                    data-aos="fade-up"
+                    data-aos-delay={index * 100}
+                  >
+                    <img src={t.photo} alt={t.name} />
+                    <h4>{t.name}</h4>
+                    <div className="stars">{"⭐".repeat(t.rating)}</div>
+                    <p>{t.review}</p>
+                    {t.userId === userId && (
+                      <div className="card-actions">
+                        <button onClick={() => editTestimonial(index)} className="edit-btn">✏ Edit</button>
+                        <button onClick={() => deleteTestimonial(index)} className="delete-btn">🗑 Delete</button>
+                      </div>
+                    )}
+                  </div>
+                );
+              })}
+            </div>
+          </div>
+          <div id="loadingMore" className="text-center text-gray-400 py-4 hidden">
+            Loading Reviews...
+          </div>
+        </div>
       </div>
 
-      {/* Cards grid */}
-      {displayed.length > 0 ? (
-        <div className="testimonials-grid">
-          {displayed.map((t) => (
-            <TestimonialCard
-              key={t.id}
-              testimonial={t}
-              ownerId={userId}
-              onEdit={openEdit}
-              onDelete={handleDelete}
-            />
-          ))}
-        </div>
-      ) : (
-        <p className="no-reviews-msg">
-          {filterStars > 0
-            ? `No ${filterStars}-star reviews yet.`
-            : "No reviews yet. Be the first!"}
-        </p>
-      )}
-
-      {/* Modal */}
       {showModal && (
-        <TestimonialModal
-          editing={editing}
-          onClose={closeModal}
-          onSubmit={handleSubmit}
-        />
+        <div
+          id="testimonialModal"
+          className="modal-overlay fixed inset-0 z-50 bg-black bg-opacity-70 flex items-center justify-center"
+          onClick={(e) => { if (e.target === e.currentTarget) closeModal(); }}
+        >
+          <div className="modal-content bg-gray-800 rounded-2xl shadow-2xl p-8 w-full max-w-md relative">
+            <button
+              type="button"
+              id="closeModal"
+              className="absolute top-3 right-3 text-gray-400 hover:text-red-500 text-2xl font-bold transition"
+              onClick={closeModal}
+            >
+              &times;
+            </button>
+            <h3 className="text-2xl font-bold mb-6 text-center text-yellow-400">
+              📝 Add Your Review
+            </h3>
+            <form id="testimonialForm" className="space-y-5" onSubmit={handleSubmit}>
+              <div>
+                <label htmlFor="t-name" className="block font-semibold mb-1">Name</label>
+                <input
+                  type="text"
+                  id="t-name"
+                  placeholder="Your Name"
+                  className="w-full px-4 py-2 border border-gray-600 rounded focus:outline-none focus:ring-2 focus:ring-yellow-400 bg-gray-900 text-white"
+                  required
+                  value={formName}
+                  onChange={(e) => setFormName(e.target.value)}
+                />
+              </div>
+              <div>
+                <label htmlFor="t-review" className="block font-semibold mb-1">Review</label>
+                <textarea
+                  id="t-review"
+                  placeholder="Your Review"
+                  className="w-full px-4 py-2 border border-gray-600 rounded focus:outline-none focus:ring-2 focus:ring-yellow-400 bg-gray-900 text-white"
+                  required
+                  value={formReview}
+                  onChange={(e) => setFormReview(e.target.value)}
+                ></textarea>
+              </div>
+              <div>
+                <label htmlFor="t-photo" className="block font-semibold mb-1">Photo</label>
+                <input type="file" id="t-photo" accept="image/*" className="w-full" onChange={handlePhotoChange} />
+                {uploadedImage && <img src={uploadedImage} className="mt-2 testimonial-img" alt="Preview" />}
+              </div>
+              <div>
+                <label className="block font-semibold mb-1">Rating</label>
+                <select
+                  id="t-rating"
+                  required
+                  className="w-full px-4 py-2 border border-gray-600 rounded bg-gray-900 text-white"
+                  value={formRating}
+                  onChange={(e) => setFormRating(e.target.value)}
+                >
+                  <option value="">Select</option>
+                  <option value="1">⭐</option>
+                  <option value="2">⭐⭐</option>
+                  <option value="3">⭐⭐⭐</option>
+                  <option value="4">⭐⭐⭐⭐</option>
+                  <option value="5">⭐⭐⭐⭐⭐</option>
+                </select>
+              </div>
+              <button
+                type="submit"
+                id="addReviewBtn"
+                className="w-full bg-yellow-400 hover:bg-yellow-500 text-gray-900 py-2 rounded font-bold transition"
+              >
+                ✅ Add Review
+              </button>
+            </form>
+          </div>
+        </div>
       )}
     </section>
   );
