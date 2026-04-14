@@ -84,7 +84,7 @@ export default function Hero() {
           {/* Right: Profile photo */}
           <div className="flex-1 flex justify-center">
             <Image
-              src="Beng Brandon Che.jpeg"
+              src="../public/images/Beng Brandon Che.jpeg"
               alt="Beng Brandon Che — Web Developer in Bamenda Cameroon"
               width={320}
               height={320}
