@@ -138,9 +138,7 @@ export default function BlogPostPage({ params }) {
 
             {/* CTA */}
             <div className="blog-post-cta-box">
-              <h3>
-                Ready to Build Your Business Online?
-              </h3>
+              <h3>Ready to Build Your Business Online?</h3>
               <p>
                 Get a free consultation with BranCodeX — Bamenda&apos;s leading
                 web development agency. We will assess your needs and get your
@@ -178,7 +176,10 @@ export default function BlogPostPage({ params }) {
                     href={`/blog/${p.slug}`}
                     className="blog-related-card"
                   >
-                    <span className="blog-card-category" style={{ fontSize: "0.7rem" }}>
+                    <span
+                      className="blog-card-category"
+                      style={{ fontSize: "0.7rem" }}
+                    >
                       {p.category}
                     </span>
                     <span className="blog-related-title">{p.title}</span>

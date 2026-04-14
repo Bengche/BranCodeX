@@ -39,9 +39,7 @@ export default function CurrencyBadge() {
         title="Live USD / XAF rate"
       >
         <span className="currency-live-dot" aria-hidden="true" />
-        <span className="currency-rate-text">
-          1 USD ≈ {displayRate} XAF
-        </span>
+        <span className="currency-rate-text">1 USD ≈ {displayRate} XAF</span>
         <i
           className={`fas fa-chevron-${open ? "down" : "up"} currency-chevron`}
         ></i>

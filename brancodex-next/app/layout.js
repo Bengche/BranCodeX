@@ -18,6 +18,7 @@ import ExitIntentPopup from "@/components/ExitIntentPopup";
 import CookieConsent from "@/components/CookieConsent";
 import ScrollProgress from "@/components/ScrollProgress";
 import CurrencyBadge from "@/components/CurrencyBadge";
+import { Analytics } from "@vercel/analytics/react";
 
 /* --------------------------------------------------------------------------
    SITE-WIDE SEO DEFAULTS
@@ -210,6 +211,7 @@ export default function RootLayout({ children }) {
           initialized once on the client, making all data-aos attributes work.
         */}
         <AOSProvider>{children}</AOSProvider>
+        <Analytics />
       </body>
     </html>
   );

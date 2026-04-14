@@ -55,13 +55,16 @@ export default function BlogPage() {
             </p>
             <div className="blog-grid">
               {blogData.map((post) => {
-                const color =
-                  categoryColors[post.category] || "#22c55e";
+                const color = categoryColors[post.category] || "#22c55e";
                 return (
                   <article key={post.slug} className="blog-card">
                     <div
                       className="blog-card-category"
-                      style={{ color, borderColor: `${color}40`, background: `${color}10` }}
+                      style={{
+                        color,
+                        borderColor: `${color}40`,
+                        background: `${color}10`,
+                      }}
                     >
                       {post.category}
                     </div>
@@ -94,8 +97,7 @@ export default function BlogPage() {
                       className="blog-card-link"
                       style={{ color }}
                     >
-                      Read Article{" "}
-                      <i className="fas fa-arrow-right"></i>
+                      Read Article <i className="fas fa-arrow-right"></i>
                     </Link>
                   </article>
                 );
@@ -115,7 +117,10 @@ export default function BlogPage() {
                 days.
               </p>
               <div className="blog-cta-actions">
-                <Link href="/#contact" className="blog-cta-btn blog-cta-btn--primary">
+                <Link
+                  href="/#contact"
+                  className="blog-cta-btn blog-cta-btn--primary"
+                >
                   Get a Free Quote
                 </Link>
                 <a
