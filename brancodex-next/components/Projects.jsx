@@ -19,7 +19,7 @@ const projects = [
       "A full-featured e-commerce platform connecting local Cameroon vendors with buyers. Built with Next.js, PostgreSQL, and MoMo payment integration.",
     tags: ["E-Commerce", "Next.js", "PostgreSQL"],
     previewUrl: "https://njimbong.com",
-    thumbnail: "/images/njimbong-thumb.webp",
+    thumbnail: "/images/coder.jpg",
     live: true,
   },
   {
@@ -29,7 +29,7 @@ const projects = [
       "A secure escrow service app that holds funds in trust for Cameroon online transactions. Reduces fraud and builds buyer-seller trust.",
     tags: ["FinTech", "React", "Node.js"],
     previewUrl: "https://fonlok.com",
-    thumbnail: "/images/fonlok-thumb.webp",
+    thumbnail: "/images/coder.jpg",
     live: true,
   },
   {
@@ -39,7 +39,7 @@ const projects = [
       "A job listing platform tailored for Cameroon and Central Africa. Companies post vacancies; job seekers filter by city, sector, and experience level.",
     tags: ["Job Board", "React", "REST API"],
     previewUrl: "https://jobfinder.brancodex.com",
-    thumbnail: "/images/jobfinder-thumb.webp",
+    thumbnail: "/images/coder.jpg",
     live: true,
   },
   {
@@ -49,7 +49,7 @@ const projects = [
       "A React-based app using the Rest Countries API to display flag, population, currency, languages, and bordering nations for every country in the world.",
     tags: ["React", "REST API", "Education"],
     previewUrl: "https://countries.brancodex.com",
-    thumbnail: "/images/country-thumb.webp",
+    thumbnail: "/images/country-information-searcher.jpg",
     live: true,
   },
   {
@@ -59,7 +59,7 @@ const projects = [
       "An academic management platform for Cameroon secondary schools — student records, fee tracking, results, timetables, and teacher dashboards.",
     tags: ["EdTech", "Node.js", "PostgreSQL"],
     previewUrl: null,
-    thumbnail: "/images/school-thumb.webp",
+    thumbnail: "/images/coming_soon.jpg",
     live: false,
   },
 ];
