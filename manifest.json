@@ -1,0 +1,40 @@
+{
+  "id": "/",
+  "name": "Brancodex",
+  "short_name": "Brancodex",
+  "start_url": "/index.html",
+  "display": "standalone",
+  "background_color": "#0C0C0C",
+  "theme_color": "#292828",
+  "description": "Web Development Agency in Bamenda, Cameroon",
+  "icons": [
+    {
+      "src": "Images/icon-192.png",
+      "sizes": "192x192",
+      "type": "image/png",
+      "purpose": "any maskable"
+    },
+    {
+      "src": "Images/icon-512.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "any maskable"
+    }
+  ],
+  "screenshots": [
+    {
+      "src": "Images/screenshot-mobile.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "form_factor": "narrow",
+      "label": "Mobile View"
+    },
+    {
+      "src": "Images/1024.png",
+      "sizes": "1024x1024",
+      "type": "image/png",
+      "form_factor": "wide",
+      "label": "Desktop View"
+    }
+  ]
+}
