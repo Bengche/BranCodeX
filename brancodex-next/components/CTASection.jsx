@@ -5,7 +5,7 @@
  * Encourages visitors to start a project.
  */
 
-import Link from 'next/link';
+import Link from "next/link";
 
 export default function CTASection() {
   return (

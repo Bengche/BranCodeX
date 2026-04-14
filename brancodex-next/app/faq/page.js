@@ -6,17 +6,17 @@
  * which works without any JavaScript.
  */
 
-import Link    from 'next/link';
-import Navbar  from '../../components/Navbar';
-import Footer  from '../../components/Footer';
-import faqData from '../../data/faqData';
+import Link from "next/link";
+import Navbar from "../../components/Navbar";
+import Footer from "../../components/Footer";
+import faqData from "../../data/faqData";
 
 export const metadata = {
   title: "FAQ | BranCodeX — Web Development Questions Answered",
   description:
     "Find answers to the most common questions about BranCodeX web development services, pricing, timelines, hosting, SEO, and more. Based in Cameroon, serving clients worldwide.",
   alternates: {
-    canonical: 'https://brancodex.com/faq',
+    canonical: "https://brancodex.com/faq",
   },
   openGraph: {
     title: "Frequently Asked Questions | BranCodeX",
@@ -38,7 +38,7 @@ export default function FAQPage() {
             <h1>Frequently Asked Questions</h1>
             <p>
               Got questions about our services, pricing, or process? Find quick
-              answers below. Still unsure?{' '}
+              answers below. Still unsure?{" "}
               <Link href="/#contact">Contact us directly.</Link>
             </p>
           </div>

@@ -5,25 +5,25 @@
  * requires DOM access via useEffect + useRef.
  */
 
-'use client';
+"use client";
 
-import { useEffect, useRef } from 'react';
-import Link from 'next/link';
-import Image from 'next/image';
+import { useEffect, useRef } from "react";
+import Link from "next/link";
+import Image from "next/image";
 
 export default function Hero() {
   const typedRef = useRef(null); // Reference to the DOM element Typed.js will type into
 
   useEffect(() => {
     // Dynamically import Typed.js so it only loads on the client
-    import('typed.js').then(({ default: Typed }) => {
+    import("typed.js").then(({ default: Typed }) => {
       const typed = new Typed(typedRef.current, {
         strings: [
           'Building Scalable Web Solutions from Cameroon, to the World! Welcome to <span class="text-yellow-300"><span class="bran">Bran</span><span class="code">Code</span><span class="x">X</span></span>',
         ],
         typeSpeed: 40,
         showCursor: true,
-        cursorChar: '|',
+        cursorChar: "|",
       });
 
       // Cleanup: destroy the instance when the component unmounts
@@ -33,18 +33,18 @@ export default function Hero() {
 
   // Scroll-triggered animation for buttons and photo
   useEffect(() => {
-    const butz  = document.querySelector('.butz');
-    const heroz = document.querySelector('.heroz');
+    const butz = document.querySelector(".butz");
+    const heroz = document.querySelector(".heroz");
 
     function onScroll() {
-      if (butz)  butz.classList.add('show-butz');
-      if (heroz) heroz.classList.add('show-heroz');
+      if (butz) butz.classList.add("show-butz");
+      if (heroz) heroz.classList.add("show-heroz");
     }
 
     // Trigger immediately + on scroll
     onScroll();
-    window.addEventListener('scroll', onScroll, { passive: true });
-    return () => window.removeEventListener('scroll', onScroll);
+    window.addEventListener("scroll", onScroll, { passive: true });
+    return () => window.removeEventListener("scroll", onScroll);
   }, []);
 
   return (
@@ -55,7 +55,6 @@ export default function Hero() {
         className="w-full min-h-screen text-white flex items-center px-6 md:px-20"
       >
         <div className="flex flex-col md:flex-row items-center justify-between w-full gap-12">
-
           {/* Left: Text content */}
           <div className="flex-1 space-y-6 text-start md:text-left">
             {/* H1 is the most important SEO heading — make it descriptive */}

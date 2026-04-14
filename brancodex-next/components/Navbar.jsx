@@ -12,22 +12,22 @@
  *  - Animated hamburger / X mobile menu
  */
 
-'use client';
+"use client";
 
-import { useState, useEffect } from 'react';
-import Link from 'next/link';
-import Image from 'next/image';
+import { useState, useEffect } from "react";
+import Link from "next/link";
+import Image from "next/image";
 
 const navLinks = [
-  { label: 'Home',         href: '/#hero' },
-  { label: 'About',        href: '/#about' },
-  { label: 'Services',     href: '/#services' },
-  { label: 'Skills',       href: '/#skills' },
-  { label: 'Projects',     href: '/#projects' },
-  { label: 'Testimonials', href: '/#testimonials' },
-  { label: 'Playground',   href: '/playground' },
-  { label: "FAQ's",        href: '/faq' },
-  { label: 'Contact',      href: '/#contact' },
+  { label: "Home", href: "/#hero" },
+  { label: "About", href: "/#about" },
+  { label: "Services", href: "/#services" },
+  { label: "Skills", href: "/#skills" },
+  { label: "Projects", href: "/#projects" },
+  { label: "Testimonials", href: "/#testimonials" },
+  { label: "Playground", href: "/playground" },
+  { label: "FAQ's", href: "/faq" },
+  { label: "Contact", href: "/#contact" },
 ];
 
 export default function Navbar() {
@@ -35,9 +35,11 @@ export default function Navbar() {
 
   // When the mobile menu is open, prevent the page from scrolling behind it
   useEffect(() => {
-    document.body.style.overflow = menuOpen ? 'hidden' : 'auto';
+    document.body.style.overflow = menuOpen ? "hidden" : "auto";
     // Cleanup when the component unmounts
-    return () => { document.body.style.overflow = 'auto'; };
+    return () => {
+      document.body.style.overflow = "auto";
+    };
   }, [menuOpen]);
 
   function closeMenu() {
@@ -50,11 +52,10 @@ export default function Navbar() {
       className="sticky top-0 left-0 w-full z-50 backdrop-blur text-white shadow-md transition-all duration-500"
     >
       <div className="max-w-7xl mx-auto px-6 py-4 flex items-center justify-between">
-
         {/* ── Logo ───────────────────────────────────────────────────────── */}
         <div className="flex items-center space-x-2 mr-10">
           <Image
-            src="/images/favicon.png"
+            src="favicon.png"
             alt="BranCodeX Logo"
             width={32}
             height={32}
@@ -96,7 +97,7 @@ export default function Navbar() {
             aria-label="Toggle navigation menu"
             aria-expanded={menuOpen}
             onClick={() => setMenuOpen((prev) => !prev)}
-            className={menuOpen ? 'open' : ''}
+            className={menuOpen ? "open" : ""}
           >
             <div className="hamburger-icon">
               <span className="line-1"></span>
@@ -109,7 +110,7 @@ export default function Navbar() {
       {/* ── Mobile overlay menu ──────────────────────────────────────────── */}
       <div
         id="mobile-menu"
-        className={menuOpen ? 'active' : ''}
+        className={menuOpen ? "active" : ""}
         aria-hidden={!menuOpen}
       >
         <nav className="mobile-nav-content">
@@ -125,7 +126,11 @@ export default function Navbar() {
           ))}
 
           <div className="mobile-footer mt-8">
-            <Link href="/#contact" className="hire-btn-mobile" onClick={closeMenu}>
+            <Link
+              href="/#contact"
+              className="hire-btn-mobile"
+              onClick={closeMenu}
+            >
               Hire Us
             </Link>
           </div>

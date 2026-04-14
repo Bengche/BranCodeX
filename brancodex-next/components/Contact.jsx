@@ -9,46 +9,46 @@
  *   Public key : JwE9TMk7vUP9adouM
  */
 
-'use client';
+"use client";
 
-import { useRef, useState, useEffect } from 'react';
-import emailjs from '@emailjs/browser';
+import { useRef, useState, useEffect } from "react";
+import emailjs from "@emailjs/browser";
 
-const EMAILJS_SERVICE  = 'service_4i8dgy8';
-const EMAILJS_TEMPLATE = 'template_cncjp0c';
-const EMAILJS_KEY      = 'JwE9TMk7vUP9adouM';
+const EMAILJS_SERVICE = "service_4i8dgy8";
+const EMAILJS_TEMPLATE = "template_cncjp0c";
+const EMAILJS_KEY = "JwE9TMk7vUP9adouM";
 
 const socialLinks = [
   {
-    icon: 'fa-brands fa-whatsapp',
-    label: 'WhatsApp',
-    href: 'https://wa.link/fhyxfh',
+    icon: "fa-brands fa-whatsapp",
+    label: "WhatsApp",
+    href: "https://wa.link/fhyxfh",
   },
   {
-    icon: 'fa-solid fa-envelope',
-    label: 'Email',
-    href: 'mailto:bengc102@gmail.com',
+    icon: "fa-solid fa-envelope",
+    label: "Email",
+    href: "mailto:bengc102@gmail.com",
   },
   {
-    icon: 'fa-brands fa-linkedin-in',
-    label: 'LinkedIn',
-    href: 'https://www.linkedin.com/in/beng-brandon-che',
+    icon: "fa-brands fa-linkedin-in",
+    label: "LinkedIn",
+    href: "https://www.linkedin.com/in/beng-brandon-che",
   },
   {
-    icon: 'fa-brands fa-github',
-    label: 'GitHub',
-    href: 'https://github.com/brandon-hub',
+    icon: "fa-brands fa-github",
+    label: "GitHub",
+    href: "https://github.com/brandon-hub",
   },
   {
-    icon: 'fa-brands fa-facebook-f',
-    label: 'Facebook',
-    href: 'https://facebook.com/brancodex',
+    icon: "fa-brands fa-facebook-f",
+    label: "Facebook",
+    href: "https://facebook.com/brancodex",
   },
 ];
 
 export default function Contact() {
   const formRef = useRef(null);
-  const [status, setStatus] = useState('idle'); // 'idle' | 'sending' | 'success' | 'error'
+  const [status, setStatus] = useState("idle"); // 'idle' | 'sending' | 'success' | 'error'
 
   useEffect(() => {
     emailjs.init(EMAILJS_KEY);
@@ -58,14 +58,18 @@ export default function Contact() {
     e.preventDefault();
     if (!formRef.current) return;
 
-    setStatus('sending');
+    setStatus("sending");
     try {
-      await emailjs.sendForm(EMAILJS_SERVICE, EMAILJS_TEMPLATE, formRef.current);
-      setStatus('success');
+      await emailjs.sendForm(
+        EMAILJS_SERVICE,
+        EMAILJS_TEMPLATE,
+        formRef.current,
+      );
+      setStatus("success");
       formRef.current.reset();
     } catch (err) {
-      console.error('EmailJS error:', err);
-      setStatus('error');
+      console.error("EmailJS error:", err);
+      setStatus("error");
     }
   }
 
@@ -91,7 +95,11 @@ export default function Contact() {
           </div>
           <div className="contact-detail">
             <i className="fa-brands fa-whatsapp"></i>
-            <a href="https://wa.link/fhyxfh" target="_blank" rel="noopener noreferrer">
+            <a
+              href="https://wa.link/fhyxfh"
+              target="_blank"
+              rel="noopener noreferrer"
+            >
               Chat on WhatsApp
             </a>
           </div>
@@ -179,9 +187,9 @@ export default function Contact() {
             <button
               type="submit"
               className="contact-submit-btn"
-              disabled={status === 'sending'}
+              disabled={status === "sending"}
             >
-              {status === 'sending' ? (
+              {status === "sending" ? (
                 <>
                   <i className="fa fa-spinner fa-spin"></i> Sending...
                 </>
@@ -193,12 +201,12 @@ export default function Contact() {
             </button>
 
             {/* Status messages */}
-            {status === 'success' && (
+            {status === "success" && (
               <p className="form-status success" role="status">
                 Message sent! We will get back to you within 24 hours.
               </p>
             )}
-            {status === 'error' && (
+            {status === "error" && (
               <p className="form-status error" role="alert">
                 Something went wrong. Please try again or email us directly.
               </p>

@@ -5,10 +5,10 @@
  * Features: add, edit, delete own reviews; star-rating filter; photo upload.
  */
 
-'use client';
+"use client";
 
-import { useState, useEffect, useRef } from 'react';
-import Image from 'next/image';
+import { useState, useEffect, useRef } from "react";
+import Image from "next/image";
 
 // ─── Helpers ─────────────────────────────────────────────────────────────────
 
@@ -18,23 +18,23 @@ function generateId() {
 
 function getStoredTestimonials() {
   try {
-    return JSON.parse(localStorage.getItem('testimonials') || '[]');
+    return JSON.parse(localStorage.getItem("testimonials") || "[]");
   } catch {
     return [];
   }
 }
 
 function saveTestimonials(list) {
-  localStorage.setItem('testimonials', JSON.stringify(list));
+  localStorage.setItem("testimonials", JSON.stringify(list));
 }
 
 /** Fallback avatar using the user's initials. */
 function InitialsAvatar({ name }) {
   const initials = name
-    .split(' ')
+    .split(" ")
     .slice(0, 2)
-    .map((w) => w[0]?.toUpperCase() ?? '')
-    .join('');
+    .map((w) => w[0]?.toUpperCase() ?? "")
+    .join("");
   return (
     <div className="testimonial-initials-avatar" aria-hidden="true">
       {initials}
@@ -53,8 +53,8 @@ function StarPicker({ value, onChange }) {
           type="button"
           role="radio"
           aria-checked={value === n}
-          aria-label={`${n} star${n !== 1 ? 's' : ''}`}
-          className={`star-pick-btn${value >= n ? ' filled' : ''}`}
+          aria-label={`${n} star${n !== 1 ? "s" : ""}`}
+          className={`star-pick-btn${value >= n ? " filled" : ""}`}
           onClick={() => onChange(n)}
         >
           &#9733;
@@ -89,7 +89,7 @@ function TestimonialCard({ testimonial, ownerId, onEdit, onDelete }) {
         </div>
         <div>
           <p className="tc-name">{testimonial.name}</p>
-          <p className="tc-role">{testimonial.role || 'Client'}</p>
+          <p className="tc-role">{testimonial.role || "Client"}</p>
         </div>
         {isOwner && (
           <div className="tc-owner-actions" aria-label="Manage your review">
@@ -113,15 +113,20 @@ function TestimonialCard({ testimonial, ownerId, onEdit, onDelete }) {
         )}
       </div>
 
-      <div className="tc-stars" aria-label={`${testimonial.stars} out of 5 stars`}>
+      <div
+        className="tc-stars"
+        aria-label={`${testimonial.stars} out of 5 stars`}
+      >
         {stars.map((filled, i) => (
-          <span key={i} className={`star-icon${filled ? ' filled' : ''}`}>
+          <span key={i} className={`star-icon${filled ? " filled" : ""}`}>
             &#9733;
           </span>
         ))}
       </div>
 
-      <blockquote className="tc-text">&ldquo;{testimonial.text}&rdquo;</blockquote>
+      <blockquote className="tc-text">
+        &ldquo;{testimonial.text}&rdquo;
+      </blockquote>
       <p className="tc-date">{testimonial.date}</p>
     </article>
   );
@@ -129,7 +134,7 @@ function TestimonialCard({ testimonial, ownerId, onEdit, onDelete }) {
 
 // ─── Modal (add / edit) ───────────────────────────────────────────────────────
 
-const emptyForm = { name: '', role: '', stars: 5, text: '', photo: '' };
+const emptyForm = { name: "", role: "", stars: 5, text: "", photo: "" };
 
 function TestimonialModal({ editing, onClose, onSubmit }) {
   const [form, setForm] = useState(editing ? { ...editing } : { ...emptyForm });
@@ -143,7 +148,7 @@ function TestimonialModal({ editing, onClose, onSubmit }) {
     const file = e.target.files?.[0];
     if (!file) return;
     const reader = new FileReader();
-    reader.onload = (ev) => handleField('photo', ev.target.result);
+    reader.onload = (ev) => handleField("photo", ev.target.result);
     reader.readAsDataURL(file);
   }
 
@@ -153,7 +158,7 @@ function TestimonialModal({ editing, onClose, onSubmit }) {
     const trimmedName = form.name.trim();
     if (!trimmedName || !trimmedText) return;
     if (trimmedText.length < 20) {
-      alert('Please write at least 20 characters in your review.');
+      alert("Please write at least 20 characters in your review.");
       return;
     }
     onSubmit(form);
@@ -161,9 +166,9 @@ function TestimonialModal({ editing, onClose, onSubmit }) {
 
   /* Lock body scroll while modal is open */
   useEffect(() => {
-    document.body.style.overflow = 'hidden';
+    document.body.style.overflow = "hidden";
     return () => {
-      document.body.style.overflow = '';
+      document.body.style.overflow = "";
     };
   }, []);
 
@@ -172,7 +177,7 @@ function TestimonialModal({ editing, onClose, onSubmit }) {
       className="modal-overlay"
       role="dialog"
       aria-modal="true"
-      aria-label={editing ? 'Edit your review' : 'Add a review'}
+      aria-label={editing ? "Edit your review" : "Add a review"}
       onClick={(e) => {
         if (e.target === e.currentTarget) onClose();
       }}
@@ -188,7 +193,7 @@ function TestimonialModal({ editing, onClose, onSubmit }) {
         </button>
 
         <h2 className="modal-heading">
-          {editing ? 'Edit Your Review' : 'Share Your Experience'}
+          {editing ? "Edit Your Review" : "Share Your Experience"}
         </h2>
 
         <form onSubmit={handleSubmit} noValidate>
@@ -201,7 +206,7 @@ function TestimonialModal({ editing, onClose, onSubmit }) {
               value={form.name}
               maxLength={60}
               required
-              onChange={(e) => handleField('name', e.target.value)}
+              onChange={(e) => handleField("name", e.target.value)}
               placeholder="e.g. Amina Tabi"
             />
           </label>
@@ -214,7 +219,7 @@ function TestimonialModal({ editing, onClose, onSubmit }) {
               type="text"
               value={form.role}
               maxLength={80}
-              onChange={(e) => handleField('role', e.target.value)}
+              onChange={(e) => handleField("role", e.target.value)}
               placeholder="e.g. CEO at StartupCM"
             />
           </label>
@@ -222,7 +227,10 @@ function TestimonialModal({ editing, onClose, onSubmit }) {
           {/* Stars */}
           <div className="modal-label">
             Rating *
-            <StarPicker value={form.stars} onChange={(v) => handleField('stars', v)} />
+            <StarPicker
+              value={form.stars}
+              onChange={(v) => handleField("stars", v)}
+            />
           </div>
 
           {/* Review text */}
@@ -235,7 +243,7 @@ function TestimonialModal({ editing, onClose, onSubmit }) {
               maxLength={500}
               required
               rows={4}
-              onChange={(e) => handleField('text', e.target.value)}
+              onChange={(e) => handleField("text", e.target.value)}
               placeholder="Tell us about your experience (min. 20 characters)..."
             />
           </label>
@@ -248,13 +256,13 @@ function TestimonialModal({ editing, onClose, onSubmit }) {
               className="upload-photo-btn"
               onClick={() => fileInputRef.current?.click()}
             >
-              {form.photo ? 'Change photo' : 'Upload photo'}
+              {form.photo ? "Change photo" : "Upload photo"}
             </button>
             <input
               ref={fileInputRef}
               type="file"
               accept="image/*"
-              style={{ display: 'none' }}
+              style={{ display: "none" }}
               onChange={handlePhoto}
             />
             {form.photo && (
@@ -270,7 +278,7 @@ function TestimonialModal({ editing, onClose, onSubmit }) {
           </div>
 
           <button type="submit" className="modal-submit-btn">
-            {editing ? 'Save changes' : 'Submit review'}
+            {editing ? "Save changes" : "Submit review"}
           </button>
         </form>
       </div>
@@ -285,15 +293,15 @@ export default function Testimonials() {
   const [filterStars, setFilterStars] = useState(0); // 0 = all
   const [showModal, setShowModal] = useState(false);
   const [editing, setEditing] = useState(null);
-  const [userId, setUserId] = useState('');
+  const [userId, setUserId] = useState("");
 
   /* Load from localStorage on mount; set or read a per-session user ID. */
   useEffect(() => {
     setItems(getStoredTestimonials());
-    let uid = sessionStorage.getItem('bx_uid');
+    let uid = sessionStorage.getItem("bx_uid");
     if (!uid) {
       uid = generateId();
-      sessionStorage.setItem('bx_uid', uid);
+      sessionStorage.setItem("bx_uid", uid);
     }
     setUserId(uid);
   }, []);
@@ -305,7 +313,7 @@ export default function Testimonials() {
     if (editing) {
       // Update existing
       const updated = items.map((t) =>
-        t.id === editing.id ? { ...t, ...form } : t
+        t.id === editing.id ? { ...t, ...form } : t,
       );
       setItems(updated);
       saveTestimonials(updated);
@@ -315,10 +323,10 @@ export default function Testimonials() {
         ...form,
         id: generateId(),
         userId,
-        date: new Date().toLocaleDateString('en-GB', {
-          day: 'numeric',
-          month: 'short',
-          year: 'numeric',
+        date: new Date().toLocaleDateString("en-GB", {
+          day: "numeric",
+          month: "short",
+          year: "numeric",
         }),
       };
       const updated = [newItem, ...items];
@@ -329,7 +337,7 @@ export default function Testimonials() {
   }
 
   function handleDelete(id) {
-    if (!window.confirm('Delete this review?')) return;
+    if (!window.confirm("Delete this review?")) return;
     const updated = items.filter((t) => t.id !== id);
     setItems(updated);
     saveTestimonials(updated);
@@ -351,8 +359,8 @@ export default function Testimonials() {
         What Clients Say
       </h2>
       <p className="testimonials-intro" data-aos="fade-up" data-aos-delay="100">
-        Real feedback from real clients. Every review stored locally — no account
-        required.
+        Real feedback from real clients. Every review stored locally — no
+        account required.
       </p>
 
       {/* Controls row */}
@@ -407,7 +415,7 @@ export default function Testimonials() {
         <p className="no-reviews-msg">
           {filterStars > 0
             ? `No ${filterStars}-star reviews yet.`
-            : 'No reviews yet. Be the first!'}
+            : "No reviews yet. Be the first!"}
         </p>
       )}
 

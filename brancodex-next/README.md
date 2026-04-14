@@ -6,16 +6,16 @@ A professionally crafted Next.js 14 portfolio for BranCodeX, a web development a
 
 ## Tech Stack
 
-| Technology | Purpose |
-|---|---|
-| **Next.js 14** (App Router) | Framework, SSR, SEO metadata API |
-| **React 18** | Component library |
-| **Tailwind CSS** | Utility-first styling (via npm, not CDN) |
-| **AOS** | Scroll animations |
-| **Typed.js** | Hero text animation |
-| **@emailjs/browser** | Contact form email delivery |
-| **JSZip** | Download ZIP in the Live Code Editor |
-| **Font Awesome 6.5** | Icons (loaded via CDN link) |
+| Technology                  | Purpose                                  |
+| --------------------------- | ---------------------------------------- |
+| **Next.js 14** (App Router) | Framework, SSR, SEO metadata API         |
+| **React 18**                | Component library                        |
+| **Tailwind CSS**            | Utility-first styling (via npm, not CDN) |
+| **AOS**                     | Scroll animations                        |
+| **Typed.js**                | Hero text animation                      |
+| **@emailjs/browser**        | Contact form email delivery              |
+| **JSZip**                   | Download ZIP in the Live Code Editor     |
+| **Font Awesome 6.5**        | Icons (loaded via CDN link)              |
 
 ---
 
@@ -98,14 +98,14 @@ Open [http://localhost:3000](http://localhost:3000) in your browser.
 
 ### Update these values in your code
 
-| File | What to update |
-|---|---|
-| `app/layout.js` | Replace `https://brancodex.com` with your real domain |
-| `app/sitemap.js` | Same — update the base URL |
-| `app/robots.js` | Same |
-| `components/Contact.jsx` | Verify EmailJS keys are still valid |
-| `components/Projects.jsx` | Add real project thumbnails to `public/images/` |
-| `next.config.mjs` | Add any external image domains you use |
+| File                      | What to update                                        |
+| ------------------------- | ----------------------------------------------------- |
+| `app/layout.js`           | Replace `https://brancodex.com` with your real domain |
+| `app/sitemap.js`          | Same — update the base URL                            |
+| `app/robots.js`           | Same                                                  |
+| `components/Contact.jsx`  | Verify EmailJS keys are still valid                   |
+| `components/Projects.jsx` | Add real project thumbnails to `public/images/`       |
+| `next.config.mjs`         | Add any external image domains you use                |
 
 ### Build for production
 
@@ -121,9 +121,9 @@ npm start
 The contact form uses your existing EmailJS account. Keys are in `components/Contact.jsx`:
 
 ```js
-const EMAILJS_SERVICE  = 'service_4i8dgy8';
-const EMAILJS_TEMPLATE = 'template_cncjp0c';
-const EMAILJS_KEY      = 'JwE9TMk7vUP9adouM';
+const EMAILJS_SERVICE = "service_4i8dgy8";
+const EMAILJS_TEMPLATE = "template_cncjp0c";
+const EMAILJS_KEY = "JwE9TMk7vUP9adouM";
 ```
 
 If these stop working, log into [emailjs.com](https://www.emailjs.com) and regenerate them.

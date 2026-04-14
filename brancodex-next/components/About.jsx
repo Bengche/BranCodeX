@@ -5,10 +5,10 @@
  * 'use client' needed for the IntersectionObserver animation.
  */
 
-'use client';
+"use client";
 
-import { useEffect, useRef } from 'react';
-import Link from 'next/link';
+import { useEffect, useRef } from "react";
+import Link from "next/link";
 
 export default function About() {
   const sectionRef = useRef(null);
@@ -19,11 +19,11 @@ export default function About() {
     const observer = new IntersectionObserver(
       ([entry]) => {
         if (entry.isIntersecting) {
-          sectionRef.current?.classList.add('show-about');
+          sectionRef.current?.classList.add("show-about");
           observer.disconnect(); // Only animate once
         }
       },
-      { threshold: 0.2 }
+      { threshold: 0.2 },
     );
 
     if (sectionRef.current) observer.observe(sectionRef.current);
@@ -48,14 +48,18 @@ export default function About() {
           people smile and businesses grow.
         </p>
 
-        <h4 className="font-bold underline mt-4">Where is BranCodeX located?</h4>
+        <h4 className="font-bold underline mt-4">
+          Where is BranCodeX located?
+        </h4>
         <p>
           Based in <strong>Bamenda, Cameroon</strong>, we work with clients
           across Cameroon and worldwide.
         </p>
 
         <Link href="/#contact">
-          <button className="contact-btn mt-4">Let&apos;s Build Together</button>
+          <button className="contact-btn mt-4">
+            Let&apos;s Build Together
+          </button>
         </Link>
       </div>
     </section>

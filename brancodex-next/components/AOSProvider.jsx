@@ -7,17 +7,17 @@
  * We wrap the entire app with this so AOS works on every page.
  */
 
-'use client';
+"use client";
 
-import { useEffect } from 'react';
-import AOS from 'aos';
+import { useEffect } from "react";
+import AOS from "aos";
 
 export default function AOSProvider({ children }) {
   useEffect(() => {
     AOS.init({
-      once: true,       // Only animate once per element
-      duration: 1000,   // 1 second animation
-      easing: 'ease-in-out',
+      once: true, // Only animate once per element
+      duration: 1000, // 1 second animation
+      easing: "ease-in-out",
     });
   }, []);
 

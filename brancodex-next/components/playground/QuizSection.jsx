@@ -10,23 +10,25 @@
  *  3. Custom Riddles (20)
  */
 
-'use client';
+"use client";
 
-import { useState, useEffect, useRef, useCallback } from 'react';
+import { useState, useEffect, useRef, useCallback } from "react";
 import {
   cameroonHistoryQuestions,
   riddlesQuestions,
   apiCategories,
   TOTAL_QUESTIONS,
   DIFFICULTY,
-} from '../../data/quizData';
+} from "../../data/quizData";
 
 // ─── Sound URLs (royalty-free, from Pixabay CDN) ──────────────────────────────
 
 const SOUNDS = {
-  correct: 'https://cdn.pixabay.com/download/audio/2022/03/15/audio_7b89dfa72b.mp3?filename=correct-2-46134.mp3',
-  wrong:   'https://cdn.pixabay.com/download/audio/2023/09/14/audio_a03a90d6a1.mp3?filename=wrong-answer-126515.mp3',
-  next:    'https://cdn.pixabay.com/download/audio/2022/03/15/audio_c8c8a13c49.mp3?filename=next-2-46205.mp3',
+  correct:
+    "https://cdn.pixabay.com/download/audio/2022/03/15/audio_7b89dfa72b.mp3?filename=correct-2-46134.mp3",
+  wrong:
+    "https://cdn.pixabay.com/download/audio/2023/09/14/audio_a03a90d6a1.mp3?filename=wrong-answer-126515.mp3",
+  next: "https://cdn.pixabay.com/download/audio/2022/03/15/audio_c8c8a13c49.mp3?filename=next-2-46205.mp3",
 };
 
 // ─── Helpers ──────────────────────────────────────────────────────────────────
@@ -41,8 +43,8 @@ function shuffle(arr) {
 }
 
 function decodeHtml(html) {
-  if (typeof window === 'undefined') return html;
-  const txt = document.createElement('textarea');
+  if (typeof window === "undefined") return html;
+  const txt = document.createElement("textarea");
   txt.innerHTML = html;
   return txt.value;
 }
@@ -54,10 +56,12 @@ async function loadQuestions() {
   for (const cat of apiCategories) {
     try {
       const url = `https://opentdb.com/api.php?amount=20&category=${cat.id}&difficulty=${DIFFICULTY}&type=multiple`;
-      const res  = await fetch(url, { cache: 'no-store' });
+      const res = await fetch(url, { cache: "no-store" });
       const data = await res.json();
       if (data.results?.length) {
-        pool = pool.concat(data.results.map((q) => ({ ...q, categoryName: cat.name })));
+        pool = pool.concat(
+          data.results.map((q) => ({ ...q, categoryName: cat.name })),
+        );
       }
     } catch {
       // Skip silently — custom questions will still be present
@@ -93,7 +97,7 @@ function playSound(url) {
 
 /** The category/name entry screen shown before the game starts. */
 function SetupScreen({ onStart }) {
-  const [name, setName] = useState('');
+  const [name, setName] = useState("");
   return (
     <div className="quiz-screen quiz-setup">
       <h2 className="quiz-screen-title">General Knowledge Quiz</h2>
@@ -118,7 +122,7 @@ function SetupScreen({ onStart }) {
       <button
         type="button"
         className="quiz-start-btn"
-        onClick={() => onStart(name.trim() || 'Player')}
+        onClick={() => onStart(name.trim() || "Player")}
       >
         Start Quiz
       </button>
@@ -128,13 +132,13 @@ function SetupScreen({ onStart }) {
 
 /** The live question screen. */
 function QuizScreen({ playerName, highScore, onEnd, onQuit }) {
-  const [questions, setQuestions]   = useState([]);
-  const [index, setIndex]           = useState(0);
-  const [passed, setPassed]         = useState(0);
-  const [failed, setFailed]         = useState(0);
-  const [timeLeft, setTimeLeft]     = useState(30);
-  const [picked, setPicked]         = useState(null); // { correct, selected }
-  const [loading, setLoading]       = useState(true);
+  const [questions, setQuestions] = useState([]);
+  const [index, setIndex] = useState(0);
+  const [passed, setPassed] = useState(0);
+  const [failed, setFailed] = useState(0);
+  const [timeLeft, setTimeLeft] = useState(30);
+  const [picked, setPicked] = useState(null); // { correct, selected }
+  const [loading, setLoading] = useState(true);
 
   const timerRef = useRef(null);
 
@@ -199,17 +203,25 @@ function QuizScreen({ playerName, highScore, onEnd, onQuit }) {
 
   if (loading) {
     return (
-      <div className="quiz-screen" style={{ minHeight: 200, display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
-        <p style={{ color: '#6366f1' }}>
+      <div
+        className="quiz-screen"
+        style={{
+          minHeight: 200,
+          display: "flex",
+          alignItems: "center",
+          justifyContent: "center",
+        }}
+      >
+        <p style={{ color: "#6366f1" }}>
           <i className="fa fa-spinner fa-spin"></i> Loading questions...
         </p>
       </div>
     );
   }
 
-  const q        = questions[index];
-  const answers  = q ? shuffle([q.correct_answer, ...q.incorrect_answers]) : [];
-  const progress = ((index) / (questions.length || 1)) * 100;
+  const q = questions[index];
+  const answers = q ? shuffle([q.correct_answer, ...q.incorrect_answers]) : [];
+  const progress = (index / (questions.length || 1)) * 100;
 
   return (
     <div className="quiz-screen quiz-main">
@@ -218,9 +230,7 @@ function QuizScreen({ playerName, highScore, onEnd, onQuit }) {
         <span className="quiz-player-tag">
           <i className="fa fa-user"></i> {playerName}
         </span>
-        <span className="quiz-score-tag">
-          Best: {highScore}
-        </span>
+        <span className="quiz-score-tag">Best: {highScore}</span>
         <button type="button" className="quiz-quit-btn" onClick={onQuit}>
           Quit
         </button>
@@ -228,7 +238,10 @@ function QuizScreen({ playerName, highScore, onEnd, onQuit }) {
 
       {/* Progress bar */}
       <div className="quiz-progress-bar">
-        <div className="quiz-progress-fill" style={{ width: `${progress}%` }}></div>
+        <div
+          className="quiz-progress-fill"
+          style={{ width: `${progress}%` }}
+        ></div>
       </div>
 
       {/* Stats row */}
@@ -239,7 +252,7 @@ function QuizScreen({ playerName, highScore, onEnd, onQuit }) {
         <span className="quiz-stat question-counter">
           {index + 1} / {questions.length}
         </span>
-        <span className={`quiz-stat timer${timeLeft <= 10 ? ' urgent' : ''}`}>
+        <span className={`quiz-stat timer${timeLeft <= 10 ? " urgent" : ""}`}>
           <i className="fa fa-clock"></i> {timeLeft}s
         </span>
         <span className="quiz-stat failed">
@@ -256,11 +269,12 @@ function QuizScreen({ playerName, highScore, onEnd, onQuit }) {
       {/* Answer buttons */}
       <div className="quiz-options">
         {answers.map((ans) => {
-          let state = '';
+          let state = "";
           if (picked !== null) {
-            if (decodeHtml(ans) === decodeHtml(picked.correct)) state = ' correct';
-            else if (ans === picked.selected) state = ' wrong';
-            else state = ' dimmed';
+            if (decodeHtml(ans) === decodeHtml(picked.correct))
+              state = " correct";
+            else if (ans === picked.selected) state = " wrong";
+            else state = " dimmed";
           }
           return (
             <button
@@ -281,7 +295,8 @@ function QuizScreen({ playerName, highScore, onEnd, onQuit }) {
         <div className="quiz-feedback-row">
           {picked.selected === null ? (
             <p className="quiz-feedback timeout">
-              Time&apos;s up! Answer: <strong>{decodeHtml(picked.correct)}</strong>
+              Time&apos;s up! Answer:{" "}
+              <strong>{decodeHtml(picked.correct)}</strong>
             </p>
           ) : decodeHtml(picked.selected) === decodeHtml(picked.correct) ? (
             <p className="quiz-feedback correct">Correct!</p>
@@ -291,7 +306,7 @@ function QuizScreen({ playerName, highScore, onEnd, onQuit }) {
             </p>
           )}
           <button type="button" className="quiz-next-btn" onClick={handleNext}>
-            {index + 1 < questions.length ? 'Next question' : 'See results'}
+            {index + 1 < questions.length ? "Next question" : "See results"}
           </button>
         </div>
       )}
@@ -300,19 +315,26 @@ function QuizScreen({ playerName, highScore, onEnd, onQuit }) {
 }
 
 /** Final results screen. */
-function ResultsScreen({ playerName, passed, failed, total, highScore, onPlayAgain }) {
+function ResultsScreen({
+  playerName,
+  passed,
+  failed,
+  total,
+  highScore,
+  onPlayAgain,
+}) {
   const percentage = Math.round((passed / total) * 100);
-  let verdict = '';
-  if (percentage >= 80) verdict = 'Outstanding!';
-  else if (percentage >= 60) verdict = 'Well done!';
-  else if (percentage >= 40) verdict = 'Keep practising.';
-  else verdict = 'Better luck next time.';
+  let verdict = "";
+  if (percentage >= 80) verdict = "Outstanding!";
+  else if (percentage >= 60) verdict = "Well done!";
+  else if (percentage >= 40) verdict = "Keep practising.";
+  else verdict = "Better luck next time.";
 
   return (
     <div className="quiz-screen quiz-results">
       <h2 className="quiz-screen-title">{verdict}</h2>
       <p className="quiz-screen-sub">
-        {playerName}, you scored <strong>{passed}</strong> out of{' '}
+        {playerName}, you scored <strong>{passed}</strong> out of{" "}
         <strong>{total}</strong> ({percentage}%).
       </p>
 
@@ -342,41 +364,41 @@ function ResultsScreen({ playerName, passed, failed, total, highScore, onPlayAga
 
 export default function QuizSection() {
   // 'setup' | 'playing' | 'results'
-  const [screen, setScreen]         = useState('setup');
-  const [playerName, setPlayerName] = useState('Player');
-  const [results, setResults]       = useState(null);
-  const [highScore, setHighScore]   = useState(0);
+  const [screen, setScreen] = useState("setup");
+  const [playerName, setPlayerName] = useState("Player");
+  const [results, setResults] = useState(null);
+  const [highScore, setHighScore] = useState(0);
 
   // Load high score from localStorage
   useEffect(() => {
-    const stored = Number(localStorage.getItem('quizHighScore') || 0);
+    const stored = Number(localStorage.getItem("quizHighScore") || 0);
     setHighScore(stored);
   }, []);
 
   function handleStart(name) {
     setPlayerName(name);
-    setScreen('playing');
+    setScreen("playing");
   }
 
   function handleEnd({ passed, failed, total }) {
     const newHigh = Math.max(highScore, passed);
     setHighScore(newHigh);
-    localStorage.setItem('quizHighScore', String(newHigh));
+    localStorage.setItem("quizHighScore", String(newHigh));
     setResults({ passed, failed, total });
-    setScreen('results');
+    setScreen("results");
   }
 
   function handleQuit() {
-    setScreen('setup');
+    setScreen("setup");
     setResults(null);
   }
 
   return (
     <section className="quiz-section">
       <div className="quiz-wrapper">
-        {screen === 'setup' && <SetupScreen onStart={handleStart} />}
+        {screen === "setup" && <SetupScreen onStart={handleStart} />}
 
-        {screen === 'playing' && (
+        {screen === "playing" && (
           <QuizScreen
             playerName={playerName}
             highScore={highScore}
@@ -385,7 +407,7 @@ export default function QuizSection() {
           />
         )}
 
-        {screen === 'results' && results && (
+        {screen === "results" && results && (
           <ResultsScreen
             playerName={playerName}
             passed={results.passed}
@@ -393,7 +415,7 @@ export default function QuizSection() {
             total={results.total}
             highScore={highScore}
             onPlayAgain={() => {
-              setScreen('setup');
+              setScreen("setup");
               setResults(null);
             }}
           />

@@ -5,25 +5,25 @@
  * Each tool is a 'use client' component loaded below Navbar + static intro.
  */
 
-import Link           from 'next/link';
-import Navbar         from '../../components/Navbar';
-import Footer         from '../../components/Footer';
-import JokesSection   from '../../components/playground/JokesSection';
-import QuizSection    from '../../components/playground/QuizSection';
-import LiveCodeEditor from '../../components/playground/LiveCodeEditor';
+import Link from "next/link";
+import Navbar from "../../components/Navbar";
+import Footer from "../../components/Footer";
+import JokesSection from "../../components/playground/JokesSection";
+import QuizSection from "../../components/playground/QuizSection";
+import LiveCodeEditor from "../../components/playground/LiveCodeEditor";
 
 export const metadata = {
-  title: 'Playground | BranCodeX — Interactive Web Tools & Quiz',
+  title: "Playground | BranCodeX — Interactive Web Tools & Quiz",
   description:
-    'Explore BranCodeX\'s interactive playground: fetch random jokes, take a general knowledge and Cameroon history quiz, or write and preview live HTML/CSS/JavaScript code — all in your browser.',
+    "Explore BranCodeX's interactive playground: fetch random jokes, take a general knowledge and Cameroon history quiz, or write and preview live HTML/CSS/JavaScript code — all in your browser.",
   alternates: {
-    canonical: 'https://brancodex.com/playground',
+    canonical: "https://brancodex.com/playground",
   },
   openGraph: {
-    title: 'BranCodeX Playground — Jokes, Quiz & Live Code Editor',
+    title: "BranCodeX Playground — Jokes, Quiz & Live Code Editor",
     description:
-      'Test your knowledge on Cameroon history, write live code, and have fun with our interactive browser tools.',
-    url: 'https://brancodex.com/playground',
+      "Test your knowledge on Cameroon history, write live code, and have fun with our interactive browser tools.",
+    url: "https://brancodex.com/playground",
   },
 };
 

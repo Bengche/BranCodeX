@@ -5,28 +5,28 @@
  * 'use client' — button interaction + fetch.
  */
 
-'use client';
+"use client";
 
-import { useState } from 'react';
+import { useState } from "react";
 
-const API_URL = 'https://official-joke-api.appspot.com/random_joke';
+const API_URL = "https://official-joke-api.appspot.com/random_joke";
 
 export default function JokesSection() {
-  const [joke, setJoke]     = useState(null);
+  const [joke, setJoke] = useState(null);
   const [loading, setLoading] = useState(false);
-  const [error, setError]   = useState('');
+  const [error, setError] = useState("");
 
   async function fetchJoke() {
     setLoading(true);
-    setError('');
+    setError("");
     setJoke(null);
     try {
-      const res  = await fetch(API_URL);
-      if (!res.ok) throw new Error('Network response was not ok');
+      const res = await fetch(API_URL);
+      if (!res.ok) throw new Error("Network response was not ok");
       const data = await res.json();
       setJoke(data);
     } catch {
-      setError('Could not fetch a joke. Check your connection and try again.');
+      setError("Could not fetch a joke. Check your connection and try again.");
     } finally {
       setLoading(false);
     }

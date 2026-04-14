@@ -10,10 +10,10 @@ export default function robots() {
   return {
     rules: [
       {
-        userAgent: '*',   // applies to all crawlers (Googlebot, Bingbot, etc.)
-        allow: '/',       // allow everything
+        userAgent: "*", // applies to all crawlers (Googlebot, Bingbot, etc.)
+        allow: "/", // allow everything
       },
     ],
-    sitemap: 'https://brancodex.com/sitemap.xml',
+    sitemap: "https://brancodex.com/sitemap.xml",
   };
 }

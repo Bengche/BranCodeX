@@ -4,62 +4,62 @@
  * 'use client' — slider scroll + iframe live-preview on demand.
  */
 
-'use client';
+"use client";
 
-import { useRef } from 'react';
-import Image from 'next/image';
+import { useRef } from "react";
+import Image from "next/image";
 
 // ─── Data ──────────────────────────────────────────────────────────────────
 
 const projects = [
   {
-    id: 'njimbong',
-    title: 'Njimbong Marketplace',
+    id: "njimbong",
+    title: "Njimbong Marketplace",
     description:
-      'A full-featured e-commerce platform connecting local Cameroon vendors with buyers. Built with Next.js, PostgreSQL, and MoMo payment integration.',
-    tags: ['E-Commerce', 'Next.js', 'PostgreSQL'],
-    previewUrl: 'https://njimbong.com',
-    thumbnail: '/images/njimbong-thumb.webp',
+      "A full-featured e-commerce platform connecting local Cameroon vendors with buyers. Built with Next.js, PostgreSQL, and MoMo payment integration.",
+    tags: ["E-Commerce", "Next.js", "PostgreSQL"],
+    previewUrl: "https://njimbong.com",
+    thumbnail: "/images/njimbong-thumb.webp",
     live: true,
   },
   {
-    id: 'fonlok',
-    title: 'Fonlok Escrow',
+    id: "fonlok",
+    title: "Fonlok Escrow",
     description:
-      'A secure escrow service app that holds funds in trust for Cameroon online transactions. Reduces fraud and builds buyer-seller trust.',
-    tags: ['FinTech', 'React', 'Node.js'],
-    previewUrl: 'https://fonlok.com',
-    thumbnail: '/images/fonlok-thumb.webp',
+      "A secure escrow service app that holds funds in trust for Cameroon online transactions. Reduces fraud and builds buyer-seller trust.",
+    tags: ["FinTech", "React", "Node.js"],
+    previewUrl: "https://fonlok.com",
+    thumbnail: "/images/fonlok-thumb.webp",
     live: true,
   },
   {
-    id: 'jobfinder',
-    title: 'Job Finder App',
+    id: "jobfinder",
+    title: "Job Finder App",
     description:
-      'A job listing platform tailored for Cameroon and Central Africa. Companies post vacancies; job seekers filter by city, sector, and experience level.',
-    tags: ['Job Board', 'React', 'REST API'],
-    previewUrl: 'https://jobfinder.brancodex.com',
-    thumbnail: '/images/jobfinder-thumb.webp',
+      "A job listing platform tailored for Cameroon and Central Africa. Companies post vacancies; job seekers filter by city, sector, and experience level.",
+    tags: ["Job Board", "React", "REST API"],
+    previewUrl: "https://jobfinder.brancodex.com",
+    thumbnail: "/images/jobfinder-thumb.webp",
     live: true,
   },
   {
-    id: 'countryinfo',
-    title: 'Country Information App',
+    id: "countryinfo",
+    title: "Country Information App",
     description:
-      'A React-based app using the Rest Countries API to display flag, population, currency, languages, and bordering nations for every country in the world.',
-    tags: ['React', 'REST API', 'Education'],
-    previewUrl: 'https://countries.brancodex.com',
-    thumbnail: '/images/country-thumb.webp',
+      "A React-based app using the Rest Countries API to display flag, population, currency, languages, and bordering nations for every country in the world.",
+    tags: ["React", "REST API", "Education"],
+    previewUrl: "https://countries.brancodex.com",
+    thumbnail: "/images/country-thumb.webp",
     live: true,
   },
   {
-    id: 'schoolmgmt',
-    title: 'School Management System',
+    id: "schoolmgmt",
+    title: "School Management System",
     description:
-      'An academic management platform for Cameroon secondary schools — student records, fee tracking, results, timetables, and teacher dashboards.',
-    tags: ['EdTech', 'Node.js', 'PostgreSQL'],
+      "An academic management platform for Cameroon secondary schools — student records, fee tracking, results, timetables, and teacher dashboards.",
+    tags: ["EdTech", "Node.js", "PostgreSQL"],
     previewUrl: null,
-    thumbnail: '/images/school-thumb.webp',
+    thumbnail: "/images/school-thumb.webp",
     live: false,
   },
 ];
@@ -74,11 +74,11 @@ export default function Projects() {
   function scrollSlider(direction) {
     if (!viewportRef.current) return;
     const cardWidth =
-      viewportRef.current.querySelector('.project-card')?.offsetWidth ?? 340;
+      viewportRef.current.querySelector(".project-card")?.offsetWidth ?? 340;
     const gap = 20;
     viewportRef.current.scrollBy({
-      left: direction === 'next' ? cardWidth + gap : -(cardWidth + gap),
-      behavior: 'smooth',
+      left: direction === "next" ? cardWidth + gap : -(cardWidth + gap),
+      behavior: "smooth",
     });
   }
 
@@ -101,8 +101,8 @@ export default function Projects() {
         Projects &amp; Case Studies
       </h2>
       <p className="projects-intro" data-aos="fade-up" data-aos-delay="100">
-        Real products built for real clients — from Cameroon-focused platforms to
-        global-ready web applications.
+        Real products built for real clients — from Cameroon-focused platforms
+        to global-ready web applications.
       </p>
 
       {/* Slider */}
@@ -111,7 +111,7 @@ export default function Projects() {
           className="proj-ctrl-btn left"
           type="button"
           aria-label="Scroll left"
-          onClick={() => scrollSlider('prev')}
+          onClick={() => scrollSlider("prev")}
         >
           <i className="fa fa-chevron-left"></i>
         </button>
@@ -130,7 +130,7 @@ export default function Projects() {
                     alt={`${project.title} screenshot`}
                     fill
                     sizes="340px"
-                    style={{ objectFit: 'cover' }}
+                    style={{ objectFit: "cover" }}
                     className="project-thumb"
                   />
                   {project.live && (
@@ -165,7 +165,8 @@ export default function Projects() {
                       rel="noopener noreferrer"
                       className="view-live-link"
                     >
-                      View live <i className="fa fa-arrow-up-right-from-square"></i>
+                      View live{" "}
+                      <i className="fa fa-arrow-up-right-from-square"></i>
                     </a>
                   )}
                 </div>
@@ -178,7 +179,7 @@ export default function Projects() {
           className="proj-ctrl-btn right"
           type="button"
           aria-label="Scroll right"
-          onClick={() => scrollSlider('next')}
+          onClick={() => scrollSlider("next")}
         >
           <i className="fa fa-chevron-right"></i>
         </button>

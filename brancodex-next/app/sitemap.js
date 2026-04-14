@@ -9,21 +9,21 @@
 export default function sitemap() {
   return [
     {
-      url: 'https://brancodex.com',
+      url: "https://brancodex.com",
       lastModified: new Date(),
-      changeFrequency: 'weekly',
-      priority: 1.0,  // Most important page
+      changeFrequency: "weekly",
+      priority: 1.0, // Most important page
     },
     {
-      url: 'https://brancodex.com/faq',
+      url: "https://brancodex.com/faq",
       lastModified: new Date(),
-      changeFrequency: 'monthly',
+      changeFrequency: "monthly",
       priority: 0.8,
     },
     {
-      url: 'https://brancodex.com/playground',
+      url: "https://brancodex.com/playground",
       lastModified: new Date(),
-      changeFrequency: 'monthly',
+      changeFrequency: "monthly",
       priority: 0.7,
     },
   ];

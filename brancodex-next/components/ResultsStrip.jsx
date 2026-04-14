@@ -6,10 +6,13 @@
  */
 
 const stats = [
-  { value: '3–14 days',       label: 'Average delivery timeline' },
-  { value: '95%+',            label: 'Performance-focused builds' },
-  { value: 'SEO-ready',       label: 'Structured for search visibility' },
-  { value: 'Cameroon → Global', label: 'Serving Bamenda, Cameroon, and worldwide' },
+  { value: "3–14 days", label: "Average delivery timeline" },
+  { value: "95%+", label: "Performance-focused builds" },
+  { value: "SEO-ready", label: "Structured for search visibility" },
+  {
+    value: "Cameroon → Global",
+    label: "Serving Bamenda, Cameroon, and worldwide",
+  },
 ];
 
 export default function ResultsStrip() {

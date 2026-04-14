@@ -11,14 +11,14 @@
  *  - Persists code to localStorage
  */
 
-'use client';
+"use client";
 
-import { useState, useEffect, useRef } from 'react';
+import { useState, useEffect, useRef } from "react";
 
 // ─── Templates ────────────────────────────────────────────────────────────────
 
 const TEMPLATES = {
-  blank: { html: '', css: '', js: '' },
+  blank: { html: "", css: "", js: "" },
   hello: {
     html: `<h1 id="msg">Hello, World!</h1>
 <button onclick="changeText()">Click me</button>`,
@@ -96,18 +96,18 @@ function reset() { n = 0; document.getElementById('count').textContent = 0; }`,
   padding: 8px 20px; border-radius: 6px;
   text-decoration: none;
 }`,
-    js: '',
+    js: "",
   },
 };
 
 const TEMPLATE_LABELS = {
-  blank:   'Blank',
-  hello:   'Hello World',
-  counter: 'Counter App',
-  card:    'Profile Card',
+  blank: "Blank",
+  hello: "Hello World",
+  counter: "Counter App",
+  card: "Profile Card",
 };
 
-const LS_KEY = 'bx_live_editor';
+const LS_KEY = "bx_live_editor";
 
 function loadSaved() {
   try {
@@ -121,15 +121,15 @@ function loadSaved() {
 // ─── Component ────────────────────────────────────────────────────────────────
 
 export default function LiveCodeEditor() {
-  const saved = typeof window !== 'undefined' ? loadSaved() : null;
+  const saved = typeof window !== "undefined" ? loadSaved() : null;
 
-  const [html,      setHtml]      = useState(saved?.html ?? TEMPLATES.hello.html);
-  const [css,       setCss]       = useState(saved?.css  ?? TEMPLATES.hello.css);
-  const [js,        setJs]        = useState(saved?.js   ?? TEMPLATES.hello.js);
-  const [activeTab, setActiveTab] = useState('html');
-  const [darkMode,  setDarkMode]  = useState(false);
+  const [html, setHtml] = useState(saved?.html ?? TEMPLATES.hello.html);
+  const [css, setCss] = useState(saved?.css ?? TEMPLATES.hello.css);
+  const [js, setJs] = useState(saved?.js ?? TEMPLATES.hello.js);
+  const [activeTab, setActiveTab] = useState("html");
+  const [darkMode, setDarkMode] = useState(false);
   const [fullscreen, setFullscreen] = useState(false);
-  const [saveMsg,   setSaveMsg]   = useState('');
+  const [saveMsg, setSaveMsg] = useState("");
 
   const previewRef = useRef(null);
   const wrapperRef = useRef(null);
@@ -139,7 +139,7 @@ export default function LiveCodeEditor() {
     `<!DOCTYPE html><html><head><meta charset="utf-8"><style>${css}</style></head><body>${html}<script>${js}</script></body></html>`;
 
   /** Sync preview whenever code changes */
-  const [srcDoc, setSrcDoc] = useState('');
+  const [srcDoc, setSrcDoc] = useState("");
   useEffect(() => {
     const id = setTimeout(() => setSrcDoc(buildSrcDoc()), 300);
     return () => clearTimeout(id);
@@ -148,29 +148,32 @@ export default function LiveCodeEditor() {
   /** Save to localStorage */
   function handleSave() {
     localStorage.setItem(LS_KEY, JSON.stringify({ html, css, js }));
-    setSaveMsg('Saved!');
-    setTimeout(() => setSaveMsg(''), 2000);
+    setSaveMsg("Saved!");
+    setTimeout(() => setSaveMsg(""), 2000);
   }
 
   /** Download HTML + CSS + JS as a ZIP file */
   async function handleDownload() {
-    const JSZip = (await import('jszip')).default;
-    const zip   = new JSZip();
-    zip.file('index.html', `<!DOCTYPE html>\n<html>\n<head>\n<meta charset="utf-8">\n<link rel="stylesheet" href="style.css">\n</head>\n<body>\n${html}\n<script src="script.js"></script>\n</body>\n</html>`);
-    zip.file('style.css',  css);
-    zip.file('script.js',  js);
-    const blob = await zip.generateAsync({ type: 'blob' });
-    const url  = URL.createObjectURL(blob);
-    const a    = document.createElement('a');
-    a.href     = url;
-    a.download = 'my-project.zip';
+    const JSZip = (await import("jszip")).default;
+    const zip = new JSZip();
+    zip.file(
+      "index.html",
+      `<!DOCTYPE html>\n<html>\n<head>\n<meta charset="utf-8">\n<link rel="stylesheet" href="style.css">\n</head>\n<body>\n${html}\n<script src="script.js"></script>\n</body>\n</html>`,
+    );
+    zip.file("style.css", css);
+    zip.file("script.js", js);
+    const blob = await zip.generateAsync({ type: "blob" });
+    const url = URL.createObjectURL(blob);
+    const a = document.createElement("a");
+    a.href = url;
+    a.download = "my-project.zip";
     a.click();
     URL.revokeObjectURL(url);
   }
 
   /** Reset to default template */
   function handleReset() {
-    if (!window.confirm('Reset to the Hello World template?')) return;
+    if (!window.confirm("Reset to the Hello World template?")) return;
     setHtml(TEMPLATES.hello.html);
     setCss(TEMPLATES.hello.css);
     setJs(TEMPLATES.hello.js);
@@ -199,11 +202,11 @@ export default function LiveCodeEditor() {
   }
 
   const editorContent = { html, css, js }[activeTab];
-  const editorSetter  = { html: setHtml, css: setCss, js: setJs }[activeTab];
+  const editorSetter = { html: setHtml, css: setCss, js: setJs }[activeTab];
 
   return (
     <section
-      className={`live-editor-section${darkMode ? ' dark-editor' : ''}`}
+      className={`live-editor-section${darkMode ? " dark-editor" : ""}`}
       ref={wrapperRef}
     >
       <div className="live-editor-inner">
@@ -221,7 +224,7 @@ export default function LiveCodeEditor() {
             defaultValue=""
             onChange={(e) => {
               if (e.target.value) handleTemplate(e.target.value);
-              e.target.value = '';
+              e.target.value = "";
             }}
             aria-label="Load a template"
           >
@@ -235,16 +238,31 @@ export default function LiveCodeEditor() {
             ))}
           </select>
 
-          <button type="button" className="editor-tool-btn" onClick={handleSave} title="Save to browser">
+          <button
+            type="button"
+            className="editor-tool-btn"
+            onClick={handleSave}
+            title="Save to browser"
+          >
             <i className="fa fa-floppy-disk"></i> Save
           </button>
           {saveMsg && <span className="editor-save-msg">{saveMsg}</span>}
 
-          <button type="button" className="editor-tool-btn" onClick={handleDownload} title="Download ZIP">
+          <button
+            type="button"
+            className="editor-tool-btn"
+            onClick={handleDownload}
+            title="Download ZIP"
+          >
             <i className="fa fa-download"></i> ZIP
           </button>
 
-          <button type="button" className="editor-tool-btn" onClick={handleReset} title="Reset editor">
+          <button
+            type="button"
+            className="editor-tool-btn"
+            onClick={handleReset}
+            title="Reset editor"
+          >
             <i className="fa fa-rotate-left"></i> Reset
           </button>
 
@@ -254,17 +272,17 @@ export default function LiveCodeEditor() {
             onClick={() => setDarkMode((d) => !d)}
             title="Toggle theme"
           >
-            <i className={`fa ${darkMode ? 'fa-sun' : 'fa-moon'}`}></i>
-            {darkMode ? ' Light' : ' Dark'}
+            <i className={`fa ${darkMode ? "fa-sun" : "fa-moon"}`}></i>
+            {darkMode ? " Light" : " Dark"}
           </button>
 
           <button
             type="button"
             className="editor-tool-btn"
             onClick={toggleFullscreen}
-            title={fullscreen ? 'Exit fullscreen' : 'Fullscreen'}
+            title={fullscreen ? "Exit fullscreen" : "Fullscreen"}
           >
-            <i className={`fa ${fullscreen ? 'fa-compress' : 'fa-expand'}`}></i>
+            <i className={`fa ${fullscreen ? "fa-compress" : "fa-expand"}`}></i>
           </button>
         </div>
 
@@ -274,11 +292,11 @@ export default function LiveCodeEditor() {
           <div className="editor-code-side">
             {/* Tab switcher */}
             <div className="editor-tabs">
-              {['html', 'css', 'js'].map((lang) => (
+              {["html", "css", "js"].map((lang) => (
                 <button
                   key={lang}
                   type="button"
-                  className={`editor-tab${activeTab === lang ? ' active' : ''}`}
+                  className={`editor-tab${activeTab === lang ? " active" : ""}`}
                   onClick={() => setActiveTab(lang)}
                 >
                   {lang.toUpperCase()}
