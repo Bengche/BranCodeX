@@ -172,7 +172,9 @@ export default function HireWebDeveloperCameroon() {
     <>
       <script
         type="application/ld+json"
-        dangerouslySetInnerHTML={{ __html: JSON.stringify(localBusinessSchema) }}
+        dangerouslySetInnerHTML={{
+          __html: JSON.stringify(localBusinessSchema),
+        }}
       />
       <Navbar />
       <main className="seo-page">
@@ -333,9 +335,7 @@ export default function HireWebDeveloperCameroon() {
         {/* FAQ */}
         <section className="seo-section seo-faq-section">
           <div className="seo-container">
-            <h2>
-              Frequently Asked Questions — Web Development in Cameroon
-            </h2>
+            <h2>Frequently Asked Questions — Web Development in Cameroon</h2>
             <div className="seo-faq-list">
               {faqs.map((f) => (
                 <details key={f.q} className="seo-faq-item">
@@ -360,19 +360,14 @@ export default function HireWebDeveloperCameroon() {
                 <Link href="/#contact" className="seo-cta-btn primary">
                   Start Your Project
                 </Link>
-                <a
-                  href="tel:+237654155218"
-                  className="seo-cta-btn secondary"
-                >
+                <a href="tel:+237654155218" className="seo-cta-btn secondary">
                   <i className="fas fa-phone"></i> +237 654 155 218
                 </a>
               </div>
               <p className="seo-cta-address">
                 <i className="fas fa-location-dot"></i> Bamenda, North West
                 Region, Cameroon &nbsp;·&nbsp;
-                <a href="mailto:contact@brancodex.com">
-                  contact@brancodex.com
-                </a>
+                <a href="mailto:contact@brancodex.com">contact@brancodex.com</a>
               </p>
             </div>
           </div>

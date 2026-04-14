@@ -121,11 +121,7 @@ export default function ExitIntentPopup() {
               </button>
             </form>
 
-            <a
-              href="/guide"
-              className="exit-popup-secondary"
-              onClick={close}
-            >
+            <a href="/guide" className="exit-popup-secondary" onClick={close}>
               📄 Or download: &quot;5 Mistakes Cameroonian Businesses Make With
               Their Website&quot;
             </a>

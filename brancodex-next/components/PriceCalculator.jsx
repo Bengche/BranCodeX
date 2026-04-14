@@ -73,10 +73,20 @@ function calcWebsite(pages) {
 
 function calcEcommerce(type, customCount) {
   if (type === "basic") {
-    return { name: "Basic E-Commerce", price: 589, products: "Up to 20", delivery: "5–7 days" };
+    return {
+      name: "Basic E-Commerce",
+      price: 589,
+      products: "Up to 20",
+      delivery: "5–7 days",
+    };
   }
   if (type === "advanced") {
-    return { name: "Advanced E-Commerce", price: 1899, products: "Up to 110", delivery: "7–14 days" };
+    return {
+      name: "Advanced E-Commerce",
+      price: 1899,
+      products: "Up to 110",
+      delivery: "7–14 days",
+    };
   }
   // Custom product count
   const count = parseInt(customCount) || 0;
@@ -112,8 +122,9 @@ export default function PriceCalculator() {
   const websiteResult = projectType === "website" ? calcWebsite(pages) : null;
   const ecomResult =
     projectType === "ecommerce" ? calcEcommerce(ecomType, customCount) : null;
-  const features =
-    websiteResult ? PLAN_FEATURES[websiteResult.basePlanPages] || PLAN_FEATURES[15] : null;
+  const features = websiteResult
+    ? PLAN_FEATURES[websiteResult.basePlanPages] || PLAN_FEATURES[15]
+    : null;
 
   return (
     <section id="calculator" className="calculator-section">
@@ -306,21 +317,27 @@ export default function PriceCalculator() {
                 rel="noopener noreferrer"
                 className="calc-custom-link whatsapp"
               >
-                <i className="fab fa-whatsapp" style={{ marginRight: "0.4rem" }}></i>
+                <i
+                  className="fab fa-whatsapp"
+                  style={{ marginRight: "0.4rem" }}
+                ></i>
                 WhatsApp Us
               </a>
               <a
                 href="mailto:contact@brancodex.com"
                 className="calc-custom-link email"
               >
-                <i className="fas fa-envelope" style={{ marginRight: "0.4rem" }}></i>
+                <i
+                  className="fas fa-envelope"
+                  style={{ marginRight: "0.4rem" }}
+                ></i>
                 Email Us
               </a>
-              <a
-                href="tel:+237654155218"
-                className="calc-custom-link call"
-              >
-                <i className="fas fa-phone" style={{ marginRight: "0.4rem" }}></i>
+              <a href="tel:+237654155218" className="calc-custom-link call">
+                <i
+                  className="fas fa-phone"
+                  style={{ marginRight: "0.4rem" }}
+                ></i>
                 Call Us
               </a>
             </div>

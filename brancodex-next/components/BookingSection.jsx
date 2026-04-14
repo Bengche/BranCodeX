@@ -5,8 +5,7 @@ import { useEffect } from "react";
 // ── Replace this URL with your actual Calendly link once you set up an account
 // at https://calendly.com/signup — create a "30 min strategy call" event type
 // and paste the full URL below (e.g. https://calendly.com/brancodex/30min)
-const CALENDLY_URL =
-  "https://calendly.com/brancodex/30min?hide_event_type_details=1&hide_gdpr_banner=1";
+const CALENDLY_URL = "https://calendly.com/bengc102/30min";
 
 export default function BookingSection() {
   useEffect(() => {
@@ -61,7 +60,12 @@ export default function BookingSection() {
             Prefer a different channel?
           </p>
           <div
-            style={{ display: "flex", gap: "0.75rem", justifyContent: "center", flexWrap: "wrap" }}
+            style={{
+              display: "flex",
+              gap: "0.75rem",
+              justifyContent: "center",
+              flexWrap: "wrap",
+            }}
           >
             <a
               href="https://wa.me/237654155218"
@@ -69,11 +73,20 @@ export default function BookingSection() {
               rel="noopener noreferrer"
               className="calc-custom-link whatsapp"
             >
-              <i className="fab fa-whatsapp" style={{ marginRight: "0.4rem" }}></i>
+              <i
+                className="fab fa-whatsapp"
+                style={{ marginRight: "0.4rem" }}
+              ></i>
               WhatsApp
             </a>
-            <a href="mailto:contact@brancodex.com" className="calc-custom-link email">
-              <i className="fas fa-envelope" style={{ marginRight: "0.4rem" }}></i>
+            <a
+              href="mailto:contact@brancodex.com"
+              className="calc-custom-link email"
+            >
+              <i
+                className="fas fa-envelope"
+                style={{ marginRight: "0.4rem" }}
+              ></i>
               Email
             </a>
             <a href="tel:+237654155218" className="calc-custom-link call">

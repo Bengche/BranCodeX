@@ -3,7 +3,8 @@ import Navbar from "../../components/Navbar";
 import Footer from "../../components/Footer";
 
 export const metadata = {
-  title: "5 Mistakes Cameroonian Businesses Make With Their Website | BranCodeX",
+  title:
+    "5 Mistakes Cameroonian Businesses Make With Their Website | BranCodeX",
   description:
     "Discover the 5 most common website mistakes that cost Cameroonian businesses clients and revenue — and how to fix them. Free guide by BranCodeX.",
   alternates: { canonical: "https://brancodex.com/guide" },
@@ -105,10 +106,9 @@ export default function GuidePage() {
             <p className="guide-intro-text">
               After building websites for businesses across Cameroon and
               internationally, one pattern stands out: the same five mistakes
-              appear in{" "}
-              <strong>over 90% of small business websites</strong> we review.
-              These mistakes are silently costing businesses thousands of
-              dollars in lost clients every year.
+              appear in <strong>over 90% of small business websites</strong> we
+              review. These mistakes are silently costing businesses thousands
+              of dollars in lost clients every year.
             </p>
             <p className="guide-intro-text">
               The good news? Every single one of them is fixable. This guide
@@ -138,7 +138,10 @@ export default function GuidePage() {
                     <h2>{m.title}</h2>
                   </div>
                   <div className="guide-stat" style={{ borderColor: m.color }}>
-                    <i className="fas fa-chart-bar" style={{ color: m.color }}></i>
+                    <i
+                      className="fas fa-chart-bar"
+                      style={{ color: m.color }}
+                    ></i>
                     {m.stat}
                   </div>
                   <h3 className="guide-problem-label">❌ The Problem</h3>
@@ -176,9 +179,7 @@ export default function GuidePage() {
               </div>
               <p className="guide-cta-small">
                 Based in Bamenda, Cameroon · Serving clients worldwide ·{" "}
-                <a href="mailto:contact@brancodex.com">
-                  contact@brancodex.com
-                </a>
+                <a href="mailto:contact@brancodex.com">contact@brancodex.com</a>
               </p>
             </div>
           </div>
