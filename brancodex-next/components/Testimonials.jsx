@@ -84,7 +84,10 @@ export default function Testimonials() {
   }
 
   return (
-    <section id="testimonials" className="bg-gray-900 mb-16 mt-16 text-white min-h-screen">
+    <section
+      id="testimonials"
+      className="bg-gray-900 mb-16 mt-16 text-white min-h-screen"
+    >
       <div className="max-w-4xl mx-auto py-12 px-4">
         <div className="flex items-center justify-between mb-6">
           <h2 className="text-3xl md:text-4xl font-extrabold tracking-tight">
@@ -110,7 +113,7 @@ export default function Testimonials() {
               className="filter-btn active flex items-center gap-2 px-4 py-2 rounded-lg border border-gray-600 bg-gray-800 hover:bg-yellow-400 hover:text-gray-900 transition font-semibold"
               value="all"
             >
-               All
+              All
             </option>
             <option
               className="filter-btn flex items-center gap-2 px-4 py-2 rounded-lg border border-gray-600 bg-gray-800 hover:bg-yellow-400 hover:text-gray-900 transition font-semibold"
@@ -148,14 +151,19 @@ export default function Testimonials() {
         <div className="relative">
           <div
             id="testimonialScrollArea"
-            style={{ maxHeight: "80vh", overflowY: "auto", paddingRight: "0.5rem" }}
+            style={{
+              maxHeight: "80vh",
+              overflowY: "auto",
+              paddingRight: "0.5rem",
+            }}
           >
             <div
               id="testimonialList"
               className="grid grid-cols-1 md:grid-cols-2 gap-8"
             >
               {testimonials.map((t, index) => {
-                if (filter !== "all" && t.rating < parseInt(filter)) return null;
+                if (filter !== "all" && t.rating < parseInt(filter))
+                  return null;
                 return (
                   <div
                     className="testimonial-card"
@@ -169,8 +177,18 @@ export default function Testimonials() {
                     <p>{t.review}</p>
                     {t.userId === userId && (
                       <div className="card-actions">
-                        <button onClick={() => editTestimonial(index)} className="edit-btn">✏ Edit</button>
-                        <button onClick={() => deleteTestimonial(index)} className="delete-btn">🗑 Delete</button>
+                        <button
+                          onClick={() => editTestimonial(index)}
+                          className="edit-btn"
+                        >
+                          ✏ Edit
+                        </button>
+                        <button
+                          onClick={() => deleteTestimonial(index)}
+                          className="delete-btn"
+                        >
+                          🗑 Delete
+                        </button>
                       </div>
                     )}
                   </div>
@@ -178,7 +196,10 @@ export default function Testimonials() {
               })}
             </div>
           </div>
-          <div id="loadingMore" className="text-center text-gray-400 py-4 hidden">
+          <div
+            id="loadingMore"
+            className="text-center text-gray-400 py-4 hidden"
+          >
             Loading Reviews...
           </div>
         </div>
@@ -188,7 +209,9 @@ export default function Testimonials() {
         <div
           id="testimonialModal"
           className="modal-overlay fixed inset-0 z-50 bg-black bg-opacity-70 flex items-center justify-center"
-          onClick={(e) => { if (e.target === e.currentTarget) closeModal(); }}
+          onClick={(e) => {
+            if (e.target === e.currentTarget) closeModal();
+          }}
         >
           <div className="modal-content bg-gray-800 rounded-2xl shadow-2xl p-8 w-full max-w-md relative">
             <button
@@ -202,9 +225,15 @@ export default function Testimonials() {
             <h3 className="text-2xl font-bold mb-6 text-center text-yellow-400">
               📝 Add Your Review
             </h3>
-            <form id="testimonialForm" className="space-y-5" onSubmit={handleSubmit}>
+            <form
+              id="testimonialForm"
+              className="space-y-5"
+              onSubmit={handleSubmit}
+            >
               <div>
-                <label htmlFor="t-name" className="block font-semibold mb-1">Name</label>
+                <label htmlFor="t-name" className="block font-semibold mb-1">
+                  Name
+                </label>
                 <input
                   type="text"
                   id="t-name"
@@ -216,7 +245,9 @@ export default function Testimonials() {
                 />
               </div>
               <div>
-                <label htmlFor="t-review" className="block font-semibold mb-1">Review</label>
+                <label htmlFor="t-review" className="block font-semibold mb-1">
+                  Review
+                </label>
                 <textarea
                   id="t-review"
                   placeholder="Your Review"
@@ -227,9 +258,23 @@ export default function Testimonials() {
                 ></textarea>
               </div>
               <div>
-                <label htmlFor="t-photo" className="block font-semibold mb-1">Photo</label>
-                <input type="file" id="t-photo" accept="image/*" className="w-full" onChange={handlePhotoChange} />
-                {uploadedImage && <img src={uploadedImage} className="mt-2 testimonial-img" alt="Preview" />}
+                <label htmlFor="t-photo" className="block font-semibold mb-1">
+                  Photo
+                </label>
+                <input
+                  type="file"
+                  id="t-photo"
+                  accept="image/*"
+                  className="w-full"
+                  onChange={handlePhotoChange}
+                />
+                {uploadedImage && (
+                  <img
+                    src={uploadedImage}
+                    className="mt-2 testimonial-img"
+                    alt="Preview"
+                  />
+                )}
               </div>
               <div>
                 <label className="block font-semibold mb-1">Rating</label>

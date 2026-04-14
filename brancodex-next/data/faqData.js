@@ -125,6 +125,44 @@ const faqData = [
     answer:
       "BranCodeX is proudly based in Bamenda, Cameroon, serving clients worldwide.",
   },
+
+  // ── International & Client-Facing Questions ──────────────────────────────
+  {
+    icon: "fa-globe",
+    question: "Do you work with clients outside Cameroon?",
+    answer:
+      "Yes — we serve clients worldwide. We have worked with businesses in Europe, North America, and across Africa. Distance is no obstacle; we collaborate fully remotely via video calls, WhatsApp, and email.",
+  },
+  {
+    icon: "fa-credit-card",
+    question: "What payment methods do you accept?",
+    answer:
+      "We accept MTN Mobile Money (MoMo), Orange Money, bank transfer (SWIFT/local), and PayPal for international clients. Payment is split into 50% upfront and 50% on delivery.",
+  },
+  {
+    icon: "fa-rotate-left",
+    question: "How do revisions work?",
+    answer:
+      "Every package includes up to 3 rounds of revisions at no extra cost. We keep refining until you are completely satisfied. Additional revisions beyond that are billed at a transparent hourly rate.",
+  },
+  {
+    icon: "fa-comments",
+    question: "How do we communicate during the project?",
+    answer:
+      "We stay in close contact throughout. Our primary channels are WhatsApp (fastest), email, and scheduled video calls for milestone reviews. You will always know the status of your project.",
+  },
+  {
+    icon: "fa-wrench",
+    question: "Do you provide support after the website launches?",
+    answer:
+      "Yes. We offer ongoing maintenance plans that cover security updates, content changes, performance monitoring, and technical support. Contact us for monthly or annual maintenance packages.",
+  },
+  {
+    icon: "fa-shield-heart",
+    question: "What if I'm not happy with the result?",
+    answer:
+      "Your satisfaction is guaranteed. If you are not happy with the initial design, we will rebuild it from scratch at no charge. We do not consider a project complete until you are genuinely proud of it.",
+  },
 ];
 
 export default faqData;

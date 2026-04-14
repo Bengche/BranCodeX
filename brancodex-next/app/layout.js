@@ -13,6 +13,8 @@
 
 import "./globals.css";
 import AOSProvider from "@/components/AOSProvider";
+import LoadingScreen from "@/components/LoadingScreen";
+import ExitIntentPopup from "@/components/ExitIntentPopup";
 
 /* --------------------------------------------------------------------------
    SITE-WIDE SEO DEFAULTS
@@ -195,6 +197,8 @@ export default function RootLayout({ children }) {
       </head>
 
       <body className="bg-slate-900 text-white">
+        <LoadingScreen />
+        <ExitIntentPopup />
         {/*
           AOSProvider wraps everything so AOS (scroll animations) is
           initialized once on the client, making all data-aos attributes work.
