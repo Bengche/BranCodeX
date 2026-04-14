@@ -11,6 +11,7 @@ import ResultsStrip from "../components/ResultsStrip";
 import About from "../components/About";
 import Services from "../components/Services";
 import Plans from "../components/Plans";
+import HowWeWork from "../components/HowWeWork";
 import PriceCalculator from "../components/PriceCalculator";
 import Skills from "../components/Skills";
 import Projects from "../components/Projects";
@@ -39,6 +40,7 @@ export default function HomePage() {
         <ResultsStrip />
         <About />
         <Services />
+        <HowWeWork />
         <Plans />
         <PriceCalculator />
         <Skills />

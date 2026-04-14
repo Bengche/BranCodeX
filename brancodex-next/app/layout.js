@@ -15,6 +15,9 @@ import "./globals.css";
 import AOSProvider from "@/components/AOSProvider";
 import LoadingScreen from "@/components/LoadingScreen";
 import ExitIntentPopup from "@/components/ExitIntentPopup";
+import CookieConsent from "@/components/CookieConsent";
+import ScrollProgress from "@/components/ScrollProgress";
+import CurrencyBadge from "@/components/CurrencyBadge";
 
 /* --------------------------------------------------------------------------
    SITE-WIDE SEO DEFAULTS
@@ -197,8 +200,11 @@ export default function RootLayout({ children }) {
       </head>
 
       <body className="bg-slate-900 text-white">
+        <ScrollProgress />
         <LoadingScreen />
         <ExitIntentPopup />
+        <CookieConsent />
+        <CurrencyBadge />
         {/*
           AOSProvider wraps everything so AOS (scroll animations) is
           initialized once on the client, making all data-aos attributes work.
