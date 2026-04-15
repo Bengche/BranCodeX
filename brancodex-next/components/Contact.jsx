@@ -3,9 +3,9 @@
 import { useState } from "react";
 import emailjs from "@emailjs/browser";
 
-const EMAILJS_SERVICE = "service_4i8dgy8";
-const EMAILJS_TEMPLATE = "template_cncjp0c";
-const EMAILJS_KEY = "JwE9TMk7vUP9adouM";
+const EMAILJS_SERVICE = "service_c5vabbm";
+const EMAILJS_TEMPLATE = "template_iclm05y";
+const EMAILJS_KEY = "n6JWvzVKqpFDqg1xt";
 
 export default function Contact() {
   const [name, setName] = useState("");
@@ -27,6 +27,8 @@ export default function Contact() {
           name: name.trim(),
           email: email.trim(),
           message: message.trim(),
+          title: "New Contact Form Message",
+          time: new Date().toLocaleString(),
         },
         EMAILJS_KEY,
       );
@@ -52,11 +54,7 @@ export default function Contact() {
           something amazing!
         </p>
 
-        <form
-          id="contact-form"
-          className="contact-form"
-          onSubmit={sendMessage}
-        >
+        <form id="contact-form" className="contact-form" onSubmit={sendMessage}>
           <div className="form-group">
             <label htmlFor="name">
               <i className="fas fa-user"></i> Your Name

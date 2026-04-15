@@ -54,12 +54,13 @@ export default function ExitIntentPopup() {
 
     try {
       await emailjs.send(
-        "service_4i8dgy8",
-        "template_cncjp0c",
+        "service_c5vabbm",
+        "template_iclm05y",
         {
-          // Variable names match the template exactly (same as contact form)
           name: name.trim(),
           email: email.trim(),
+          title: "Free Website Audit Request",
+          time: new Date().toLocaleString(),
           message:
             `🎯 NEW FREE WEBSITE AUDIT REQUEST\n\n` +
             `Name:    ${name.trim()}\n` +
@@ -68,7 +69,7 @@ export default function ExitIntentPopup() {
             `Action: Visit their site, run PageSpeed Insights + SEO checks, ` +
             `then reply to ${email.trim()} with the audit report within 24 h.`,
         },
-        "JwE9TMk7vUP9adouM" // public key — same as emailjs.init() in index.html
+        "n6JWvzVKqpFDqg1xt"
       );
     } catch (err) {
       console.error("EmailJS error:", err);
