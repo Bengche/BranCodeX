@@ -34,18 +34,36 @@ function parseDollars(priceStr) {
 }
 
 // ─── Data ──────────────────────────────────────────────────────────────────
+// features  — always visible (top 5)
+// extras    — revealed on toggle (green check)
+// notIncluded — revealed on toggle (red × — drives upgrade)
 
 const websitePlans = [
   {
     title: "Landing Page",
-    tagline: "High-conversion single-page sites.",
+    tagline: "High-conversion single-page site.",
     price: "$189",
     aiLabel: "Includes AI Chat Assistant",
+    guarantee: "2 free revision rounds included",
     features: [
-      "Hosting & domain (12 months)",
-      "Mobile-first & SEO Optimized",
-      "WhatsApp & Email Integration",
+      "1 fully responsive page",
+      "Hosting & domain (12 months free)",
+      "SSL security certificate",
+      "WhatsApp & Email contact integration",
+      "Basic SEO (meta tags, title, description)",
+    ],
+    extras: [
+      "Google Analytics setup",
+      "Mobile-first performance optimization",
+      "Social media links",
+      "Favicon + social share image",
       "Delivery in < 3 days",
+    ],
+    notIncluded: [
+      "Blog / CMS",
+      "Professional business email",
+      "MoMo payment integration",
+      "Multiple pages",
     ],
   },
   {
@@ -54,11 +72,25 @@ const websitePlans = [
     price: "$199",
     aiLabel: "Includes Smart AI Support Bot",
     note: "Everything in Landing Page, plus:",
+    guarantee: "2 free revision rounds included",
     features: [
-      "Up to 3 Responsive Pages",
-      "Domain & Hosting included",
-      "SSL Security Certificate",
+      "Up to 3 responsive pages",
+      "Hosting & domain (12 months free)",
+      "SSL security certificate",
+      "Contact form with email notifications",
+      "Basic SEO + Google Analytics",
+    ],
+    extras: [
+      "WhatsApp & Email integration",
+      "Social media & Open Graph tags",
+      "Mobile-first design",
+      "Favicon + social share image",
       "Delivery in < 3 days",
+    ],
+    notIncluded: [
+      "Blog / CMS",
+      "Professional business email",
+      "MoMo payment integration",
     ],
   },
   {
@@ -67,26 +99,54 @@ const websitePlans = [
     price: "$269",
     aiLabel: "Includes Custom AI Assistant",
     note: "Everything in Starter, plus:",
+    guarantee: "2 free revision rounds included",
     features: [
-      "Up to 5 Pages + Speed Optimization",
-      "Basic On-Page SEO",
-      "WhatsApp Click-to-Chat",
+      "Up to 5 responsive pages",
+      "Hosting & domain (12 months free)",
+      "SSL certificate + page speed optimization",
+      "Basic on-page SEO",
+      "WhatsApp click-to-chat button",
+    ],
+    extras: [
+      "Google Analytics + Search Console setup",
+      "Contact form with email routing",
+      "Favicon + social share image",
+      "Sitemap & robots.txt",
       "Delivery in < 7 days",
+    ],
+    notIncluded: [
+      "CMS / Blog",
+      "Professional business email",
+      "MoMo payment gateway",
     ],
   },
   {
     title: "Standard Plan",
-    tagline: "Scalable solution for growing teams.",
+    tagline: "Scalable solution for growing businesses.",
     price: "$469",
-    aiLabel: "AI Customer Lead-Gen",
+    aiLabel: "AI Customer Lead-Gen Chatbot",
     note: "Everything in Basic, plus:",
     featured: true,
     badge: "Most Popular",
+    guarantee: "2 free revision rounds + satisfaction guarantee",
     features: [
-      "Up to 10 Pages + CMS/Blog",
-      "Professional Business Emails",
+      "Up to 10 responsive pages",
+      "CMS / Blog (post articles yourself)",
+      "Professional business email setup",
       "Google Maps & Analytics",
+      "Advanced on-page SEO",
+    ],
+    extras: [
+      "Search Console + sitemap submission",
+      "Social media links + Open Graph tags",
+      "WhatsApp click-to-chat + lead form",
+      "Newsletter subscribe form",
       "Delivery in < 7 days",
+    ],
+    notIncluded: [
+      "MoMo / card payment gateway",
+      "Custom UI animations",
+      "Admin panel dashboard",
     ],
   },
   {
@@ -95,11 +155,24 @@ const websitePlans = [
     price: "$999",
     aiLabel: "Advanced AI Integration",
     note: "Everything in Standard, plus:",
+    badge: "Best Value",
+    guarantee: "3 free revision rounds + satisfaction guarantee",
     features: [
-      "Custom UI Design & Animations",
-      "Up to 15 Pages + Dark Mode",
-      "Advanced SEO & Admin Panel",
-      "Newsletter & Priority Support",
+      "Up to 15 custom-designed pages",
+      "Custom UI design + micro-animations",
+      "Dark / light mode toggle",
+      "Full admin panel dashboard",
+      "Advanced SEO + structured data markup",
+    ],
+    extras: [
+      "Newsletter + subscriber management",
+      "Priority support + monthly site checkup",
+      "Speed & Core Web Vitals optimization",
+      "Performance monitoring setup",
+      "Delivery in < 14 days",
+    ],
+    notIncluded: [
+      "MoMo / card payment gateway",
     ],
   },
 ];
@@ -111,11 +184,25 @@ const ecommercePlans = [
     price: "$589",
     aiLabel: "Includes AI Shopping Assistant",
     featured: true,
+    guarantee: "2 free revision rounds included",
     features: [
-      "Up to 20 Products + Cart",
-      "WhatsApp Order Notifications",
-      "Manual Payment Support",
+      "Up to 20 products + shopping cart",
+      "Product search & category filters",
+      "WhatsApp order notifications",
+      "Manual payment support (bank transfer)",
+      "Order confirmation emails",
+    ],
+    extras: [
+      "Basic inventory management",
+      "Mobile-first & SEO-optimized",
+      "SSL certificate + security setup",
+      "Product image gallery per item",
       "Delivery in 5–7 days",
+    ],
+    notIncluded: [
+      "Automated MoMo / card gateway",
+      "Customer accounts & order history",
+      "Bulk product import",
     ],
   },
   {
@@ -124,11 +211,23 @@ const ecommercePlans = [
     price: "$1,899",
     aiLabel: "Personal Shopper AI",
     note: "Everything in Basic E-Commerce, plus:",
+    guarantee: "3 free revision rounds + satisfaction guarantee",
     features: [
-      "Up to 110 Products + Admin Panel",
-      "MoMo/Card Payment Gateways",
-      "Advanced SEO & Accounts",
+      "Up to 110 products + full admin panel",
+      "MTN MoMo + Orange Money gateways",
+      "Card payments (Stripe / PayPal)",
+      "Customer accounts + order history",
+      "Advanced inventory + low-stock alerts",
+    ],
+    extras: [
+      "Cart abandonment email automation",
+      "Advanced SEO + product schema markup",
+      "Shipping zone configuration",
+      "Discount codes & promotions module",
       "Delivery in 7–14 days",
+    ],
+    notIncluded: [
+      "Multi-vendor marketplace",
     ],
   },
 ];
@@ -144,12 +243,21 @@ function PlanCard({ plan, xafRate }) {
       ? Math.round(dollars * xafRate).toLocaleString("en") + " FCFA"
       : null;
 
-  const visibleFeatures = plan.features.slice(0, 3);
-  const extraFeatures = plan.features.slice(3);
+  const moreCount =
+    (plan.extras?.length || 0) + (plan.notIncluded?.length || 0);
+  const hasMore = moreCount > 0;
 
   return (
     <div className={`plan-item${plan.featured ? " plan-item--featured" : ""}`}>
-      {plan.badge && <span className="plan-badge">{plan.badge}</span>}
+      {plan.badge && (
+        <span
+          className={`plan-badge${
+            plan.badge === "Best Value" ? " plan-badge--gold" : ""
+          }`}
+        >
+          {plan.badge}
+        </span>
+      )}
 
       <div className="plan-card">
         <h3 className="plan-title">{plan.title}</h3>
@@ -180,44 +288,59 @@ function PlanCard({ plan, xafRate }) {
 
         {plan.note && <p className="plan-note-label">{plan.note}</p>}
 
-        {/* Top 3 features — always visible */}
+        {/* Top features — always visible */}
         <ul className="plan-features plan-features-visible">
-          {visibleFeatures.map((f) => (
+          {plan.features.map((f) => (
             <li key={f}>
               <i className="fa fa-check-circle"></i> {f}
             </li>
           ))}
         </ul>
 
-        {/* Extra features — collapsible */}
-        {extraFeatures.length > 0 && (
-          <>
-            <div
-              className={`features-wrapper${
-                open ? " features-wrapper--open" : ""
-              }`}
-            >
-              <ul className="plan-features">
-                {extraFeatures.map((f) => (
-                  <li key={f}>
-                    <i className="fa fa-check-circle"></i> {f}
-                  </li>
-                ))}
-              </ul>
-            </div>
+        {/* Extras + not-included — collapsible */}
+        {hasMore && (
+          <div
+            className={`features-wrapper${
+              open ? " features-wrapper--open" : ""
+            }`}
+          >
+            <ul className="plan-features">
+              {plan.extras?.map((f) => (
+                <li key={f}>
+                  <i className="fa fa-check-circle"></i> {f}
+                </li>
+              ))}
+              {plan.notIncluded?.map((f) => (
+                <li key={f} className="plan-feature--no">
+                  <i className="fa fa-times-circle"></i> {f}
+                </li>
+              ))}
+            </ul>
+          </div>
+        )}
+
+        {plan.guarantee && (
+          <div className="plan-guarantee">
+            <i className="fa fa-shield-halved"></i>
+            <span>{plan.guarantee}</span>
+          </div>
+        )}
+
+        {/* Footer: toggle + CTA grouped — prevents collision */}
+        <div className="plan-card-footer">
+          {hasMore && (
             <button
               className="plan-features-toggle"
               type="button"
               onClick={() => setOpen((prev) => !prev)}
             >
-              {open ? "Hide" : `+ ${extraFeatures.length} more included`}
+              {open ? "Show less" : `+ ${moreCount} more details`}
             </button>
-          </>
-        )}
-
-        <Link href="/#contact" className="plan-cta-btn">
-          Start This Plan <i className="fa fa-arrow-right"></i>
-        </Link>
+          )}
+          <Link href="/#contact" className="plan-cta-btn">
+            Start This Plan <i className="fa fa-arrow-right"></i>
+          </Link>
+        </div>
       </div>
     </div>
   );

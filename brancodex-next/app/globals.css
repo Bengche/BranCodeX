@@ -526,8 +526,8 @@ body {
    ========================================================================= */
 .plans-section {
   padding: 4.5rem 1.5rem;
-  background-color: #f8fafc;
-  color: #0f172a;
+  background: linear-gradient(180deg, #0d1929 0%, #0f172a 100%);
+  color: #e2e8f0;
   border-top: 3px solid rgba(34, 197, 94, 0.3);
   border-bottom: 3px solid rgba(34, 197, 94, 0.3);
 }
@@ -538,13 +538,13 @@ body {
   margin: 0 auto 2.5rem;
 }
 
-/* "Packages" heading readable on the light plans background */
+/* "Packages" heading readable on the dark plans background */
 .plans-header .section-title {
-  color: #0f172a;
+  color: #f0f6ff;
 }
 
 .plans-intro {
-  color: #475569;
+  color: #94a3b8;
   font-size: 1.05rem;
   line-height: 1.7;
   margin-top: 0.5rem;
@@ -557,7 +557,7 @@ body {
 }
 
 .plans-subheading {
-  color: #0f172a;
+  color: #e2e8f0;
   text-align: center;
 }
 
@@ -578,9 +578,9 @@ body {
   flex-direction: column;
   padding: 1.75rem;
   border-radius: 16px;
-  border: 1px solid #e2e8f0;
-  background: #ffffff;
-  box-shadow: 0 12px 30px rgba(15, 23, 42, 0.08);
+  border: 1px solid #1e293b;
+  background: #192133;
+  box-shadow: 0 12px 30px rgba(0, 0, 0, 0.3);
   transition:
     transform 0.2s ease,
     box-shadow 0.2s ease,
@@ -596,19 +596,19 @@ body {
 .plan-title {
   font-size: clamp(1.4rem, 2.2vw, 1.8rem);
   font-weight: 700;
-  color: #0f172a;
+  color: #f0f6ff;
   margin-bottom: 0.35rem;
 }
 
 .plan-tagline {
-  color: #475569;
+  color: #94a3b8;
   font-size: 0.95rem;
   margin-bottom: 0.6rem;
 }
 
 /* "Tailored Pricing" label on custom cards */
 .plan-price {
-  color: #0f172a;
+  color: #e2e8f0;
   font-weight: 700;
   margin: 0.65rem 0 0.9rem;
   font-size: 1.1rem;
@@ -646,7 +646,7 @@ body {
 .plan-price-num {
   font-size: clamp(2rem, 3.5vw, 2.75rem);
   font-weight: 900;
-  color: #0f172a;
+  color: #f0f6ff;
   letter-spacing: -0.02em;
   line-height: 1;
 }
@@ -684,16 +684,54 @@ body {
 
 .plan-features li {
   list-style: none;
-  background: #f1f5f9;
-  border: 1px solid #e2e8f0;
+  background: rgba(255, 255, 255, 0.03);
+  border: 1px solid rgba(255, 255, 255, 0.07);
   border-radius: 10px;
   padding: 0.55rem 0.75rem;
   font-size: 0.9rem;
-  color: #0f172a;
+  color: #cbd5e1;
 }
 
 .plan-features li .fa-check-circle {
   color: #22c55e;
+}
+
+/* Not-included features — greyed with red × to drive upgrade */
+.plan-feature--no {
+  opacity: 0.45;
+}
+
+.plan-feature--no .fa-times-circle {
+  color: #ef4444;
+}
+
+/* Revision / satisfaction guarantee pill */
+.plan-guarantee {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  background: rgba(34, 197, 94, 0.06);
+  border: 1px solid rgba(34, 197, 94, 0.2);
+  border-radius: 0.5rem;
+  padding: 0.5rem 0.75rem;
+  font-size: 0.8rem;
+  font-weight: 600;
+  color: #22c55e;
+  margin-top: 0.875rem;
+}
+
+.plan-guarantee i {
+  font-size: 0.9rem;
+  flex-shrink: 0;
+}
+
+/* Card footer — groups toggle + CTA so they never collide */
+.plan-card-footer {
+  margin-top: auto;
+  padding-top: 0.875rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.625rem;
 }
 
 .ai-highlight {
@@ -743,8 +781,14 @@ body {
   z-index: 5;
 }
 
+/* Gold badge for "Best Value" */
+.plan-badge--gold {
+  background: linear-gradient(135deg, #d97706, #f59e0b);
+}
+
 .plan-item--featured .plan-card {
-  border-color: #16a34a;
+  border-color: rgba(34, 197, 94, 0.5);
+  background: #1e2d44;
 }
 
 .btn-custom-cta {
@@ -767,7 +811,7 @@ body {
   transform: translateY(-2px);
 }
 
-/* CTA button on each PlanCard */
+/* CTA button on each PlanCard — margin-top handled by .plan-card-footer */
 .plan-cta-btn {
   display: flex;
   align-items: center;
@@ -781,8 +825,7 @@ body {
   text-decoration: none;
   font-weight: 700;
   font-size: 0.9rem;
-  margin-top: auto;
-  padding-top: 1rem;
+  margin-top: 0;
   transition:
     background 0.2s,
     transform 0.2s;
@@ -856,7 +899,7 @@ body {
   border-radius: 0.75rem;
   font-size: 0.85rem;
   font-weight: 600;
-  color: #475569;
+  color: #94a3b8;
 }
 
 .plans-trust-bar i {
