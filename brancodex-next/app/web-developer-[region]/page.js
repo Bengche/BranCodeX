@@ -216,9 +216,9 @@ export default function RegionPage({ params }) {
               <span className="region-accent">{r.city}</span>
             </h2>
             <p>
-              Every service below is available to businesses in {r.city} and the
-              {" "}{r.region}. We handle everything from design to launch to
-              ongoing support.
+              Every service below is available to businesses in {r.city} and the{" "}
+              {r.region}. We handle everything from design to launch to ongoing
+              support.
             </p>
           </div>
           <div className="region-services-grid">
@@ -242,13 +242,12 @@ export default function RegionPage({ params }) {
             <div className="region-pricing-text">
               <span className="region-badge">Transparent Pricing</span>
               <h2>
-                Websites starting at{" "}
-                <span className="region-accent">$189</span>
+                Websites starting at <span className="region-accent">$189</span>
               </h2>
               <p>
                 Professional websites for {r.city} businesses from $189
-                (~116,000 XAF). No hidden fees. Pay via MTN Mobile Money,
-                Orange Money, or international transfer.
+                (~116,000 XAF). No hidden fees. Pay via MTN Mobile Money, Orange
+                Money, or international transfer.
               </p>
               <ul className="region-pricing-list">
                 <li>
@@ -258,10 +257,12 @@ export default function RegionPage({ params }) {
                   <i className="fas fa-check-circle"></i> 5-Page Website — $269
                 </li>
                 <li>
-                  <i className="fas fa-check-circle"></i> E-Commerce Store — from $589
+                  <i className="fas fa-check-circle"></i> E-Commerce Store —
+                  from $589
                 </li>
                 <li>
-                  <i className="fas fa-check-circle"></i> All packages include SEO, SSL &amp; mobile-first design
+                  <i className="fas fa-check-circle"></i> All packages include
+                  SEO, SSL &amp; mobile-first design
                 </li>
               </ul>
               <div className="region-pricing-actions">
@@ -317,9 +318,7 @@ export default function RegionPage({ params }) {
       <section className="region-cta">
         <div className="region-inner">
           <div className="region-cta-box">
-            <h2>
-              Ready to grow your {r.city} business online?
-            </h2>
+            <h2>Ready to grow your {r.city} business online?</h2>
             <p>
               Send us a message today for a free consultation and personalized
               quote. We respond within 24 hours — usually much faster.

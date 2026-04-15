@@ -16,8 +16,15 @@ const regionData = [
     region: "Central Africa",
     regionLabel: "All Regions",
     population: "28 million",
-    majorIndustries: ["Trade", "Agriculture", "Oil & Gas", "Services", "Technology"],
-    metaTitle: "Web Developer in Cameroon | Best Web Development Agency | BranCodeX",
+    majorIndustries: [
+      "Trade",
+      "Agriculture",
+      "Oil & Gas",
+      "Services",
+      "Technology",
+    ],
+    metaTitle:
+      "Web Developer in Cameroon | Best Web Development Agency | BranCodeX",
     metaDescription:
       "BranCodeX is Cameroon's leading web development agency. We build fast, modern websites, e-commerce stores, and web apps for businesses across all 10 regions of Cameroon and internationally. Get your free quote today.",
     keywords: [
@@ -69,8 +76,15 @@ const regionData = [
     region: "Littoral Region",
     regionLabel: "Littoral",
     population: "4 million",
-    majorIndustries: ["Commerce", "Port & Logistics", "Finance", "Manufacturing", "Hospitality"],
-    metaTitle: "Web Developer in Douala | Professional Web Design Douala | BranCodeX",
+    majorIndustries: [
+      "Commerce",
+      "Port & Logistics",
+      "Finance",
+      "Manufacturing",
+      "Hospitality",
+    ],
+    metaTitle:
+      "Web Developer in Douala | Professional Web Design Douala | BranCodeX",
     metaDescription:
       "Looking for a web developer in Douala? BranCodeX builds fast, modern websites, e-commerce stores, and landing pages for businesses in Douala, Littoral Region. Get your free quote today.",
     keywords: [
@@ -121,8 +135,15 @@ const regionData = [
     region: "Centre Region",
     regionLabel: "Centre",
     population: "3.5 million",
-    majorIndustries: ["Government", "Education", "NGOs", "Services", "Healthcare"],
-    metaTitle: "Web Developer in Yaoundé | Website Design Yaoundé Cameroon | BranCodeX",
+    majorIndustries: [
+      "Government",
+      "Education",
+      "NGOs",
+      "Services",
+      "Healthcare",
+    ],
+    metaTitle:
+      "Web Developer in Yaoundé | Website Design Yaoundé Cameroon | BranCodeX",
     metaDescription:
       "Professional web developer in Yaoundé, Cameroon. BranCodeX builds fast websites, landing pages, and e-commerce stores for businesses in Yaoundé and the Centre Region. Free quote available.",
     keywords: [
@@ -173,8 +194,15 @@ const regionData = [
     region: "Northwest Region",
     regionLabel: "Northwest",
     population: "500,000+",
-    majorIndustries: ["Trade", "Agriculture", "Education", "Services", "Crafts"],
-    metaTitle: "Web Developer in Bamenda | Professional Website Design Bamenda | BranCodeX",
+    majorIndustries: [
+      "Trade",
+      "Agriculture",
+      "Education",
+      "Services",
+      "Crafts",
+    ],
+    metaTitle:
+      "Web Developer in Bamenda | Professional Website Design Bamenda | BranCodeX",
     metaDescription:
       "BranCodeX is a web development agency based in Bamenda, Northwest Region. We build professional websites, e-commerce stores, and landing pages for businesses in Bamenda and across Cameroon.",
     keywords: [
@@ -225,8 +253,14 @@ const regionData = [
     region: "West Region",
     regionLabel: "Ouest",
     population: "400,000+",
-    majorIndustries: ["Commerce", "Agriculture", "Real Estate", "Transportation"],
-    metaTitle: "Web Developer in Bafoussam | Website Design West Region Cameroon | BranCodeX",
+    majorIndustries: [
+      "Commerce",
+      "Agriculture",
+      "Real Estate",
+      "Transportation",
+    ],
+    metaTitle:
+      "Web Developer in Bafoussam | Website Design West Region Cameroon | BranCodeX",
     metaDescription:
       "Professional web development in Bafoussam, West Region. BranCodeX builds fast, modern websites and e-commerce stores for businesses in Bafoussam and across the West Region of Cameroon.",
     keywords: [
@@ -276,7 +310,8 @@ const regionData = [
     regionLabel: "Southwest",
     population: "200,000+",
     majorIndustries: ["Education", "Technology", "Tourism", "Agriculture"],
-    metaTitle: "Web Developer in Buéa | Silicon Mountain Web Design Cameroon | BranCodeX",
+    metaTitle:
+      "Web Developer in Buéa | Silicon Mountain Web Design Cameroon | BranCodeX",
     metaDescription:
       "Web development services in Buéa, Southwest Region — home of Silicon Mountain. BranCodeX builds modern websites and tech-forward web apps for startups and businesses in Buéa.",
     keywords: [
@@ -327,7 +362,8 @@ const regionData = [
     regionLabel: "North",
     population: "500,000+",
     majorIndustries: ["Textile", "Cotton", "Cattle", "Commerce", "Transport"],
-    metaTitle: "Web Developer in Garoua | Professional Website Design North Cameroon | BranCodeX",
+    metaTitle:
+      "Web Developer in Garoua | Professional Website Design North Cameroon | BranCodeX",
     metaDescription:
       "Web development services in Garoua, North Region of Cameroon. BranCodeX builds professional websites and e-commerce stores for businesses in Garoua and the surrounding North Region.",
     keywords: [
@@ -377,7 +413,8 @@ const regionData = [
     regionLabel: "Far North",
     population: "400,000+",
     majorIndustries: ["Tourism", "Handicrafts", "Agriculture", "Trade"],
-    metaTitle: "Web Developer in Maroua | Website Design Far North Cameroon | BranCodeX",
+    metaTitle:
+      "Web Developer in Maroua | Website Design Far North Cameroon | BranCodeX",
     metaDescription:
       "Professional web development in Maroua, Far North Region of Cameroon. BranCodeX builds modern websites and e-commerce solutions for businesses and tourism operators in Maroua.",
     keywords: [
@@ -427,7 +464,8 @@ const regionData = [
     regionLabel: "Adamawa",
     population: "300,000+",
     majorIndustries: ["Cattle", "Agriculture", "Trade", "Transport Hub"],
-    metaTitle: "Web Developer in Ngaoundéré | Website Design Adamawa Cameroon | BranCodeX",
+    metaTitle:
+      "Web Developer in Ngaoundéré | Website Design Adamawa Cameroon | BranCodeX",
     metaDescription:
       "Web development services in Ngaoundéré, Adamawa Region of Cameroon. BranCodeX builds professional websites and e-commerce solutions for businesses in Ngaoundéré and the Adamawa plateau.",
     keywords: [
@@ -477,7 +515,8 @@ const regionData = [
     regionLabel: "East",
     population: "200,000+",
     majorIndustries: ["Forestry", "Mining", "Agriculture", "Commerce"],
-    metaTitle: "Web Developer in Bertoua | Website Design East Region Cameroon | BranCodeX",
+    metaTitle:
+      "Web Developer in Bertoua | Website Design East Region Cameroon | BranCodeX",
     metaDescription:
       "Professional web development in Bertoua, East Region of Cameroon. BranCodeX builds modern websites and e-commerce solutions for forestry, mining, and commercial businesses in Bertoua.",
     keywords: [
@@ -527,7 +566,8 @@ const regionData = [
     regionLabel: "South",
     population: "150,000+",
     majorIndustries: ["Cocoa", "Agriculture", "Timber", "Trade"],
-    metaTitle: "Web Developer in Ebolowa | Website Design South Region Cameroon | BranCodeX",
+    metaTitle:
+      "Web Developer in Ebolowa | Website Design South Region Cameroon | BranCodeX",
     metaDescription:
       "Web development services in Ebolowa, South Region of Cameroon. BranCodeX builds professional websites and online stores for agri-businesses, traders, and services in Ebolowa.",
     keywords: [

@@ -300,7 +300,13 @@ const blogData = [
     date: "2025-05-05",
     readTime: "9 min read",
     category: "E-Commerce",
-    tags: ["e-commerce", "online store", "cameroon", "momo", "digital business"],
+    tags: [
+      "e-commerce",
+      "online store",
+      "cameroon",
+      "momo",
+      "digital business",
+    ],
     author: "Beng Brandon Che",
     content: `
 <p>E-commerce in Cameroon is no longer a niche phenomenon. With over 10 million internet users, rapidly growing mobile money adoption, and a young, digitally active population, the conditions for successful online retail have never been better. This guide covers everything a Cameroonian business owner needs to know about selling online — from choosing the right platform to handling payments and logistics.</p>
@@ -345,7 +351,8 @@ const blogData = [
 
   {
     slug: "web-development-douala",
-    title: "Web Development in Douala: Professional Websites for Littoral Region Businesses",
+    title:
+      "Web Development in Douala: Professional Websites for Littoral Region Businesses",
     excerpt:
       "Why businesses in Douala need a professional website in 2025 — and how BranCodeX builds high-performance websites specifically optimized for the Cameroonian economic capital.",
     date: "2025-05-10",
@@ -384,13 +391,20 @@ const blogData = [
 
   {
     slug: "web-development-yaounde",
-    title: "Web Development in Yaoundé: Professional Websites for the Centre Region",
+    title:
+      "Web Development in Yaoundé: Professional Websites for the Centre Region",
     excerpt:
       "How businesses, NGOs, and government contractors in Yaoundé can leverage professional web development to win clients, secure contracts, and establish credibility online.",
     date: "2025-05-12",
     readTime: "6 min read",
     category: "Web Development",
-    tags: ["web development", "yaounde", "centre region", "cameroon", "website"],
+    tags: [
+      "web development",
+      "yaounde",
+      "centre region",
+      "cameroon",
+      "website",
+    ],
     author: "Beng Brandon Che",
     content: `
 <p>Yaoundé is Cameroon's political and administrative capital — a city where government ministries, embassies, NGOs, universities, and a thriving startup ecosystem coexist. The digital presence demands of Yaoundé businesses are distinct from those of Douala: here, credibility, authority, and the ability to speak to both local and international audiences are paramount. This article explores what professional web development looks like for Yaoundé businesses and institutions.</p>
@@ -421,7 +435,8 @@ const blogData = [
 
   {
     slug: "ecommerce-douala-littoral",
-    title: "E-Commerce in Douala: How to Launch Your Online Store in Cameroon's Biggest Market",
+    title:
+      "E-Commerce in Douala: How to Launch Your Online Store in Cameroon's Biggest Market",
     excerpt:
       "A practical guide for Douala businesses ready to start selling online — covering platforms, payments, logistics, and SEO in Cameroon's economic capital.",
     date: "2025-05-15",
@@ -486,7 +501,8 @@ const blogData = [
 
   {
     slug: "ecommerce-bamenda-northwest",
-    title: "E-Commerce in Bamenda: Selling Online in the Northwest Region of Cameroon",
+    title:
+      "E-Commerce in Bamenda: Selling Online in the Northwest Region of Cameroon",
     excerpt:
       "A guide for Bamenda businesses ready to move beyond WhatsApp sales and build a real online store reaching customers across the Northwest Region and beyond.",
     date: "2025-05-20",
@@ -519,13 +535,20 @@ const blogData = [
 
   {
     slug: "ecommerce-bafoussam-west",
-    title: "E-Commerce in Bafoussam: Online Business for West Region Entrepreneurs",
+    title:
+      "E-Commerce in Bafoussam: Online Business for West Region Entrepreneurs",
     excerpt:
       "How Bafoussam traders and businesses in the West Region of Cameroon can build profitable online stores and reach customers nationally and internationally.",
     date: "2025-05-22",
     readTime: "5 min read",
     category: "E-Commerce",
-    tags: ["e-commerce", "bafoussam", "west region", "cameroon", "online store"],
+    tags: [
+      "e-commerce",
+      "bafoussam",
+      "west region",
+      "cameroon",
+      "online store",
+    ],
     author: "Beng Brandon Che",
     content: `
 <p>Bafoussam and the West Region of Cameroon have long been associated with commercial energy and entrepreneurial initiative — qualities that translate naturally into successful e-commerce. The city's position as a major market hub, combined with the West Region's productive agricultural economy and strong diaspora connections, creates compelling e-commerce opportunities that forward-thinking businesses are beginning to seize.</p>
@@ -554,7 +577,13 @@ const blogData = [
     date: "2025-05-24",
     readTime: "5 min read",
     category: "E-Commerce",
-    tags: ["e-commerce", "buea", "southwest", "silicon mountain", "online store"],
+    tags: [
+      "e-commerce",
+      "buea",
+      "southwest",
+      "silicon mountain",
+      "online store",
+    ],
     author: "Beng Brandon Che",
     content: `
 <p>Buéa occupies a unique position in Cameroon's e-commerce landscape. As home to Silicon Mountain — the continent's most noted tech startup hub outside of Lagos and Nairobi — Buéa has a tech-literate population, active startup founders, and a culture that readily embraces digital business models. Whether you are a startup seeking to launch a digital product, a local retailer ready to go online, or a service provider booking clients through a website, Buéa is an excellent market to build from.</p>
@@ -604,7 +633,8 @@ const blogData = [
 
   {
     slug: "ecommerce-maroua-far-north",
-    title: "E-Commerce in Maroua: Digital Commerce for Far North Region Businesses",
+    title:
+      "E-Commerce in Maroua: Digital Commerce for Far North Region Businesses",
     excerpt:
       "A guide to launching online sales for businesses in Maroua and the Far North Region — including tourism, handicrafts, and agricultural products.",
     date: "2025-05-28",
@@ -633,7 +663,8 @@ const blogData = [
 
   {
     slug: "ecommerce-ngaoundere-adamawa",
-    title: "E-Commerce in Ngaoundéré: Building Online Business in the Adamawa Region",
+    title:
+      "E-Commerce in Ngaoundéré: Building Online Business in the Adamawa Region",
     excerpt:
       "How Ngaoundéré businesses can use e-commerce to connect the Adamawa Region's agricultural and commercial economy with national and international buyers.",
     date: "2025-05-30",
@@ -662,7 +693,8 @@ const blogData = [
 
   {
     slug: "ecommerce-bertoua-east",
-    title: "E-Commerce in Bertoua: Selling Online in the East Region of Cameroon",
+    title:
+      "E-Commerce in Bertoua: Selling Online in the East Region of Cameroon",
     excerpt:
       "How forestry, mining, and commercial businesses in Bertoua can use professional websites and e-commerce to reach national buyers and international partners.",
     date: "2025-06-01",
@@ -691,13 +723,21 @@ const blogData = [
 
   {
     slug: "ecommerce-ebolowa-south",
-    title: "E-Commerce in Ebolowa: Digital Business Opportunities in South Cameroon",
+    title:
+      "E-Commerce in Ebolowa: Digital Business Opportunities in South Cameroon",
     excerpt:
       "How businesses in Ebolowa and the South Region can leverage e-commerce to sell cocoa, agricultural products, and services to national and international buyers.",
     date: "2025-06-03",
     readTime: "5 min read",
     category: "E-Commerce",
-    tags: ["e-commerce", "ebolowa", "south region", "cameroon", "cocoa", "online store"],
+    tags: [
+      "e-commerce",
+      "ebolowa",
+      "south region",
+      "cameroon",
+      "cocoa",
+      "online store",
+    ],
     author: "Beng Brandon Che",
     content: `
 <p>Ebolowa sits at the heart of Cameroon's cocoa belt — a region whose agricultural wealth has historically flowed to intermediaries and exporters while producers received less than their fair share. E-commerce and direct-to-buyer online platforms represent an opportunity to change that equation: Ebolowa producers who establish a professional online presence can connect directly with national buyers, export cooperatives, and international fair-trade importers, eliminating layers of margin loss.</p>

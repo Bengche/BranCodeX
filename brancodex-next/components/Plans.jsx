@@ -6,8 +6,32 @@
 
 "use client";
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import Link from "next/link";
+
+// ─── Live XAF rate ──────────────────────────────────────────────────────────
+
+const FALLBACK_RATE = 620;
+
+function useXafRate() {
+  const [rate, setRate] = useState(null);
+  useEffect(() => {
+    fetch("https://open.er-api.com/v6/latest/USD")
+      .then((r) => r.json())
+      .then((d) => {
+        if (d.result === "success" && d.rates?.XAF) setRate(d.rates.XAF);
+        else setRate(FALLBACK_RATE);
+      })
+      .catch(() => setRate(FALLBACK_RATE));
+  }, []);
+  return rate;
+}
+
+// Converts "$189" → dollar amount, returns null for non-numeric strings
+function parseDollars(priceStr) {
+  const n = Number(priceStr.replace(/[$,]/g, ""));
+  return isNaN(n) || n === 0 ? null : n;
+}
 
 // ─── Data ──────────────────────────────────────────────────────────────────
 
@@ -111,8 +135,14 @@ const ecommercePlans = [
 
 // ─── Card component ─────────────────────────────────────────────────────────
 
-function PlanCard({ plan }) {
+function PlanCard({ plan, xafRate }) {
   const [open, setOpen] = useState(false);
+
+  const dollars = parseDollars(plan.price);
+  const xafAmount =
+    xafRate && dollars
+      ? Math.round(dollars * xafRate).toLocaleString("en") + " FCFA"
+      : null;
 
   return (
     <div className={`plan-item${plan.featured ? " plan-item--featured" : ""}`}>
@@ -124,6 +154,14 @@ function PlanCard({ plan }) {
         <p className="plan-price">
           Starting from US$ <span>{plan.price.replace("$", "")}</span>
         </p>
+
+        {xafAmount && (
+          <p className="plan-xaf-price">
+            <span className="xaf-live-dot" aria-hidden="true" />
+            ≈&nbsp;<span className="xaf-val">{xafAmount}</span>
+            &nbsp;· live rate
+          </p>
+        )}
 
         <p className="ai-highlight">
           <i className="fa fa-robot" style={{ color: "#3b82f6" }}></i>
@@ -173,6 +211,7 @@ function PlanCard({ plan }) {
 // ─── Main component ──────────────────────────────────────────────────────────
 
 export default function Plans() {
+  const xafRate = useXafRate();
   return (
     <section id="plans" className="plans-section">
       <div className="plans-header">
@@ -190,7 +229,7 @@ export default function Plans() {
       {/* Website plans grid */}
       <div className="plans-grid">
         {websitePlans.map((plan) => (
-          <PlanCard key={plan.title} plan={plan} />
+          <PlanCard key={plan.title} plan={plan} xafRate={xafRate} />
         ))}
 
         {/* Custom Solutions card — no features toggle, just a CTA */}
@@ -224,7 +263,7 @@ export default function Plans() {
       </h3>
       <div className="plans-grid">
         {ecommercePlans.map((plan) => (
-          <PlanCard key={plan.title} plan={plan} />
+          <PlanCard key={plan.title} plan={plan} xafRate={xafRate} />
         ))}
 
         {/* Enterprise card */}

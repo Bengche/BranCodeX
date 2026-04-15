@@ -50,9 +50,14 @@ export default function sitemap() {
     { url: BASE, priority: 1.0, changeFrequency: "weekly" },
     { url: `${BASE}/faq`, priority: 0.8, changeFrequency: "monthly" },
     { url: `${BASE}/playground`, priority: 0.7, changeFrequency: "monthly" },
-    { url: `${BASE}/hire-web-developer-cameroon`, priority: 0.9, changeFrequency: "monthly" },
+    {
+      url: `${BASE}/hire-web-developer-cameroon`,
+      priority: 0.9,
+      changeFrequency: "monthly",
+    },
     { url: `${BASE}/guide`, priority: 0.7, changeFrequency: "monthly" },
     { url: `${BASE}/blog`, priority: 0.9, changeFrequency: "weekly" },
+    { url: `${BASE}/our-process`, priority: 0.7, changeFrequency: "monthly" },
   ].map((p) => ({ ...p, lastModified: now }));
 
   const blogPages = blogSlugs.map((slug) => ({
@@ -71,4 +76,3 @@ export default function sitemap() {
 
   return [...staticPages, ...blogPages, ...regionPages];
 }
-
