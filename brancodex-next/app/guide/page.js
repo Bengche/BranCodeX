@@ -5,10 +5,9 @@ import Footer from "../../components/Footer";
 const guideSchema = {
   "@context": "https://schema.org",
   "@type": "Article",
-  headline:
-    "5 Costly Mistakes Cameroonian Businesses Make With Their Website",
+  headline: "5 Costly Mistakes Businesses Make With Their Website",
   description:
-    "Discover the 5 most common website mistakes that cost Cameroonian businesses clients and revenue — and how to fix them.",
+    "Discover the 5 most common website mistakes that cost businesses clients and revenue worldwide — and how to fix them.",
   author: {
     "@type": "Person",
     name: "Beng Brandon Che",
@@ -30,34 +29,34 @@ const guideSchema = {
     "@id": "https://brancodex.com/guide",
   },
   keywords:
-    "website mistakes cameroon, mobile website cameroon, SEO cameroon, website speed cameroon, call to action website",
+    "website mistakes, mobile website optimization, SEO mistakes, website speed, call to action website, improve website performance",
   articleSection: "Web Development Guide",
   about: {
     "@type": "Thing",
-    name: "Website Best Practices for Cameroonian Businesses",
+    name: "Website Best Practices for Businesses Worldwide",
   },
 };
 
 export const metadata = {
   title:
-    "5 Mistakes Cameroonian Businesses Make With Their Website | BranCodeX",
+    "5 Mistakes Businesses Make With Their Website | BranCodeX",
   description:
-    "Discover the 5 most common website mistakes that cost Cameroonian businesses clients and revenue — and how to fix them. Free guide by BranCodeX.",
+    "Discover the 5 most common website mistakes costing businesses clients and revenue worldwide — and how to fix them. Free guide by BranCodeX.",
   keywords: [
-    "website mistakes cameroon",
-    "common website errors cameroon",
-    "improve website cameroon",
-    "mobile website cameroon",
-    "website not ranking google cameroon",
-    "ssl certificate cameroon website",
-    "website speed cameroon",
+    "website mistakes",
+    "common website errors",
+    "improve website performance",
+    "mobile website optimization",
+    "website not ranking google",
+    "ssl certificate website",
+    "website speed optimization",
     "no call to action website",
-    "local seo cameroon",
-    "free web guide cameroon",
+    "local seo tips",
+    "free web development guide",
   ],
   alternates: { canonical: "https://brancodex.com/guide" },
   openGraph: {
-    title: "5 Website Mistakes Cameroonian Businesses Must Avoid",
+    title: "5 Website Mistakes Every Business Must Avoid",
     description:
       "Free guide: The 5 critical website mistakes that are costing your business clients right now — and the exact fixes.",
     url: "https://brancodex.com/guide",
@@ -66,7 +65,7 @@ export const metadata = {
   },
   twitter: {
     card: "summary",
-    title: "5 Website Mistakes Cameroonian Businesses Must Avoid",
+    title: "5 Website Mistakes Every Business Must Avoid",
     description:
       "Free guide: The 5 critical website mistakes that are costing your business clients right now — and the exact fixes.",
   },
@@ -78,9 +77,9 @@ const mistakes = [
     icon: "fa-mobile-screen",
     title: "Not Having a Mobile-Optimized Website",
     problem:
-      "Over 80% of internet users in Cameroon browse on mobile phones. If your website isn't designed for mobile first, you are actively losing clients every single day. Slow-loading, hard-to-tap buttons and text that requires zooming will drive visitors straight to your competitors.",
-    fix: "Mobile-first design ensures your website looks perfect on every screen size. Every BranCodeX site is built mobile-first from day one — because that is where your customers are.",
-    stat: "80%+ of Cameroonian users browse on mobile",
+      "Over 80% of internet users worldwide browse on mobile phones. If your website isn't designed for mobile first, you are actively losing clients every single day. Slow-loading, hard-to-tap buttons and text that requires zooming will drive visitors straight to your competitors.",
+    fix: "Mobile-first design ensures your website looks perfect on every screen size — phone, tablet, or desktop. Every BranCodeX site is built mobile-first from day one, because that is where your customers are.",
+    stat: "80%+ of global internet users browse on mobile",
     color: "#ef4444",
   },
   {
@@ -118,8 +117,8 @@ const mistakes = [
     icon: "fa-magnifying-glass",
     title: "Not Showing Up on Google (No SEO)",
     problem:
-      "Having a beautiful website that no one can find is like opening a shop in the middle of the forest. Without basic SEO (Search Engine Optimization), your website will not appear when potential clients search for your services on Google. Most businesses in Cameroon have zero SEO strategy.",
-    fix: "SEO includes optimized page titles, descriptions, proper heading structure, local business markup, and content that Google understands. BranCodeX includes basic on-page SEO in every project — giving you a real chance to rank.",
+      "Having a beautiful website that no one can find is like opening a shop in the middle of the forest. Without basic SEO (Search Engine Optimization), your website will not appear when potential clients search for your services on Google. Most small businesses — regardless of where they are located — have zero SEO strategy.",
+    fix: "SEO includes optimized page titles, descriptions, proper heading structure, local business markup, and content that Google understands. BranCodeX includes on-page SEO in every project — giving you a real chance to rank in your city, country, or globally.",
     stat: "93% of online experiences begin with a search engine",
     color: "#3b82f6",
   },
@@ -139,7 +138,7 @@ export default function GuidePage() {
           <div className="guide-hero-inner">
             <span className="guide-badge">FREE GUIDE</span>
             <h1>
-              5 Costly Mistakes Cameroonian Businesses Make With Their Website
+              5 Costly Mistakes Businesses Make With Their Website
             </h1>
             <p>
               And the exact fixes that will turn your website into a
@@ -147,14 +146,13 @@ export default function GuidePage() {
             </p>
             <div className="guide-meta">
               <span>
-                <i className="fas fa-user"></i> By BranCodeX — Bamenda, Cameroon
+                <i className="fas fa-user"></i> By BranCodeX
               </span>
               <span>
                 <i className="fas fa-clock"></i> 5 min read
               </span>
               <span>
-                <i className="fas fa-globe"></i> For businesses in Cameroon &
-                beyond
+                <i className="fas fa-globe"></i> For businesses worldwide
               </span>
             </div>
           </div>
@@ -164,8 +162,8 @@ export default function GuidePage() {
         <section className="guide-intro-section">
           <div className="guide-container">
             <p className="guide-intro-text">
-              After building websites for businesses across Cameroon and
-              internationally, one pattern stands out: the same five mistakes
+              After auditing websites for businesses across different countries
+              and industries, one pattern stands out: the same five mistakes
               appear in <strong>over 90% of small business websites</strong> we
               review. These mistakes are silently costing businesses thousands
               of dollars in lost clients every year.
@@ -238,7 +236,7 @@ export default function GuidePage() {
                 </a>
               </div>
               <p className="guide-cta-small">
-                Based in Bamenda, Cameroon · Serving clients worldwide ·{" "}
+                Trusted by businesses worldwide ·{" "}
                 <a href="mailto:contact@brancodex.com">contact@brancodex.com</a>
               </p>
             </div>

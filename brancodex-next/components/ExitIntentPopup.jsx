@@ -69,7 +69,7 @@ export default function ExitIntentPopup() {
             `Action: Visit their site, run PageSpeed Insights + SEO checks, ` +
             `then reply to ${email.trim()} with the audit report within 24 h.`,
         },
-        "n6JWvzVKqpFDqg1xt"
+        "n6JWvzVKqpFDqg1xt",
       );
     } catch (err) {
       console.error("EmailJS error:", err);
@@ -156,8 +156,7 @@ export default function ExitIntentPopup() {
             </form>
 
             <a href="/guide" className="exit-popup-secondary" onClick={close}>
-              📄 Or read: &quot;5 Mistakes Cameroonian Businesses Make With
-              Their Website&quot;
+              📄 Or read: &quot;5 Costly Mistakes Businesses Make With Their Website&quot;
             </a>
 
             <button type="button" className="exit-popup-skip" onClick={close}>
