@@ -347,6 +347,8 @@ body {
   padding: 3rem 1.5rem;
   background: linear-gradient(135deg, #0f172a, #1e293b);
   color: #f8fafc;
+  border-top: 3px solid rgba(34, 197, 94, 0.3);
+  border-bottom: 3px solid rgba(34, 197, 94, 0.3);
 }
 
 .results-grid {
@@ -755,7 +757,9 @@ body {
   text-decoration: none;
   font-weight: 700;
   margin-top: auto;
-  transition: background 0.2s, transform 0.2s;
+  transition:
+    background 0.2s,
+    transform 0.2s;
 }
 
 .btn-custom-cta:hover {
@@ -779,7 +783,9 @@ body {
   font-size: 0.9rem;
   margin-top: auto;
   padding-top: 1rem;
-  transition: background 0.2s, transform 0.2s;
+  transition:
+    background 0.2s,
+    transform 0.2s;
 }
 
 .plan-cta-btn:hover {
@@ -811,10 +817,15 @@ body {
 
 .plans-category-divider::before,
 .plans-category-divider::after {
-  content: '';
+  content: "";
   flex: 1;
   height: 1px;
-  background: linear-gradient(90deg, transparent, rgba(34, 197, 94, 0.3), transparent);
+  background: linear-gradient(
+    90deg,
+    transparent,
+    rgba(34, 197, 94, 0.3),
+    transparent
+  );
 }
 
 .plans-category-badge {
@@ -866,12 +877,19 @@ body {
 /* =========================================================================
    SKILLS
    ========================================================================= */
+.playground {
+  border-top: 3px solid rgba(34, 197, 94, 0.3);
+  border-bottom: 3px solid rgba(34, 197, 94, 0.3);
+}
+
 .skills-section {
   padding: 4rem 2rem;
   background-color: #1e293b;
   color: #f1f5f9;
   text-align: center;
   margin-top: 30px;
+  border-top: 3px solid rgba(34, 197, 94, 0.3);
+  border-bottom: 3px solid rgba(34, 197, 94, 0.3);
 }
 
 .skills-intro {
@@ -1127,6 +1145,8 @@ body {
   padding: 4rem 1.5rem;
   background: linear-gradient(to bottom right, #f8fafc, #e0f7fa);
   text-align: center;
+  border-top: 3px solid rgba(34, 197, 94, 0.3);
+  border-bottom: 3px solid rgba(34, 197, 94, 0.3);
 }
 
 .contact-container {
@@ -1231,6 +1251,8 @@ body {
   background: linear-gradient(135deg, #0f172a, #14b8a6);
   color: #ffffff;
   text-align: center;
+  border-top: 3px solid rgba(34, 197, 94, 0.3);
+  border-bottom: 3px solid rgba(34, 197, 94, 0.3);
 }
 
 .cta-section h2 {
@@ -1693,6 +1715,8 @@ textarea {
   background: #0f172a;
   color: #f8fafc;
   overflow: hidden;
+  border-top: 3px solid rgba(34, 197, 94, 0.3);
+  border-bottom: 3px solid rgba(34, 197, 94, 0.3);
 }
 
 .projects-intro {
@@ -1970,6 +1994,8 @@ textarea {
   background: #0f172a;
   color: #f1f5f9;
   text-align: center;
+  border-top: 3px solid rgba(34, 197, 94, 0.3);
+  border-bottom: 3px solid rgba(34, 197, 94, 0.3);
 }
 
 .testimonials-intro {
@@ -3484,6 +3510,8 @@ textarea {
 .calculator-section {
   padding: 6rem 1.5rem;
   background: #0f172a;
+  border-top: 3px solid rgba(34, 197, 94, 0.3);
+  border-bottom: 3px solid rgba(34, 197, 94, 0.3);
 }
 
 .calculator-inner {
@@ -3899,6 +3927,8 @@ textarea {
 .booking-section {
   padding: 6rem 1.5rem;
   background: #1e293b;
+  border-top: 3px solid rgba(34, 197, 94, 0.3);
+  border-bottom: 3px solid rgba(34, 197, 94, 0.3);
 }
 
 .booking-inner {
@@ -5571,7 +5601,8 @@ textarea {
 .process-teaser {
   padding: 4rem 1.5rem;
   background: #0f172a;
-  border-top: 1px solid #1e293b;
+  border-top: 3px solid rgba(34, 197, 94, 0.3);
+  border-bottom: 3px solid rgba(34, 197, 94, 0.3);
 }
 .process-teaser-inner {
   max-width: 700px;
