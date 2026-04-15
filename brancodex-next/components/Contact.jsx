@@ -1,6 +1,6 @@
 "use client";
 
-import { useRef, useState, useEffect } from "react";
+import { useRef, useState } from "react";
 import emailjs from "@emailjs/browser";
 
 const EMAILJS_SERVICE = "service_4i8dgy8";
@@ -11,24 +11,21 @@ export default function Contact() {
   const formRef = useRef(null);
   const [statusMsg, setStatusMsg] = useState("");
 
-  useEffect(() => {
-    emailjs.init(EMAILJS_KEY);
-  }, []);
-
   async function sendMessage(e) {
     e.preventDefault();
-    const status = setStatusMsg;
-    status("Sending message...");
+    setStatusMsg("Sending message...");
     try {
       await emailjs.sendForm(
         EMAILJS_SERVICE,
         EMAILJS_TEMPLATE,
         formRef.current,
+        EMAILJS_KEY,
       );
-      status("Thank you! I'll get back to you soon 😊");
+      setStatusMsg("✅ Message sent! I'll get back to you soon 😊");
       formRef.current.reset();
-    } catch {
-      status("Something went wrong. Please try again.");
+    } catch (err) {
+      console.error("EmailJS error:", err);
+      setStatusMsg("❌ Something went wrong. Please try again.");
     }
   }
 
