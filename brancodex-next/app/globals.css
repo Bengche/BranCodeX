@@ -45,7 +45,10 @@ body {
 #navbar {
   background-color: #0f172a;
   border-bottom: 1px solid transparent;
-  transition: background-color 0.5s ease, border-color 0.5s ease, box-shadow 0.5s ease;
+  transition:
+    background-color 0.5s ease,
+    border-color 0.5s ease,
+    box-shadow 0.5s ease;
 }
 
 #navbar.navbar--scrolled {
@@ -3549,6 +3552,13 @@ textarea {
 }
 .exit-popup-skip:hover {
   color: #94a3b8;
+}
+
+.exit-popup-error {
+  color: #f87171;
+  font-size: 0.82rem;
+  text-align: center;
+  margin: -0.25rem 0 0.25rem;
 }
 
 .exit-popup-success {
