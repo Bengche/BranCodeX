@@ -17,7 +17,9 @@ const quickLinks = [
   { label: "Blog", href: "/blog" },
   { label: "FAQ's", href: "/faq" },
   { label: "Playground", href: "/playground" },
-  { label: "Contact", href: "/#contact" },
+  { label: "Contact", href: "/contact" },
+  { label: "Privacy Policy", href: "/privacy-policy" },
+  { label: "Terms of Service", href: "/terms" },
 ];
 
 const socialLinks = [
@@ -28,7 +30,7 @@ const socialLinks = [
   },
   {
     icon: "fas fa-envelope",
-    href: "mailto:bengc102@gmail.com",
+    href: "mailto:contact@brancodex.com",
     label: "Email",
   },
   {
@@ -110,6 +112,11 @@ export default function Footer() {
           &copy; 2025&ndash;{currentYear} <span className="bran">Bran</span>
           <span className="code">Code</span>
           <span className="x">X</span> | All Rights Reserved.
+        </p>
+        <p style={{ marginTop: "0.5rem", fontSize: "0.78rem" }}>
+          <Link href="/privacy-policy" style={{ color: "#64748b", textDecoration: "none", marginRight: "1rem" }}>Privacy Policy</Link>
+          <Link href="/terms" style={{ color: "#64748b", textDecoration: "none", marginRight: "1rem" }}>Terms of Service</Link>
+          <a href="mailto:contact@brancodex.com" style={{ color: "#64748b", textDecoration: "none" }}>contact@brancodex.com</a>
         </p>
       </div>
     </footer>

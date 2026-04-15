@@ -41,6 +41,9 @@ export default function sitemap() {
     { url: `${BASE}/guide`, priority: 0.7, changeFrequency: "monthly" },
     { url: `${BASE}/blog`, priority: 0.9, changeFrequency: "weekly" },
     { url: `${BASE}/our-process`, priority: 0.7, changeFrequency: "monthly" },
+    { url: `${BASE}/contact`, priority: 0.9, changeFrequency: "monthly" },
+    { url: `${BASE}/privacy-policy`, priority: 0.4, changeFrequency: "yearly" },
+    { url: `${BASE}/terms`, priority: 0.4, changeFrequency: "yearly" },
   ].map((p) => ({ ...p, lastModified: now }));
 
   const blogPages = blogSlugs.map((slug) => ({
