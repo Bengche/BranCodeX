@@ -55,7 +55,7 @@ export default function ExitIntentPopup() {
     try {
       await emailjs.send(
         "service_c5vabbm",
-        "template_iclm05y",
+        "template_9q6e9vr",
         {
           name: name.trim(),
           email: email.trim(),
