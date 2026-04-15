@@ -24,7 +24,6 @@ html {
 body {
   max-width: 100vw;
   overflow-x: hidden;
-  background-color: #0f172a;
 }
 
 /* =========================================================================
@@ -527,6 +526,8 @@ body {
   padding: 4.5rem 1.5rem;
   background-color: #f8fafc;
   color: #0f172a;
+  border-top: 3px solid rgba(34, 197, 94, 0.3);
+  border-bottom: 3px solid rgba(34, 197, 94, 0.3);
 }
 
 .plans-header {
@@ -535,7 +536,7 @@ body {
   margin: 0 auto 2.5rem;
 }
 
-/* Ensure "Packages" heading is readable on the light plans background */
+/* "Packages" heading readable on the light plans background */
 .plans-header .section-title {
   color: #0f172a;
 }
@@ -586,7 +587,8 @@ body {
 
 .plan-card:hover {
   transform: translateY(-4px);
-  border-color: #3b82f6;
+  box-shadow: 0 20px 40px rgba(34, 197, 94, 0.12);
+  border-color: #22c55e;
 }
 
 .plan-title {
@@ -602,18 +604,57 @@ body {
   margin-bottom: 0.6rem;
 }
 
+/* "Tailored Pricing" label on custom cards */
 .plan-price {
   color: #0f172a;
-  font-weight: 600;
+  font-weight: 700;
   margin: 0.65rem 0 0.9rem;
+  font-size: 1.1rem;
 }
 
-.plan-price span {
-  font-size: clamp(1.8rem, 3vw, 2.5rem);
-  font-weight: 800;
+/* Structured price block used inside PlanCard */
+.plan-price-block {
+  display: flex;
+  flex-direction: column;
+  gap: 0.1rem;
+  margin: 0.5rem 0 0.75rem;
 }
 
-/* Features drawer (collapsed by default) */
+.plan-price-label {
+  font-size: 0.72rem;
+  font-weight: 600;
+  color: #94a3b8;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+}
+
+.plan-price-amount {
+  display: flex;
+  align-items: baseline;
+  gap: 0.3rem;
+}
+
+.plan-price-currency {
+  font-size: 1rem;
+  font-weight: 700;
+  color: #64748b;
+  padding-bottom: 0.2rem;
+}
+
+.plan-price-num {
+  font-size: clamp(2rem, 3.5vw, 2.75rem);
+  font-weight: 900;
+  color: #0f172a;
+  letter-spacing: -0.02em;
+  line-height: 1;
+}
+
+/* Top 3 features — always visible */
+.plan-features-visible {
+  margin-bottom: 0.25rem;
+}
+
+/* Extra features drawer — collapsed by default */
 .features-wrapper {
   display: grid;
   grid-template-rows: 0fr;
@@ -624,10 +665,10 @@ body {
   overflow: hidden;
 }
 
-.plan-card:not(.is-collapsed) .features-wrapper {
+.features-wrapper--open {
   grid-template-rows: 1fr;
   opacity: 1;
-  margin-top: 15px;
+  margin-top: 0.5rem;
 }
 
 .plan-features {
@@ -649,6 +690,10 @@ body {
   color: #0f172a;
 }
 
+.plan-features li .fa-check-circle {
+  color: #22c55e;
+}
+
 .ai-highlight {
   display: flex;
   align-items: center;
@@ -656,7 +701,7 @@ body {
   margin: 10px 0;
   font-size: 0.95rem;
   font-weight: 700;
-  color: #3b82f6;
+  color: #22c55e;
 }
 
 .plan-features-toggle {
@@ -665,19 +710,21 @@ body {
   justify-content: center;
   align-items: center;
   gap: 0.4rem;
-  margin-top: auto;
-  padding: 0.6rem 1.1rem;
+  margin-top: 0.75rem;
+  padding: 0.5rem 1.1rem;
   background: transparent;
-  border: 1px solid #3b82f6;
-  color: #3b82f6;
+  border: 1px solid rgba(34, 197, 94, 0.4);
+  color: #16a34a;
   border-radius: 999px;
+  font-size: 0.82rem;
   font-weight: 600;
   cursor: pointer;
   transition: all 0.2s ease;
 }
 
 .plan-features-toggle:hover {
-  background: #3b82f6;
+  background: #22c55e;
+  border-color: #22c55e;
   color: #ffffff;
 }
 
@@ -702,12 +749,112 @@ body {
   display: block;
   text-align: center;
   padding: 0.8rem;
-  background-color: #3b82f6;
-  color: white;
+  background-color: #22c55e;
+  color: #ffffff;
   border-radius: 999px;
   text-decoration: none;
   font-weight: 700;
   margin-top: auto;
+  transition: background 0.2s, transform 0.2s;
+}
+
+.btn-custom-cta:hover {
+  background-color: #16a34a;
+  transform: translateY(-2px);
+}
+
+/* CTA button on each PlanCard */
+.plan-cta-btn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  text-align: center;
+  padding: 0.75rem 1.25rem;
+  background: #22c55e;
+  color: #ffffff;
+  border-radius: 999px;
+  text-decoration: none;
+  font-weight: 700;
+  font-size: 0.9rem;
+  margin-top: auto;
+  padding-top: 1rem;
+  transition: background 0.2s, transform 0.2s;
+}
+
+.plan-cta-btn:hover {
+  background: #16a34a;
+  transform: translateY(-2px);
+}
+
+.plan-item--featured .plan-cta-btn {
+  box-shadow: 0 4px 20px rgba(34, 197, 94, 0.3);
+}
+
+/* Plan note (replaces inline style) */
+.plan-note-label {
+  font-size: 0.75rem;
+  font-weight: 700;
+  color: #22c55e;
+  margin: 0.625rem 0 0.3rem;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+}
+
+/* E-commerce category divider */
+.plans-category-divider {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  margin: 2.5rem 0 1.75rem;
+}
+
+.plans-category-divider::before,
+.plans-category-divider::after {
+  content: '';
+  flex: 1;
+  height: 1px;
+  background: linear-gradient(90deg, transparent, rgba(34, 197, 94, 0.3), transparent);
+}
+
+.plans-category-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  background: rgba(34, 197, 94, 0.08);
+  color: #16a34a;
+  border: 1px solid rgba(34, 197, 94, 0.25);
+  border-radius: 999px;
+  padding: 0.4rem 1.25rem;
+  font-size: 0.85rem;
+  font-weight: 700;
+  white-space: nowrap;
+}
+
+/* Trust signal bar */
+.plans-trust-bar {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-wrap: wrap;
+  gap: 0.5rem 1.25rem;
+  margin-top: 2.5rem;
+  padding: 1rem 1.5rem;
+  background: rgba(34, 197, 94, 0.05);
+  border: 1px solid rgba(34, 197, 94, 0.15);
+  border-radius: 0.75rem;
+  font-size: 0.85rem;
+  font-weight: 600;
+  color: #475569;
+}
+
+.plans-trust-bar i {
+  color: #22c55e;
+  margin-right: 0.3rem;
+}
+
+.trust-sep {
+  color: #cbd5e1;
 }
 
 @media (max-width: 640px) {
@@ -6027,47 +6174,4 @@ textarea {
     align-items: flex-start;
     gap: 1.25rem;
   }
-}
-
-/* =========================================================================
-   SECTION SEPARATOR
-   A slim decorative divider inserted between every homepage section.
-   Adapts between dark and light section backgrounds via the `background`
-   inline-style set by the <SectionDivider> React component.
-   ========================================================================= */
-.section-sep {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  padding: 0 3rem;
-  height: 48px;
-  width: 100%;
-  position: relative;
-  flex-shrink: 0;
-}
-
-.section-sep-line {
-  flex: 1;
-  height: 1px;
-  background: linear-gradient(
-    90deg,
-    transparent 0%,
-    rgba(34, 197, 94, 0.12) 20%,
-    rgba(34, 197, 94, 0.35) 50%,
-    rgba(34, 197, 94, 0.12) 80%,
-    transparent 100%
-  );
-}
-
-.section-sep-diamond {
-  width: 8px;
-  height: 8px;
-  background: #22c55e;
-  transform: rotate(45deg);
-  margin: 0 1.25rem;
-  flex-shrink: 0;
-  border-radius: 1px;
-  box-shadow:
-    0 0 8px rgba(34, 197, 94, 0.8),
-    0 0 20px rgba(34, 197, 94, 0.35);
 }

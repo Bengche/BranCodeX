@@ -1,4 +1,4 @@
-/**
+﻿/**
  * app/page.js — Home page
  *
  * Assembles every section component in the correct order.
@@ -20,7 +20,6 @@ import Contact from "../components/Contact";
 import BookingSection from "../components/BookingSection";
 import CTASection from "../components/CTASection";
 import Footer from "../components/Footer";
-import SectionDivider from "../components/SectionDivider";
 import Link from "next/link";
 
 export const metadata = {
@@ -38,13 +37,9 @@ export default function HomePage() {
       <Navbar />
       <main id="main-content">
         <Hero />
-        <SectionDivider />
         <ResultsStrip />
-        <SectionDivider />
         <About />
-        <SectionDivider />
         <Services />
-        <SectionDivider />
 
         {/* Process teaser — links to /our-process page */}
         <div className="process-teaser">
@@ -63,27 +58,14 @@ export default function HomePage() {
           </div>
         </div>
 
-        {/* dark → light: process-teaser (#0f172a) → plans (#f8fafc) */}
-        <SectionDivider from="#0f172a" to="#f8fafc" />
         <Plans />
-        {/* light → dark: plans (#f8fafc) → calculator (#0f172a) */}
-        <SectionDivider from="#f8fafc" to="#0f172a" />
         <PriceCalculator />
-        <SectionDivider />
         <Skills />
-        <SectionDivider />
         <Projects />
-        <SectionDivider />
         <PlaygroundTeaser />
-        <SectionDivider />
         <Testimonials />
-        <SectionDivider />
         <CTASection />
-        {/* dark → light: cta (#0f172a) → contact (#f8fafc) */}
-        <SectionDivider from="#0f172a" to="#f8fafc" />
         <Contact />
-        {/* light → dark: contact (#f8fafc) → booking (#1e293b) */}
-        <SectionDivider from="#f8fafc" to="#1e293b" />
         <BookingSection />
       </main>
       <Footer />

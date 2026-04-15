@@ -144,16 +144,24 @@ function PlanCard({ plan, xafRate }) {
       ? Math.round(dollars * xafRate).toLocaleString("en") + " FCFA"
       : null;
 
+  const visibleFeatures = plan.features.slice(0, 3);
+  const extraFeatures = plan.features.slice(3);
+
   return (
     <div className={`plan-item${plan.featured ? " plan-item--featured" : ""}`}>
       {plan.badge && <span className="plan-badge">{plan.badge}</span>}
 
-      <div className={`plan-card${open ? "" : " is-collapsed"}`}>
+      <div className="plan-card">
         <h3 className="plan-title">{plan.title}</h3>
         <p className="plan-tagline">{plan.tagline}</p>
-        <p className="plan-price">
-          Starting from US$ <span>{plan.price.replace("$", "")}</span>
-        </p>
+
+        <div className="plan-price-block">
+          <span className="plan-price-label">Starting from</span>
+          <div className="plan-price-amount">
+            <span className="plan-price-currency">US$</span>
+            <span className="plan-price-num">{plan.price.replace("$", "")}</span>
+          </div>
+        </div>
 
         {xafAmount && (
           <p className="plan-xaf-price">
@@ -164,45 +172,50 @@ function PlanCard({ plan, xafRate }) {
         )}
 
         <p className="ai-highlight">
-          <i className="fa fa-robot" style={{ color: "#3b82f6" }}></i>
+          <i className="fa fa-robot"></i>
           <strong>{plan.aiLabel}</strong>
         </p>
 
-        {plan.note && (
-          <p
-            style={{
-              fontSize: "0.75rem",
-              fontWeight: "bold",
-              color: "#3b82f6",
-              margin: "10px 0 5px",
-              textTransform: "uppercase",
-            }}
-          >
-            {plan.note}
-          </p>
+        {plan.note && <p className="plan-note-label">{plan.note}</p>}
+
+        {/* Top 3 features — always visible */}
+        <ul className="plan-features plan-features-visible">
+          {visibleFeatures.map((f) => (
+            <li key={f}>
+              <i className="fa fa-check-circle"></i> {f}
+            </li>
+          ))}
+        </ul>
+
+        {/* Extra features — collapsible */}
+        {extraFeatures.length > 0 && (
+          <>
+            <div
+              className={`features-wrapper${
+                open ? " features-wrapper--open" : ""
+              }`}
+            >
+              <ul className="plan-features">
+                {extraFeatures.map((f) => (
+                  <li key={f}>
+                    <i className="fa fa-check-circle"></i> {f}
+                  </li>
+                ))}
+              </ul>
+            </div>
+            <button
+              className="plan-features-toggle"
+              type="button"
+              onClick={() => setOpen((prev) => !prev)}
+            >
+              {open ? "Hide" : `+ ${extraFeatures.length} more included`}
+            </button>
+          </>
         )}
 
-        <div className="features-wrapper">
-          <ul className="plan-features">
-            {plan.features.map((f) => (
-              <li key={f}>
-                <i
-                  className="fa fa-check-circle"
-                  style={{ color: "green" }}
-                ></i>{" "}
-                {f}
-              </li>
-            ))}
-          </ul>
-        </div>
-
-        <button
-          className="plan-features-toggle"
-          type="button"
-          onClick={() => setOpen((prev) => !prev)}
-        >
-          {open ? "Hide features" : "Show all features"}
-        </button>
+        <Link href="/#contact" className="plan-cta-btn">
+          Start This Plan <i className="fa fa-arrow-right"></i>
+        </Link>
       </div>
     </div>
   );
@@ -239,7 +252,7 @@ export default function Plans() {
           <p className="plan-price">Tailored Pricing</p>
           <ul className="plan-features mb-6">
             <li>
-              <i className="fa fa-robot" style={{ color: "#3b82f6" }}></i>{" "}
+              <i className="fa fa-robot" style={{ color: "#22c55e" }}></i>{" "}
               <strong>Custom AI Agent Workflows</strong>
             </li>
             <li>
@@ -258,9 +271,11 @@ export default function Plans() {
       </div>
 
       {/* E-commerce plans */}
-      <h3 className="plans-subheading mt-8 mb-4 font-bold text-2xl">
-        E-Commerce Ecosystems
-      </h3>
+      <div className="plans-category-divider">
+        <span className="plans-category-badge">
+          <i className="fa fa-shopping-cart"></i> E-Commerce Ecosystems
+        </span>
+      </div>
       <div className="plans-grid">
         {ecommercePlans.map((plan) => (
           <PlanCard key={plan.title} plan={plan} xafRate={xafRate} />
@@ -273,7 +288,7 @@ export default function Plans() {
           <p className="plan-price">Tailored Pricing</p>
           <ul className="plan-features mb-6">
             <li>
-              <i className="fa fa-robot" style={{ color: "#3b82f6" }}></i>{" "}
+              <i className="fa fa-robot" style={{ color: "#22c55e" }}></i>{" "}
               <strong>AI Inventory Automation</strong>
             </li>
             <li>
@@ -289,6 +304,15 @@ export default function Plans() {
             Start Enterprise Project
           </Link>
         </div>
+      </div>
+
+      {/* Trust signal */}
+      <div className="plans-trust-bar">
+        <span><i className="fa fa-shield-alt"></i> No hidden fees</span>
+        <span className="trust-sep">·</span>
+        <span><i className="fa fa-comments"></i> Free consultation</span>
+        <span className="trust-sep">·</span>
+        <span><i className="fa fa-check-double"></i> 100% transparent scoping</span>
       </div>
     </section>
   );
