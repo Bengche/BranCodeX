@@ -54,6 +54,11 @@ body {
   box-shadow: 0 2px 40px rgba(0, 0, 0, 0.12);
 }
 
+/* Offset page content so it doesn't hide under the fixed navbar */
+body {
+  padding-top: 72px;
+}
+
 /* --- Hamburger button ---------------------------------------------------- */
 #menu-btn {
   position: relative;

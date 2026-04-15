@@ -59,7 +59,7 @@ export default function Navbar() {
   return (
     <nav
       id="navbar"
-      className={`sticky top-0 left-0 w-full z-50 text-white transition-all duration-500${scrolled ? " navbar--scrolled" : ""}`}
+      className={`fixed top-0 left-0 w-full z-50 text-white transition-all duration-500${scrolled ? " navbar--scrolled" : ""}`}
     >
       <div className="max-w-7xl mx-auto px-6 py-4 flex items-center justify-between">
         {/* ── Logo ───────────────────────────────────────────────────────── */}
