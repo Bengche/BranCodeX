@@ -1,6 +1,6 @@
 "use client";
 
-import { useRef, useState } from "react";
+import { useState } from "react";
 import emailjs from "@emailjs/browser";
 
 const EMAILJS_SERVICE = "service_4i8dgy8";
@@ -8,25 +8,38 @@ const EMAILJS_TEMPLATE = "template_cncjp0c";
 const EMAILJS_KEY = "JwE9TMk7vUP9adouM";
 
 export default function Contact() {
-  const formRef = useRef(null);
+  const [name, setName] = useState("");
+  const [email, setEmail] = useState("");
+  const [message, setMessage] = useState("");
   const [statusMsg, setStatusMsg] = useState("");
+  const [sending, setSending] = useState(false);
 
   async function sendMessage(e) {
     e.preventDefault();
+    if (!name.trim() || !email.trim() || !message.trim()) return;
+    setSending(true);
     setStatusMsg("Sending message...");
     try {
-      await emailjs.sendForm(
+      await emailjs.send(
         EMAILJS_SERVICE,
         EMAILJS_TEMPLATE,
-        formRef.current,
+        {
+          name: name.trim(),
+          email: email.trim(),
+          message: message.trim(),
+        },
         EMAILJS_KEY,
       );
       setStatusMsg("✅ Message sent! I'll get back to you soon 😊");
-      formRef.current.reset();
+      setName("");
+      setEmail("");
+      setMessage("");
     } catch (err) {
       console.error("EmailJS error:", err);
-      setStatusMsg("❌ Something went wrong. Please try again.");
+      const detail = err?.text || err?.message || JSON.stringify(err);
+      setStatusMsg(`❌ Failed to send: ${detail}`);
     }
+    setSending(false);
   }
 
   return (
@@ -42,7 +55,6 @@ export default function Contact() {
         <form
           id="contact-form"
           className="contact-form"
-          ref={formRef}
           onSubmit={sendMessage}
         >
           <div className="form-group">
@@ -55,6 +67,8 @@ export default function Contact() {
               required
               placeholder="Enter your name"
               name="name"
+              value={name}
+              onChange={(e) => setName(e.target.value)}
             />
           </div>
 
@@ -68,6 +82,8 @@ export default function Contact() {
               required
               placeholder="Enter your email"
               name="email"
+              value={email}
+              onChange={(e) => setEmail(e.target.value)}
             />
           </div>
 
@@ -81,10 +97,13 @@ export default function Contact() {
               required
               placeholder="What&#39;s on your mind?"
               name="message"
+              value={message}
+              onChange={(e) => setMessage(e.target.value)}
             ></textarea>
           </div>
-          <button type="submit" className="contact-btn">
-            <i className="fas fa-paper-plane"></i> Send Message
+          <button type="submit" className="contact-btn" disabled={sending}>
+            <i className="fas fa-paper-plane"></i>{" "}
+            {sending ? "Sending..." : "Send Message"}
           </button>
         </form>
 
