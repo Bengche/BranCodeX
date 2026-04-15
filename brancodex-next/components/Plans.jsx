@@ -49,19 +49,19 @@ const websitePlans = [
       "1 fully responsive page",
       "Hosting & domain (12 months free)",
       "SSL security certificate",
-      "WhatsApp & Email contact integration",
+      "Professional business email (1st year free)",
       "Basic SEO (meta tags, title, description)",
     ],
     extras: [
+      "WhatsApp & Email contact integration",
       "Google Analytics setup",
       "Mobile-first performance optimization",
-      "Social media links",
       "Favicon + social share image",
       "Delivery in < 3 days",
+      "⚡ Higher search ranking / off-page SEO — available as add-on",
     ],
     notIncluded: [
       "Blog / CMS",
-      "Professional business email",
       "MoMo payment integration",
       "Multiple pages",
     ],
@@ -77,7 +77,7 @@ const websitePlans = [
       "Up to 3 responsive pages",
       "Hosting & domain (12 months free)",
       "SSL security certificate",
-      "Contact form with email notifications",
+      "Professional business email (1st year free)",
       "Basic SEO + Google Analytics",
     ],
     extras: [
@@ -86,10 +86,10 @@ const websitePlans = [
       "Mobile-first design",
       "Favicon + social share image",
       "Delivery in < 3 days",
+      "⚡ Higher search ranking / off-page SEO — available as add-on",
     ],
     notIncluded: [
       "Blog / CMS",
-      "Professional business email",
       "MoMo payment integration",
     ],
   },
@@ -104,19 +104,19 @@ const websitePlans = [
       "Up to 5 responsive pages",
       "Hosting & domain (12 months free)",
       "SSL certificate + page speed optimization",
+      "Professional business email (1st year free)",
       "Basic on-page SEO",
-      "WhatsApp click-to-chat button",
     ],
     extras: [
+      "WhatsApp click-to-chat button",
       "Google Analytics + Search Console setup",
       "Contact form with email routing",
-      "Favicon + social share image",
       "Sitemap & robots.txt",
       "Delivery in < 7 days",
+      "⚡ Higher search ranking / off-page SEO — available as add-on",
     ],
     notIncluded: [
       "CMS / Blog",
-      "Professional business email",
       "MoMo payment gateway",
     ],
   },
@@ -132,7 +132,7 @@ const websitePlans = [
     features: [
       "Up to 10 responsive pages",
       "CMS / Blog (post articles yourself)",
-      "Professional business email setup",
+      "Professional business email (1st year free)",
       "Google Maps & Analytics",
       "Advanced on-page SEO",
     ],
@@ -142,6 +142,7 @@ const websitePlans = [
       "WhatsApp click-to-chat + lead form",
       "Newsletter subscribe form",
       "Delivery in < 7 days",
+      "⚡ Higher search ranking / off-page SEO — available as add-on",
     ],
     notIncluded: [
       "MoMo / card payment gateway",
@@ -160,20 +161,20 @@ const websitePlans = [
     features: [
       "Up to 15 custom-designed pages",
       "Custom UI design + micro-animations",
-      "Dark / light mode toggle",
-      "Full admin panel dashboard",
+      "MTN MoMo + Orange Money + card payments",
+      "Professional business email (1st year free)",
       "Advanced SEO + structured data markup",
     ],
     extras: [
+      "Dark / light mode toggle",
+      "Full admin panel dashboard",
       "Newsletter + subscriber management",
       "Priority support + monthly site checkup",
       "Speed & Core Web Vitals optimization",
-      "Performance monitoring setup",
       "Delivery in < 14 days",
+      "⚡ Higher search ranking / off-page SEO — available as add-on",
     ],
-    notIncluded: [
-      "MoMo / card payment gateway",
-    ],
+    notIncluded: [],
   },
 ];
 
@@ -226,9 +227,7 @@ const ecommercePlans = [
       "Discount codes & promotions module",
       "Delivery in 7–14 days",
     ],
-    notIncluded: [
-      "Multi-vendor marketplace",
-    ],
+    notIncluded: ["Multi-vendor marketplace"],
   },
 ];
 
@@ -305,11 +304,17 @@ function PlanCard({ plan, xafRate }) {
             }`}
           >
             <ul className="plan-features">
-              {plan.extras?.map((f) => (
-                <li key={f}>
-                  <i className="fa fa-check-circle"></i> {f}
-                </li>
-              ))}
+              {plan.extras?.map((f) =>
+                f.startsWith("\u26a1") ? (
+                  <li key={f} className="plan-feature--addon">
+                    <i className="fa fa-bolt"></i> {f.replace("\u26a1 ", "")}
+                  </li>
+                ) : (
+                  <li key={f}>
+                    <i className="fa fa-check-circle"></i> {f}
+                  </li>
+                )
+              )}
               {plan.notIncluded?.map((f) => (
                 <li key={f} className="plan-feature--no">
                   <i className="fa fa-times-circle"></i> {f}

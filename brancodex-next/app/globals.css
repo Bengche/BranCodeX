@@ -705,6 +705,18 @@ body {
   color: #ef4444;
 }
 
+/* Add-on note — amber bolt icon, distinguishes paid upgrades from free features */
+.plan-feature--addon {
+  background: rgba(245, 158, 11, 0.06) !important;
+  border-color: rgba(245, 158, 11, 0.2) !important;
+  color: #fbbf24 !important;
+  font-style: italic;
+}
+
+.plan-feature--addon .fa-bolt {
+  color: #f59e0b;
+}
+
 /* Revision / satisfaction guarantee pill */
 .plan-guarantee {
   display: flex;
