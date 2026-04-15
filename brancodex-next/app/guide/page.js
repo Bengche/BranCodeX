@@ -2,17 +2,73 @@ import Link from "next/link";
 import Navbar from "../../components/Navbar";
 import Footer from "../../components/Footer";
 
+const guideSchema = {
+  "@context": "https://schema.org",
+  "@type": "Article",
+  headline:
+    "5 Costly Mistakes Cameroonian Businesses Make With Their Website",
+  description:
+    "Discover the 5 most common website mistakes that cost Cameroonian businesses clients and revenue — and how to fix them.",
+  author: {
+    "@type": "Person",
+    name: "Beng Brandon Che",
+    url: "https://brancodex.com",
+  },
+  publisher: {
+    "@type": "Organization",
+    name: "BranCodeX",
+    url: "https://brancodex.com",
+    logo: {
+      "@type": "ImageObject",
+      url: "https://brancodex.com/images/favicon.png",
+    },
+  },
+  datePublished: "2025-01-15",
+  dateModified: "2025-03-10",
+  mainEntityOfPage: {
+    "@type": "WebPage",
+    "@id": "https://brancodex.com/guide",
+  },
+  keywords:
+    "website mistakes cameroon, mobile website cameroon, SEO cameroon, website speed cameroon, call to action website",
+  articleSection: "Web Development Guide",
+  about: {
+    "@type": "Thing",
+    name: "Website Best Practices for Cameroonian Businesses",
+  },
+};
+
 export const metadata = {
   title:
     "5 Mistakes Cameroonian Businesses Make With Their Website | BranCodeX",
   description:
     "Discover the 5 most common website mistakes that cost Cameroonian businesses clients and revenue — and how to fix them. Free guide by BranCodeX.",
+  keywords: [
+    "website mistakes cameroon",
+    "common website errors cameroon",
+    "improve website cameroon",
+    "mobile website cameroon",
+    "website not ranking google cameroon",
+    "ssl certificate cameroon website",
+    "website speed cameroon",
+    "no call to action website",
+    "local seo cameroon",
+    "free web guide cameroon",
+  ],
   alternates: { canonical: "https://brancodex.com/guide" },
   openGraph: {
     title: "5 Website Mistakes Cameroonian Businesses Must Avoid",
     description:
       "Free guide: The 5 critical website mistakes that are costing your business clients right now — and the exact fixes.",
     url: "https://brancodex.com/guide",
+    siteName: "BranCodeX",
+    type: "article",
+  },
+  twitter: {
+    card: "summary",
+    title: "5 Website Mistakes Cameroonian Businesses Must Avoid",
+    description:
+      "Free guide: The 5 critical website mistakes that are costing your business clients right now — and the exact fixes.",
   },
 };
 
@@ -72,6 +128,10 @@ const mistakes = [
 export default function GuidePage() {
   return (
     <>
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(guideSchema) }}
+      />
       <Navbar />
       <main className="guide-page">
         {/* Header */}

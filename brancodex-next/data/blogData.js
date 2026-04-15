@@ -294,7 +294,8 @@ const blogData = [
 
   {
     slug: "ecommerce-cameroon",
-    title: "E-Commerce & Web Development in Cameroon: Complete 2025 Guide for Businesses",
+    title:
+      "E-Commerce & Web Development in Cameroon: Complete 2025 Guide for Businesses",
     excerpt:
       "Everything you need to know about building a website, starting an online store, or launching e-commerce in Cameroon — platforms, payments, logistics, and web development services for Cameroonian businesses.",
     date: "2025-05-05",
@@ -444,7 +445,15 @@ const blogData = [
     date: "2025-05-15",
     readTime: "6 min read",
     category: "E-Commerce",
-    tags: ["e-commerce", "douala", "online store", "littoral", "momo", "web development", "web developer"],
+    tags: [
+      "e-commerce",
+      "douala",
+      "online store",
+      "littoral",
+      "momo",
+      "web development",
+      "web developer",
+    ],
     author: "Beng Brandon Che",
     content: `
 <p>Douala is Cameroon's commercial center — and it is rapidly becoming its e-commerce center too. With the highest concentration of businesses, the most purchasing power, and the strongest logistics infrastructure in the country, Douala offers the best conditions for launching a successful online store. If you are a Douala business owner considering selling online, this guide is your roadmap.</p>
@@ -476,13 +485,21 @@ const blogData = [
 
   {
     slug: "ecommerce-yaounde-centre",
-    title: "Web Development & E-Commerce in Yaoundé: Build & Sell Online in Cameroon's Capital",
+    title:
+      "Web Development & E-Commerce in Yaoundé: Build & Sell Online in Cameroon's Capital",
     excerpt:
       "How businesses in Yaoundé can get a professional website or online store — targeting Cameroon's most educated and institutionally connected market with expert web development services.",
     date: "2025-05-18",
     readTime: "5 min read",
     category: "E-Commerce",
-    tags: ["e-commerce", "yaounde", "online store", "centre region", "web development", "web developer"],
+    tags: [
+      "e-commerce",
+      "yaounde",
+      "online store",
+      "centre region",
+      "web development",
+      "web developer",
+    ],
     author: "Beng Brandon Che",
     content: `
 <p>Yaoundé is not just Cameroon's political capital — it is one of the country's most sophisticated consumer markets. With a large concentration of civil servants, international organization employees, students, and educated professionals, Yaoundé's online shoppers are discerning, digitally confident, and increasingly prefer the convenience of buying online. Here is what building a successful e-commerce business in Yaoundé looks like.</p>
@@ -510,7 +527,15 @@ const blogData = [
     date: "2025-05-20",
     readTime: "5 min read",
     category: "E-Commerce",
-    tags: ["e-commerce", "bamenda", "northwest", "cameroon", "online store", "web development", "web developer"],
+    tags: [
+      "e-commerce",
+      "bamenda",
+      "northwest",
+      "cameroon",
+      "online store",
+      "web development",
+      "web developer",
+    ],
     author: "Beng Brandon Che",
     content: `
 <p>Bamenda is BranCodeX's home city — and we have watched firsthand how Bamenda businesses have embraced digital commerce over the last several years. From fashion boutiques on Commercial Avenue to food sellers using WhatsApp catalogues, local entrepreneurship is clearly ready for the next step: a real, searchable, professional online store. This guide is for Bamenda business owners ready to make that move.</p>
@@ -616,7 +641,15 @@ const blogData = [
     date: "2025-05-26",
     readTime: "5 min read",
     category: "E-Commerce",
-    tags: ["e-commerce", "garoua", "north region", "cameroon", "online store", "web development", "web developer"],
+    tags: [
+      "e-commerce",
+      "garoua",
+      "north region",
+      "cameroon",
+      "online store",
+      "web development",
+      "web developer",
+    ],
     author: "Beng Brandon Che",
     content: `
 <p>Garoua is the commercial capital of northern Cameroon — a hub for the region's textile, cotton, livestock, and transport industries. While e-commerce adoption in northern Cameroon is somewhat less advanced than in Douala or Yaoundé, that gap is closing rapidly as smartphone penetration grows and Mobile Money becomes universal. For Garoua businesses willing to move early, the competitive advantage of building an online presence now is significant.</p>
@@ -646,7 +679,15 @@ const blogData = [
     date: "2025-05-28",
     readTime: "5 min read",
     category: "E-Commerce",
-    tags: ["e-commerce", "maroua", "far north", "cameroon", "online store", "web development", "web developer"],
+    tags: [
+      "e-commerce",
+      "maroua",
+      "far north",
+      "cameroon",
+      "online store",
+      "web development",
+      "web developer",
+    ],
     author: "Beng Brandon Che",
     content: `
 <p>Maroua and the Far North Region of Cameroon sit at the intersection of rich cultural heritage, stunning natural landscapes, and growing commercial activity. E-commerce here opens doors to three distinct markets: local buyers within the region, national buyers in Douala and Yaoundé, and international buyers — particularly tourists, diaspora communities, and fair-trade importers — interested in the region's distinctive handicrafts and agricultural products.</p>
@@ -676,7 +717,15 @@ const blogData = [
     date: "2025-05-30",
     readTime: "5 min read",
     category: "E-Commerce",
-    tags: ["e-commerce", "ngaoundere", "adamawa", "cameroon", "online store", "web development", "web developer"],
+    tags: [
+      "e-commerce",
+      "ngaoundere",
+      "adamawa",
+      "cameroon",
+      "online store",
+      "web development",
+      "web developer",
+    ],
     author: "Beng Brandon Che",
     content: `
 <p>Ngaoundéré is the gateway between northern and southern Cameroon — a strategic position that translates directly into commercial opportunity. The city's cattle market is one of the largest in the country, its agricultural plateau is among the most productive, and its rail connection to the coast makes it a natural logistics hub. For businesses here, e-commerce offers a way to extend that commercial reach far beyond what physical proximity alone can achieve.</p>
@@ -706,7 +755,15 @@ const blogData = [
     date: "2025-06-01",
     readTime: "5 min read",
     category: "E-Commerce",
-    tags: ["e-commerce", "bertoua", "east region", "cameroon", "online store", "web development", "web developer"],
+    tags: [
+      "e-commerce",
+      "bertoua",
+      "east region",
+      "cameroon",
+      "online store",
+      "web development",
+      "web developer",
+    ],
     author: "Beng Brandon Che",
     content: `
 <p>Bertoua and the East Region of Cameroon are defined by natural wealth — vast forest reserves, mineral deposits, and agricultural land that supports national and international commodity chains. While e-commerce adoption is at an earlier stage here than in Douala or Yaoundé, the East Region's economic fundamentals create strong opportunities for businesses that establish their digital presence early.</p>
@@ -777,7 +834,14 @@ const blogData = [
     date: "2025-06-15",
     readTime: "7 min read",
     category: "Web Development",
-    tags: ["web developer", "web development", "usa", "united states", "affordable", "hire web developer"],
+    tags: [
+      "web developer",
+      "web development",
+      "usa",
+      "united states",
+      "affordable",
+      "hire web developer",
+    ],
     author: "Beng Brandon Che",
     content: `
 <p>If you are a business owner in the United States looking to hire a web developer, you already know the challenge: local US agency rates for a quality website start at $5,000 and can easily exceed $20,000 for a custom build. Yet the quality of overseas web development — when you work with the right team — is now indistinguishable from what you would get locally. BranCodeX is a professional web development agency that builds world-class websites for US clients at a fraction of US pricing.</p>
@@ -818,13 +882,21 @@ const blogData = [
 
   {
     slug: "web-developer-uk",
-    title: "Professional Web Developer for UK Businesses in 2025 — Affordable & World-Class",
+    title:
+      "Professional Web Developer for UK Businesses in 2025 — Affordable & World-Class",
     excerpt:
       "UK businesses looking to hire a web developer can work with BranCodeX for world-class Next.js websites at a fraction of UK agency prices. Professional, fast, and fully remote.",
     date: "2025-06-16",
     readTime: "6 min read",
     category: "Web Development",
-    tags: ["web developer", "web development", "uk", "united kingdom", "affordable", "hire web developer"],
+    tags: [
+      "web developer",
+      "web development",
+      "uk",
+      "united kingdom",
+      "affordable",
+      "hire web developer",
+    ],
     author: "Beng Brandon Che",
     content: `
 <p>Web development in the UK comes with a premium price tag: local agencies in London, Manchester, and Birmingham typically charge £3,000–£15,000 for a professional business website. For small and medium-sized businesses in the UK, these costs can be prohibitive — yet a high-quality online presence is more important than ever for competing in British markets. BranCodeX offers a compelling alternative: world-class web development at a transparent, affordable price, delivered entirely remotely.</p>
@@ -854,13 +926,20 @@ const blogData = [
 
   {
     slug: "web-developer-canada",
-    title: "Hire a Web Developer for Your Canadian Business in 2025 — BranCodeX",
+    title:
+      "Hire a Web Developer for Your Canadian Business in 2025 — BranCodeX",
     excerpt:
       "Canadian businesses looking for a skilled, affordable web developer will find world-class Next.js website development at BranCodeX — transparent pricing, fast delivery, and full SEO included.",
     date: "2025-06-17",
     readTime: "6 min read",
     category: "Web Development",
-    tags: ["web developer", "web development", "canada", "affordable", "hire web developer"],
+    tags: [
+      "web developer",
+      "web development",
+      "canada",
+      "affordable",
+      "hire web developer",
+    ],
     author: "Beng Brandon Che",
     content: `
 <p>Canada has one of the world's most vibrant startup and small business ecosystems — from tech companies in Toronto and Vancouver to service businesses across Calgary, Montreal, and Ottawa. Yet local web development in Canada carries some of the highest price tags in the world, with Toronto and Vancouver agencies charging CAD $5,000–$20,000 for professional business websites. BranCodeX offers Canadian businesses a better option: the same quality, a fraction of the cost.</p>
@@ -886,13 +965,20 @@ const blogData = [
 
   {
     slug: "web-developer-australia",
-    title: "Affordable Web Developer for Australian Businesses in 2025 | BranCodeX",
+    title:
+      "Affordable Web Developer for Australian Businesses in 2025 | BranCodeX",
     excerpt:
       "Australian businesses looking to hire a web developer can access world-class Next.js website development from BranCodeX — at a fraction of Australian agency prices, with full SEO and fast delivery.",
     date: "2025-06-18",
     readTime: "6 min read",
     category: "Web Development",
-    tags: ["web developer", "web development", "australia", "affordable", "hire web developer"],
+    tags: [
+      "web developer",
+      "web development",
+      "australia",
+      "affordable",
+      "hire web developer",
+    ],
     author: "Beng Brandon Che",
     content: `
 <p>Australia has one of the highest costs of living in the world — and that cost extends directly to local web development pricing. Sydney and Melbourne agencies typically charge AUD $5,000–$20,000 for a professional business website. For Australian small businesses, sole traders, and startups, this price point is a significant barrier to accessing the quality of online presence they need to compete. BranCodeX makes world-class web development accessible to Australian businesses at prices that make genuine sense.</p>
@@ -919,13 +1005,21 @@ const blogData = [
 
   {
     slug: "web-developer-germany",
-    title: "Professional Web Developer for German Businesses in 2025 — BranCodeX",
+    title:
+      "Professional Web Developer for German Businesses in 2025 — BranCodeX",
     excerpt:
       "German companies and startups looking for affordable, world-class web development can hire BranCodeX for Next.js websites with full SEO. Englsih-language and professional, at significantly lower cost than German agencies.",
     date: "2025-06-19",
     readTime: "6 min read",
     category: "Web Development",
-    tags: ["web developer", "web development", "germany", "deutschland", "affordable", "hire web developer"],
+    tags: [
+      "web developer",
+      "web development",
+      "germany",
+      "deutschland",
+      "affordable",
+      "hire web developer",
+    ],
     author: "Beng Brandon Che",
     content: `
 <p>Germany has one of Europe's most dynamic digital economies — with thousands of Mittelstand companies, a thriving startup scene in Berlin, Munich, and Hamburg, and a growing demand for high-performance web presence. German web development agencies charge between €3,000 and €15,000 for professional websites. BranCodeX offers an internationally trusted alternative: Next.js web development of comparable quality, at a fraction of German agency pricing, delivered in full professional English.</p>
@@ -952,13 +1046,21 @@ const blogData = [
 
   {
     slug: "web-developer-france",
-    title: "Développeur Web Professionnel pour les Entreprises Françaises en 2025 | BranCodeX",
+    title:
+      "Développeur Web Professionnel pour les Entreprises Françaises en 2025 | BranCodeX",
     excerpt:
       "Les entreprises françaises cherchant un développeur web professionnel et abordable peuvent faire confiance à BranCodeX — des sites Next.js de haute performance avec SEO complet, livrés en français ou en anglais.",
     date: "2025-06-20",
     readTime: "6 min read",
     category: "Web Development",
-    tags: ["web developer", "web development", "france", "développeur web", "affordable", "hire web developer"],
+    tags: [
+      "web developer",
+      "web development",
+      "france",
+      "développeur web",
+      "affordable",
+      "hire web developer",
+    ],
     author: "Beng Brandon Che",
     content: `
 <p>BranCodeX est une agence de développement web basée à Bamenda, au Cameroun — un pays officiellement bilingue français-anglais. Nous développons des sites web professionnels pour des entreprises en France, en Belgique, en Suisse, et dans toute la francophonie, avec une maîtrise native du français. Si votre agence locale facture entre 2 000 € et 15 000 € pour un site web professionnel, nous vous offrons une alternative de qualité mondiale à une fraction de ce prix.</p>
@@ -985,13 +1087,21 @@ const blogData = [
 
   {
     slug: "web-developer-italy",
-    title: "Web Developer for Italian Businesses in 2025 — Affordable Next.js Websites | BranCodeX",
+    title:
+      "Web Developer for Italian Businesses in 2025 — Affordable Next.js Websites | BranCodeX",
     excerpt:
       "Italian businesses and startups can hire BranCodeX for professional, affordable web development — high-performance Next.js websites with full SEO, fast delivery, and transparent pricing.",
     date: "2025-06-21",
     readTime: "6 min read",
     category: "Web Development",
-    tags: ["web developer", "web development", "italy", "italia", "affordable", "hire web developer"],
+    tags: [
+      "web developer",
+      "web development",
+      "italy",
+      "italia",
+      "affordable",
+      "hire web developer",
+    ],
     author: "Beng Brandon Che",
     content: `
 <p>Italy has a thriving economy of small and medium-sized enterprises — from fashion and design brands in Milan, to food and wine producers in Tuscany, to technology startups in Rome and Turin. These businesses need professional websites to compete nationally and internationally, but local Italian web agencies charge between €3,000 and €12,000 for equivalent quality work. BranCodeX provides world-class web development to Italian businesses at a price point that makes the investment genuinely accessible.</p>
@@ -1024,7 +1134,15 @@ const blogData = [
     date: "2025-06-22",
     readTime: "6 min read",
     category: "Web Development",
-    tags: ["web developer", "web development", "switzerland", "schweiz", "suisse", "affordable", "hire web developer"],
+    tags: [
+      "web developer",
+      "web development",
+      "switzerland",
+      "schweiz",
+      "suisse",
+      "affordable",
+      "hire web developer",
+    ],
     author: "Beng Brandon Che",
     content: `
 <p>Switzerland has among the highest web development costs in Europe — Zurich and Geneva agencies routinely charge CHF 5,000–25,000 for professional business websites. For Swiss SMEs, startups, and organizations, this pricing is a significant barrier. BranCodeX offers professional Next.js web development to Swiss clients at transparent, accessible pricing — without the Swiss cost-of-living premium baked into your invoice.</p>
@@ -1057,7 +1175,15 @@ const blogData = [
     date: "2025-06-23",
     readTime: "6 min read",
     category: "Web Development",
-    tags: ["web developer", "web development", "netherlands", "holland", "amsterdam", "affordable", "hire web developer"],
+    tags: [
+      "web developer",
+      "web development",
+      "netherlands",
+      "holland",
+      "amsterdam",
+      "affordable",
+      "hire web developer",
+    ],
     author: "Beng Brandon Che",
     content: `
 <p>The Netherlands is one of Europe's most digitally advanced markets — with some of the highest internet penetration rates in the world, a powerful startup ecosystem centred in Amsterdam, and extremely high consumer expectations for website quality and loading speed. Dutch web development agencies in Amsterdam and Rotterdam charge between €3,000 and €15,000 for professional websites. BranCodeX gives Dutch businesses access to the same quality at a significantly lower price point.</p>
@@ -1084,13 +1210,22 @@ const blogData = [
 
   {
     slug: "web-developer-uae-dubai",
-    title: "Professional Web Developer for UAE & Dubai Businesses in 2025 | BranCodeX",
+    title:
+      "Professional Web Developer for UAE & Dubai Businesses in 2025 | BranCodeX",
     excerpt:
       "UAE and Dubai businesses looking for a world-class web developer can hire BranCodeX for Next.js websites — high performance, full SEO, and significantly more affordable than Dubai agency rates.",
     date: "2025-06-24",
     readTime: "6 min read",
     category: "Web Development",
-    tags: ["web developer", "web development", "uae", "dubai", "abu dhabi", "affordable", "hire web developer"],
+    tags: [
+      "web developer",
+      "web development",
+      "uae",
+      "dubai",
+      "abu dhabi",
+      "affordable",
+      "hire web developer",
+    ],
     author: "Beng Brandon Che",
     content: `
 <p>Dubai and the wider UAE have become one of the world's most competitive digital markets — with high smartphone penetration, a tech-forward government pushing digital adoption, and an international business community with extremely high standards for professional presentation. Local Dubai web agencies charge AED 10,000–60,000 for professional business websites. BranCodeX delivers the same performance and quality to UAE businesses at a fraction of that investment.</p>
@@ -1125,8 +1260,8 @@ const CURRENT_YEAR = new Date().getFullYear();
 
 export default blogData.map((post) => ({
   ...post,
-  title:   post.title.replace(/2025/g,   String(CURRENT_YEAR)),
+  title: post.title.replace(/2025/g, String(CURRENT_YEAR)),
   excerpt: post.excerpt.replace(/2025/g, String(CURRENT_YEAR)),
-  date:    post.date.replace(/^2025/,    String(CURRENT_YEAR)),
+  date: post.date.replace(/^2025/, String(CURRENT_YEAR)),
   content: post.content.replace(/2025/g, String(CURRENT_YEAR)),
 }));

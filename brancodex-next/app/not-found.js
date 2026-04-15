@@ -6,6 +6,7 @@ export const metadata = {
   title: "404 — Page Not Found | BranCodeX",
   description:
     "The page you are looking for doesn't exist. Return to BranCodeX — web development agency in Bamenda, Cameroon.",
+  robots: { index: false, follow: true },
 };
 
 export default function NotFound() {

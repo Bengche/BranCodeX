@@ -159,7 +159,9 @@ function PlanCard({ plan, xafRate }) {
           <span className="plan-price-label">Starting from</span>
           <div className="plan-price-amount">
             <span className="plan-price-currency">US$</span>
-            <span className="plan-price-num">{plan.price.replace("$", "")}</span>
+            <span className="plan-price-num">
+              {plan.price.replace("$", "")}
+            </span>
           </div>
         </div>
 
@@ -308,11 +310,17 @@ export default function Plans() {
 
       {/* Trust signal */}
       <div className="plans-trust-bar">
-        <span><i className="fa fa-shield-alt"></i> No hidden fees</span>
+        <span>
+          <i className="fa fa-shield-alt"></i> No hidden fees
+        </span>
         <span className="trust-sep">·</span>
-        <span><i className="fa fa-comments"></i> Free consultation</span>
+        <span>
+          <i className="fa fa-comments"></i> Free consultation
+        </span>
         <span className="trust-sep">·</span>
-        <span><i className="fa fa-check-double"></i> 100% transparent scoping</span>
+        <span>
+          <i className="fa fa-check-double"></i> 100% transparent scoping
+        </span>
       </div>
     </section>
   );

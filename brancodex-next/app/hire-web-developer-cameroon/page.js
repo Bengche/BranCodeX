@@ -26,6 +26,13 @@ export const metadata = {
     description:
       "BranCodeX — the leading web development agency in Bamenda, Cameroon. We build fast, modern websites for businesses locally and worldwide.",
     url: "https://brancodex.com/hire-web-developer-cameroon",
+    siteName: "BranCodeX",
+  },
+  twitter: {
+    card: "summary",
+    title: "Hire a Web Developer in Bamenda, Cameroon | BranCodeX",
+    description:
+      "BranCodeX — the leading web development agency in Bamenda, Cameroon. Fast, modern websites from $189.",
   },
 };
 
@@ -88,6 +95,7 @@ const faqs = [
 const localBusinessSchema = {
   "@context": "https://schema.org",
   "@type": "LocalBusiness",
+  "@id": "https://brancodex.com/#organization",
   name: "BranCodeX",
   description:
     "Professional web development agency based in Bamenda, Cameroon. We build fast, modern websites for businesses locally and worldwide.",
@@ -118,7 +126,10 @@ const localBusinessSchema = {
     opens: "08:00",
     closes: "18:00",
   },
-  sameAs: ["https://github.com/Bengche/BranCodeX"],
+  sameAs: [
+    "https://github.com/Bengche/BranCodeX",
+    "https://www.linkedin.com/in/beng-brandon-338382291",
+  ],
   priceRange: "$189 - $1,899",
   serviceArea: {
     "@type": "GeoCircle",

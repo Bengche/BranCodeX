@@ -1,0 +1,41 @@
+{
+  "name": "BranCodeX — Web Developer Cameroon",
+  "short_name": "BranCodeX",
+  "description": "Professional web development agency based in Bamenda, Cameroon. Fast, modern websites from $189.",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#0a0a0a",
+  "theme_color": "#f0c040",
+  "orientation": "portrait-primary",
+  "scope": "/",
+  "lang": "en",
+  "icons": [
+    {
+      "src": "/images/icon-192.png",
+      "sizes": "192x192",
+      "type": "image/png",
+      "purpose": "any maskable"
+    },
+    {
+      "src": "/images/icon-512 (1).png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "any maskable"
+    },
+    {
+      "src": "/images/1024.png",
+      "sizes": "1024x1024",
+      "type": "image/png",
+      "purpose": "any"
+    }
+  ],
+  "categories": ["business", "productivity", "utilities"],
+  "screenshots": [
+    {
+      "src": "/images/BranCodeX.jpg",
+      "sizes": "1200x630",
+      "type": "image/jpeg",
+      "label": "BranCodeX Portfolio Homepage"
+    }
+  ]
+}

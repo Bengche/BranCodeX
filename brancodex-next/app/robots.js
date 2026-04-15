@@ -12,6 +12,7 @@ export default function robots() {
       {
         userAgent: "*", // applies to all crawlers (Googlebot, Bingbot, etc.)
         allow: "/", // allow everything
+        disallow: ["/api/"], // prevent API routes from being indexed
       },
     ],
     sitemap: "https://brancodex.com/sitemap.xml",

@@ -38,9 +38,15 @@ export default function FAQAccordion() {
                 aria-expanded={isOpen}
                 aria-controls={`faq-answer-${i}`}
               >
-                <i className={`fas ${item.icon} faq-icon`} aria-hidden="true"></i>
+                <i
+                  className={`fas ${item.icon} faq-icon`}
+                  aria-hidden="true"
+                ></i>
                 <span>{item.question}</span>
-                <i className="fas fa-chevron-down faq-chevron" aria-hidden="true"></i>
+                <i
+                  className="fas fa-chevron-down faq-chevron"
+                  aria-hidden="true"
+                ></i>
               </button>
               <div
                 id={`faq-answer-${i}`}

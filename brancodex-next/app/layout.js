@@ -25,6 +25,7 @@ import { Analytics } from "@vercel/analytics/react";
    Each page can override individual fields by exporting its own `metadata`.
    -------------------------------------------------------------------------- */
 export const metadata = {
+  metadataBase: new URL("https://brancodex.com"),
   // The %s will be replaced by each page's own title
   title: {
     default: "BranCodeX | Web Development Agency in Bamenda, Cameroon",
@@ -35,20 +36,53 @@ export const metadata = {
 
   // Keywords help with SEO — especially for local searches in Cameroon
   keywords: [
+    // Cameroon — local intent (high priority)
     "web developer in Cameroon",
     "web development agency Cameroon",
     "web developer in Bamenda",
     "website design Cameroon",
     "web design Bamenda",
-    "best web developers in Cameroon",
-    "web developers in Africa",
-    "landing pages Cameroon",
+    "best web developer in Cameroon",
+    "affordable website design Cameroon",
+    "hire web developer Cameroon",
+    "web development Bamenda Cameroon",
+    "website design Bamenda",
+    "web agency Bafoussam",
+    "web developer Douala",
+    "web developer Yaounde",
+    "web developer Buea",
+    "website design Yaoundé",
+    "website design Douala",
     "e-commerce Cameroon",
+    "online store Cameroon",
     "SEO Cameroon",
+    "MoMo payment website Cameroon",
+    "Next.js developer Cameroon",
+    "WordPress developer Cameroon",
+    // Africa — regional intent
+    "web developer in Africa",
+    "web development agency Africa",
+    "best web developer Africa",
+    "web design West Africa",
+    "web developer Central Africa",
+    "web developer Nigeria",
+    "web developer Ghana",
+    "web developer Senegal",
+    "African web design agency",
+    "web development company Sub-Saharan Africa",
+    // Global / English-speaking
+    "affordable web development agency",
+    "freelance web developer",
+    "professional website design",
+    "landing page design",
+    "e-commerce website development",
+    "Next.js developer",
+    "React web developer",
+    "small business website design",
+    "conversion-optimized website",
+    // Brand
     "BranCodeX",
     "Beng Brandon Che",
-    "Next.js developer Cameroon",
-    "affordable website design",
   ],
 
   authors: [{ name: "Beng Brandon Che", url: "https://brancodex.com" }],
@@ -67,7 +101,8 @@ export const metadata = {
     canonical: "https://brancodex.com",
   },
 
-  // Open Graph — controls the preview card when someone shares your link
+  // Open Graph — let Next.js opengraph-image.jsx generate a real 1200×630 OG image.
+  // Do NOT override openGraph.images here — that would bypass the generated image.
   openGraph: {
     type: "website",
     url: "https://brancodex.com",
@@ -75,24 +110,15 @@ export const metadata = {
     description:
       "Modern, conversion-focused websites and e-commerce solutions built in Bamenda, Cameroon for clients worldwide.",
     siteName: "BranCodeX",
-    images: [
-      {
-        url: "https://brancodex.com/images/favicon.png",
-        width: 1200,
-        height: 630,
-        alt: "BranCodeX Web Development Agency",
-      },
-    ],
     locale: "en_US",
   },
 
-  // Twitter/X card — controls how your link looks when shared on Twitter
+  // Twitter/X card — summary_large_image auto-picks up the opengraph-image.jsx
   twitter: {
     card: "summary_large_image",
     title: "BranCodeX | Web Development Agency in Cameroon",
     description:
       "Web development agency in Bamenda, Cameroon delivering fast, modern websites, landing pages, and e-commerce experiences.",
-    images: ["https://brancodex.com/images/favicon.png"],
     creator: "@brancodex",
   },
 
@@ -138,20 +164,37 @@ export default function RootLayout({ children }) {
                   "@id": "https://brancodex.com/#organization",
                   name: "BranCodeX",
                   url: "https://brancodex.com",
-                  logo: "https://brancodex.com/images/favicon.png",
+                  logo: {
+                    "@type": "ImageObject",
+                    url: "https://brancodex.com/images/favicon.png",
+                    width: 512,
+                    height: 512,
+                  },
                   foundingLocation: {
                     "@type": "Place",
                     name: "Bamenda, Cameroon",
                   },
-                  areaServed: ["Bamenda", "Cameroon", "Worldwide"],
+                  areaServed: [
+                    "Bamenda",
+                    "Cameroon",
+                    "Douala",
+                    "Yaoundé",
+                    "Buea",
+                    "Bafoussam",
+                    "Africa",
+                    "Worldwide",
+                  ],
                   sameAs: [
                     "https://github.com/Bengche",
+                    "https://github.com/Bengche/BranCodeX",
                     "https://www.linkedin.com/in/beng-brandon-338382291",
                   ],
                   contactPoint: {
                     "@type": "ContactPoint",
-                    email: "bengc102@gmail.com",
+                    email: "contact@brancodex.com",
+                    telephone: "+237654155218",
                     contactType: "customer support",
+                    availableLanguage: ["English", "French"],
                   },
                 },
                 {
@@ -161,22 +204,26 @@ export default function RootLayout({ children }) {
                   alternateName: "BranCodeX",
                   jobTitle: "Full-Stack Web Developer",
                   url: "https://brancodex.com",
-                  image: "https://brancodex.com/images/favicon.png",
+                  image: "https://brancodex.com/images/Beng Brandon Che.jpeg",
+                  worksFor: { "@id": "https://brancodex.com/#organization" },
                   address: {
                     "@type": "PostalAddress",
                     addressLocality: "Bamenda",
                     addressRegion: "North West",
                     addressCountry: "CM",
                   },
-                  areaServed: ["Bamenda", "Cameroon", "Worldwide"],
+                  areaServed: ["Bamenda", "Cameroon", "Africa", "Worldwide"],
                   knowsAbout: [
                     "Web Design",
                     "Website Development",
                     "SEO",
+                    "Local SEO",
                     "Landing Pages",
                     "E-Commerce",
                     "Next.js",
                     "React",
+                    "WordPress",
+                    "Mobile-first Design",
                   ],
                 },
                 {
@@ -187,11 +234,6 @@ export default function RootLayout({ children }) {
                   description:
                     "Web development agency in Bamenda, Cameroon building websites for clients worldwide.",
                   publisher: { "@id": "https://brancodex.com/#organization" },
-                  potentialAction: {
-                    "@type": "SearchAction",
-                    target: "https://brancodex.com/?q={search_term_string}",
-                    "query-input": "required name=search_term_string",
-                  },
                 },
               ],
             }),

@@ -1,0 +1,45 @@
+<section id="contact" class="contact-section" data-aos="fade-up">
+  <div class="contact-container">
+    <h2>💌 Let's Connect</h2>
+    <p class="contact-intro">
+      Got a project in mind, a question to ask, or just want to say hi?  
+      I'd love to hear from you. Fill out the form and let’s build something amazing!
+    </p>
+
+    <form id="contact-form" class="contact-form" onsubmit="sendMessage(event)">
+      <div class="form-group">
+        <label for="name"><i class="fas fa-user"></i> Your Name</label>
+        <input type="text" id="name" required placeholder="Enter your name" name="name" />
+      </div>
+
+      <div class="form-group">
+        <label for="email"><i class="fas fa-envelope"></i> Your Email</label>
+        <input type="email" id="email" required placeholder="Enter your email" name="email"/>
+      </div>
+
+      <div class="form-group">
+        <label for="message"><i class="fas fa-comment-dots"></i> Message</label>
+        <textarea id="message" rows="5" required placeholder="What's on your mind?" name="message"></textarea>
+      </div>
+      <button type="submit" class="contact-btn">
+        <i class="fas fa-paper-plane"></i> Send Message
+      </button>
+    </form>
+
+    <div id="message-status" class="message-status"></div>
+
+    <div class="social-links" data-aos="fade-up">
+  <p>Or connect with us on social media 👇</p>
+  <div class="icons">
+    <a href="https://wa.link/fhyxfh" target="_blank"><i class="fab fa-whatsapp"></i></a>
+    <a href="mailto:contact@brancodex.com"><i class="fas fa-envelope"></i></a>
+    <a href="https://wa.link/fhyxfh" target="_blank"><i class="fab fa-x"></i></a>
+    <a href="https://www.linkedin.com/in/beng-brandon-338382291?utm_source=share&utm_campaign=share_via&utm_content=profile&utm_medium=android_app" target="_blank"><i class="fab fa-linkedin-in"></i></a>
+    <a href="https://github.com/Bengche" target="_blank"><i class="fab fa-github"></i></a>
+    <a href="https://www.facebook.com/bengbrandonche?mibextid=ZbWKwL" target="_blank"><i class="fab fa-facebook-f"></i></a>
+    
+  </div>
+</div>
+
+  </div>
+</section>

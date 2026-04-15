@@ -22,10 +22,25 @@ export async function generateMetadata({ params }) {
       title: post.title,
       description: post.excerpt,
       url: `https://brancodex.com/blog/${post.slug}`,
+      siteName: "BranCodeX",
       type: "article",
       publishedTime: post.date,
       authors: [post.author],
       tags: post.tags,
+      images: [
+        {
+          url: "https://brancodex.com/images/BranCodeX.jpg",
+          width: 1200,
+          height: 630,
+          alt: post.title,
+        },
+      ],
+    },
+    twitter: {
+      card: "summary_large_image",
+      title: post.title,
+      description: post.excerpt,
+      images: ["https://brancodex.com/images/BranCodeX.jpg"],
     },
   };
 }
@@ -57,6 +72,7 @@ export default function BlogPostPage({ params }) {
     },
     datePublished: post.date,
     dateModified: post.date,
+    image: "https://brancodex.com/images/BranCodeX.jpg",
     mainEntityOfPage: {
       "@type": "WebPage",
       "@id": `https://brancodex.com/blog/${post.slug}`,

@@ -6,28 +6,11 @@
  * which makes it much easier for Google to find and rank them.
  */
 
+import blogData from "../data/blogData";
+
 const BASE = "https://brancodex.com";
 
-const blogSlugs = [
-  "why-your-business-in-cameroon-needs-a-website",
-  "how-much-does-a-website-cost-in-cameroon",
-  "how-to-rank-your-business-on-google-in-cameroon",
-  "nextjs-vs-wordpress-which-is-better-for-cameroon-businesses",
-  "web-development-services-cameroon",
-  "ecommerce-cameroon",
-  "web-development-douala",
-  "web-development-yaounde",
-  "ecommerce-douala-littoral",
-  "ecommerce-yaounde-centre",
-  "ecommerce-bamenda-northwest",
-  "ecommerce-bafoussam-west",
-  "ecommerce-buea-southwest",
-  "ecommerce-garoua-north",
-  "ecommerce-maroua-far-north",
-  "ecommerce-ngaoundere-adamawa",
-  "ecommerce-bertoua-east",
-  "ecommerce-ebolowa-south",
-];
+const blogSlugs = blogData.map((p) => p.slug);
 
 const regionSlugs = [
   "cameroon",

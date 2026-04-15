@@ -34,7 +34,7 @@ export default function Testimonials() {
           }
         });
       },
-      { threshold: 0.15 }
+      { threshold: 0.15 },
     );
     cards.forEach((card) => {
       card.classList.remove("visible");
@@ -92,7 +92,7 @@ export default function Testimonials() {
         formData.append("image", photoFile);
         const res = await fetch(
           `https://api.imgbb.com/1/upload?key=${IMGBB_API_KEY}`,
-          { method: "POST", body: formData }
+          { method: "POST", body: formData },
         );
         const data = await res.json();
         if (data?.data?.url) photo_url = data.data.url;
