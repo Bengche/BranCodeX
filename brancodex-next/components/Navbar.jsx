@@ -34,6 +34,14 @@ const navLinks = [
 
 export default function Navbar() {
   const [menuOpen, setMenuOpen] = useState(false);
+  const [scrolled, setScrolled] = useState(false);
+
+  // Glass effect on scroll
+  useEffect(() => {
+    const onScroll = () => setScrolled(window.scrollY > 10);
+    window.addEventListener("scroll", onScroll, { passive: true });
+    return () => window.removeEventListener("scroll", onScroll);
+  }, []);
 
   // When the mobile menu is open, prevent the page from scrolling behind it
   useEffect(() => {
@@ -51,7 +59,7 @@ export default function Navbar() {
   return (
     <nav
       id="navbar"
-      className="sticky top-0 left-0 w-full z-50 backdrop-blur text-white shadow-md transition-all duration-500"
+      className={`sticky top-0 left-0 w-full z-50 text-white transition-all duration-500${scrolled ? " navbar--scrolled" : ""}`}
     >
       <div className="max-w-7xl mx-auto px-6 py-4 flex items-center justify-between">
         {/* ── Logo ───────────────────────────────────────────────────────── */}
