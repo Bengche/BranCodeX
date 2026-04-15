@@ -1262,16 +1262,23 @@ body {
 .form-group textarea {
   width: 100%;
   padding: 0.75rem;
-  border: 1.5px solid #cbd5e1;
+  border: 1.5px solid #334155;
   border-radius: 10px;
   font-size: 1rem;
   outline: none;
   transition: border 0.3s ease;
+  background: #0f172a;
+  color: #f0f6ff;
+}
+
+.form-group input::placeholder,
+.form-group textarea::placeholder {
+  color: #64748b;
 }
 
 .form-group input:focus,
 .form-group textarea:focus {
-  border-color: #0ea5e9;
+  border-color: #22c55e;
 }
 
 .message-status {
