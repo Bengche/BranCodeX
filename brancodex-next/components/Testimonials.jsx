@@ -2,7 +2,6 @@
 
 import { useState, useEffect, useRef } from "react";
 
-const SHEETDB_URL = "https://sheetdb.io/api/v1/2wmi54lm74tyn";
 const IMGBB_API_KEY = "69c45289e2873d6bd5719277ac377ceb";
 
 export default function Testimonials() {
@@ -47,10 +46,9 @@ export default function Testimonials() {
   async function loadAllTestimonials() {
     setLoading(true);
     try {
-      const res = await fetch(SHEETDB_URL);
-      let data = await res.json();
-      data.reverse(); // most recent first
-      setTestimonials(data);
+      const res = await fetch("/api/testimonials");
+      const data = await res.json();
+      setTestimonials(Array.isArray(data) ? data : []);
     } catch {
       setTestimonials([]);
     } finally {
@@ -99,7 +97,7 @@ export default function Testimonials() {
         const data = await res.json();
         if (data?.data?.url) photo_url = data.data.url;
       }
-      await fetch(SHEETDB_URL, {
+      await fetch("/api/testimonials", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
