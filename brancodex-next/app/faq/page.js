@@ -9,7 +9,7 @@
 import Link from "next/link";
 import Navbar from "../../components/Navbar";
 import Footer from "../../components/Footer";
-import faqData from "../../data/faqData";
+import FAQAccordion from "../../components/FAQAccordion";
 
 export const metadata = {
   title: "FAQ | BranCodeX — Web Development Questions Answered",
@@ -46,28 +46,7 @@ export default function FAQPage() {
 
         {/* Accordion list */}
         <section className="faq-section" aria-label="FAQ accordion">
-          <div className="faq-list">
-            {faqData.map((item, i) => (
-              <details key={i} className="faq-item">
-                <summary className="faq-question">
-                  <i className={`fa ${item.icon} faq-icon`}></i>
-                  <span>{item.question}</span>
-                  <i className="fa fa-chevron-down faq-chevron"></i>
-                </summary>
-                <div className="faq-answer">
-                  <p>{item.answer}</p>
-                </div>
-              </details>
-            ))}
-          </div>
-
-          {/* Bottom CTA */}
-          <div className="faq-bottom-cta">
-            <p>Still have a question?</p>
-            <Link href="/#contact" className="faq-cta-btn">
-              Send us a message
-            </Link>
-          </div>
+          <FAQAccordion />
         </section>
       </main>
 
