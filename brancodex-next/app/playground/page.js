@@ -10,6 +10,7 @@ import Navbar from "../../components/Navbar";
 import Footer from "../../components/Footer";
 import JokesSection from "../../components/playground/JokesSection";
 import QuizSection from "../../components/playground/QuizSection";
+import GuessChallengeSection from "../../components/playground/GuessChallengeSection";
 import LiveCodeEditor from "../../components/playground/LiveCodeEditor";
 
 export const metadata = {
@@ -44,6 +45,7 @@ export default function PlaygroundPage() {
             <nav className="playground-quick-nav" aria-label="Jump to section">
               <a href="#jokes">Jokes</a>
               <a href="#quiz">Quiz</a>
+              <a href="#guess-challenge">Guess &amp; Challenge</a>
               <a href="#live-editor">Live Editor</a>
             </nav>
           </div>
@@ -57,6 +59,11 @@ export default function PlaygroundPage() {
         {/* Quiz */}
         <section id="quiz">
           <QuizSection />
+        </section>
+
+        {/* Guess & Challenge */}
+        <section id="guess-challenge">
+          <GuessChallengeSection />
         </section>
 
         {/* Live code editor */}
