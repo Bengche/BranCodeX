@@ -1,87 +1,133 @@
 ﻿"use client";
 
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
+
+const SHEETDB_URL = "https://sheetdb.io/api/v1/2wmi54lm74tyn";
+const IMGBB_API_KEY = "69c45289e2873d6bd5719277ac377ceb";
 
 export default function Testimonials() {
   const [testimonials, setTestimonials] = useState([]);
-  const [userId, setUserId] = useState("");
+  const [loading, setLoading] = useState(true);
   const [showModal, setShowModal] = useState(false);
   const [filter, setFilter] = useState("all");
-  const [currentEditIndex, setCurrentEditIndex] = useState(null);
   const [formName, setFormName] = useState("");
   const [formReview, setFormReview] = useState("");
   const [formRating, setFormRating] = useState("");
-  const [uploadedImage, setUploadedImage] = useState("");
+  const [photoFile, setPhotoFile] = useState(null);
+  const [photoPreview, setPhotoPreview] = useState("");
+  const [submitting, setSubmitting] = useState(false);
+  const listRef = useRef(null);
 
   useEffect(() => {
-    const stored = JSON.parse(localStorage.getItem("testimonials") || "[]");
-    setTestimonials(stored);
-    if (!sessionStorage.getItem("userId")) {
-      sessionStorage.setItem("userId", Date.now().toString());
-    }
-    setUserId(sessionStorage.getItem("userId"));
+    loadAllTestimonials();
   }, []);
+
+  // Attach IntersectionObserver to cards for scroll-in animation
+  useEffect(() => {
+    if (!listRef.current) return;
+    const cards = listRef.current.querySelectorAll(".testimonial-card");
+    const observer = new IntersectionObserver(
+      (entries, obs) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) {
+            entry.target.classList.add("visible");
+            obs.unobserve(entry.target);
+          }
+        });
+      },
+      { threshold: 0.15 }
+    );
+    cards.forEach((card) => {
+      card.classList.remove("visible");
+      observer.observe(card);
+    });
+    return () => observer.disconnect();
+  }, [testimonials, filter]);
+
+  async function loadAllTestimonials() {
+    setLoading(true);
+    try {
+      const res = await fetch(SHEETDB_URL);
+      let data = await res.json();
+      data.reverse(); // most recent first
+      setTestimonials(data);
+    } catch {
+      setTestimonials([]);
+    } finally {
+      setLoading(false);
+    }
+  }
 
   function openModal() {
     setFormName("");
     setFormReview("");
     setFormRating("");
-    setUploadedImage("");
-    setCurrentEditIndex(null);
+    setPhotoFile(null);
+    setPhotoPreview("");
     setShowModal(true);
   }
 
   function closeModal() {
     setShowModal(false);
-    setCurrentEditIndex(null);
   }
 
   function handlePhotoChange(e) {
     const file = e.target.files?.[0];
     if (!file) return;
+    setPhotoFile(file);
     const reader = new FileReader();
-    reader.onload = (ev) => setUploadedImage(ev.target.result);
+    reader.onload = (ev) => setPhotoPreview(ev.target.result);
     reader.readAsDataURL(file);
   }
 
-  function handleSubmit(e) {
+  async function handleSubmit(e) {
     e.preventDefault();
-    const testimonialData = {
-      name: formName,
-      review: formReview,
-      rating: parseInt(formRating),
-      photo: uploadedImage || "https://i.pravatar.cc/100",
-      userId,
-    };
-    let updated;
-    if (currentEditIndex !== null) {
-      updated = [...testimonials];
-      updated[currentEditIndex] = testimonialData;
-    } else {
-      updated = [testimonialData, ...testimonials];
+    if (!formRating) {
+      alert("Please select a rating.");
+      return;
     }
-    setTestimonials(updated);
-    localStorage.setItem("testimonials", JSON.stringify(updated));
-    closeModal();
+    setSubmitting(true);
+    try {
+      let photo_url = "";
+      if (photoFile) {
+        const formData = new FormData();
+        formData.append("image", photoFile);
+        const res = await fetch(
+          `https://api.imgbb.com/1/upload?key=${IMGBB_API_KEY}`,
+          { method: "POST", body: formData }
+        );
+        const data = await res.json();
+        if (data?.data?.url) photo_url = data.data.url;
+      }
+      await fetch(SHEETDB_URL, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          data: [
+            {
+              name: formName,
+              review: formReview,
+              rating: formRating,
+              photo_url,
+              created_at: new Date().toISOString(),
+            },
+          ],
+        }),
+      });
+      alert("✅ Testimonial submitted!");
+      closeModal();
+      loadAllTestimonials();
+    } catch {
+      alert("❌ Submission failed. Please try again.");
+    } finally {
+      setSubmitting(false);
+    }
   }
 
-  function editTestimonial(index) {
-    const t = testimonials[index];
-    setFormName(t.name);
-    setFormReview(t.review);
-    setFormRating(String(t.rating));
-    setUploadedImage(t.photo);
-    setCurrentEditIndex(index);
-    setShowModal(true);
-  }
-
-  function deleteTestimonial(index) {
-    if (!confirm("Are you sure you want to delete this review?")) return;
-    const updated = [...testimonials];
-    updated.splice(index, 1);
-    setTestimonials(updated);
-    localStorage.setItem("testimonials", JSON.stringify(updated));
-  }
+  const filtered =
+    filter === "all"
+      ? testimonials
+      : testimonials.filter((t) => String(t.rating) === String(filter));
 
   return (
     <section
@@ -109,42 +155,12 @@ export default function Testimonials() {
             value={filter}
             onChange={(e) => setFilter(e.target.value)}
           >
-            <option
-              className="filter-btn active flex items-center gap-2 px-4 py-2 rounded-lg border border-gray-600 bg-gray-800 hover:bg-yellow-400 hover:text-gray-900 transition font-semibold"
-              value="all"
-            >
-              All
-            </option>
-            <option
-              className="filter-btn flex items-center gap-2 px-4 py-2 rounded-lg border border-gray-600 bg-gray-800 hover:bg-yellow-400 hover:text-gray-900 transition font-semibold"
-              value="1"
-            >
-              ⭐1 Star
-            </option>
-            <option
-              className="filter-btn flex items-center gap-2 px-4 py-2 rounded-lg border border-gray-600 bg-gray-800 hover:bg-yellow-400 hover:text-gray-900 transition font-semibold"
-              value="2"
-            >
-              ⭐2 Stars
-            </option>
-            <option
-              className="filter-btn flex items-center gap-2 px-4 py-2 rounded-lg border border-gray-600 bg-gray-800 hover:bg-yellow-400 hover:text-gray-900 transition font-semibold"
-              value="3"
-            >
-              ⭐3 Stars
-            </option>
-            <option
-              className="filter-btn flex items-center gap-2 px-4 py-2 rounded-lg border border-gray-600 bg-gray-800 hover:bg-yellow-400 hover:text-gray-900 transition font-semibold"
-              value="4"
-            >
-              ⭐4 Stars
-            </option>
-            <option
-              className="filter-btn flex items-center gap-2 px-4 py-2 rounded-lg border border-gray-600 bg-gray-800 hover:bg-yellow-400 hover:text-gray-900 transition font-semibold"
-              value="5"
-            >
-              ⭐5 Stars
-            </option>
+            <option value="all">All</option>
+            <option value="1">⭐ 1 Star</option>
+            <option value="2">⭐⭐ 2 Stars</option>
+            <option value="3">⭐⭐⭐ 3 Stars</option>
+            <option value="4">⭐⭐⭐⭐ 4 Stars</option>
+            <option value="5">⭐⭐⭐⭐⭐ 5 Stars</option>
           </select>
         </div>
 
@@ -157,50 +173,50 @@ export default function Testimonials() {
               paddingRight: "0.5rem",
             }}
           >
-            <div
-              id="testimonialList"
-              className="grid grid-cols-1 md:grid-cols-2 gap-8"
-            >
-              {testimonials.map((t, index) => {
-                if (filter !== "all" && t.rating < parseInt(filter))
-                  return null;
-                return (
+            {loading ? (
+              <div className="text-center text-gray-400 py-8">Loading...</div>
+            ) : filtered.length === 0 ? (
+              <div className="text-center text-gray-400 col-span-2 py-8">
+                No testimonials found for this filter.
+              </div>
+            ) : (
+              <div
+                id="testimonialList"
+                className="grid grid-cols-1 md:grid-cols-2 gap-8"
+                ref={listRef}
+              >
+                {filtered.map((t, i) => (
                   <div
-                    className="testimonial-card"
-                    key={index}
-                    data-aos="fade-up"
-                    data-aos-delay={index * 100}
+                    key={i}
+                    className="testimonial-card flex flex-col md:flex-row items-center gap-4"
                   >
-                    <img src={t.photo} alt={t.name} />
-                    <h4>{t.name}</h4>
-                    <div className="stars">{"⭐".repeat(t.rating)}</div>
-                    <p>{t.review}</p>
-                    {t.userId === userId && (
-                      <div className="card-actions">
-                        <button
-                          onClick={() => editTestimonial(index)}
-                          className="edit-btn"
-                        >
-                          ✏ Edit
-                        </button>
-                        <button
-                          onClick={() => deleteTestimonial(index)}
-                          className="delete-btn"
-                        >
-                          🗑 Delete
-                        </button>
+                    <span className="testimonial-quote">&ldquo;</span>
+                    <img
+                      src={
+                        t.photo_url ||
+                        `https://ui-avatars.com/api/?name=${encodeURIComponent(t.name)}`
+                      }
+                      className="testimonial-img mb-2 md:mb-0"
+                      alt="User Photo"
+                    />
+                    <div className="flex-1">
+                      <div className="flex items-center gap-2 mb-1">
+                        <strong className="text-lg">{t.name}</strong>
+                        <span className="testimonial-stars text-yellow-400">
+                          {"★".repeat(Number(t.rating))}
+                        </span>
                       </div>
-                    )}
+                      <p className="italic text-gray-200 mb-2">
+                        &ldquo;{t.review}&rdquo;
+                      </p>
+                      <div className="text-xs text-gray-400">
+                        {new Date(t.created_at).toLocaleString()}
+                      </div>
+                    </div>
                   </div>
-                );
-              })}
-            </div>
-          </div>
-          <div
-            id="loadingMore"
-            className="text-center text-gray-400 py-4 hidden"
-          >
-            Loading Reviews...
+                ))}
+              </div>
+            )}
           </div>
         </div>
       </div>
@@ -268,9 +284,9 @@ export default function Testimonials() {
                   className="w-full"
                   onChange={handlePhotoChange}
                 />
-                {uploadedImage && (
+                {photoPreview && (
                   <img
-                    src={uploadedImage}
+                    src={photoPreview}
                     className="mt-2 testimonial-img"
                     alt="Preview"
                   />
@@ -296,9 +312,12 @@ export default function Testimonials() {
               <button
                 type="submit"
                 id="addReviewBtn"
-                className="w-full bg-yellow-400 hover:bg-yellow-500 text-gray-900 py-2 rounded font-bold transition"
+                disabled={submitting}
+                className={`w-full bg-yellow-400 hover:bg-yellow-500 text-gray-900 py-2 rounded font-bold transition${
+                  submitting ? " btn-disabled" : ""
+                }`}
               >
-                ✅ Add Review
+                {submitting ? "⏳ Submitting..." : "✅ Add Review"}
               </button>
             </form>
           </div>
