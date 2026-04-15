@@ -162,7 +162,7 @@ export default function BlogPostPage({ params }) {
               </p>
               <div className="blog-post-cta-actions">
                 <Link
-                  href="/#contact"
+                  href="/contact"
                   className="blog-cta-btn blog-cta-btn--primary"
                 >
                   Get a Free Quote
@@ -175,6 +175,32 @@ export default function BlogPostPage({ params }) {
                 >
                   <i className="fab fa-whatsapp"></i> WhatsApp Us
                 </a>
+              </div>
+            </div>
+
+            {/* Internal SEO Links */}
+            <div style={{ marginTop: "2rem", padding: "1.5rem", background: "#0f172a", borderRadius: "1rem", border: "1px solid #1e293b" }}>
+              <p style={{ color: "#94a3b8", fontSize: "0.75rem", textTransform: "uppercase", letterSpacing: "0.05em", marginBottom: "0.75rem" }}>More from BranCodeX</p>
+              <div style={{ display: "flex", flexWrap: "wrap", gap: "0.6rem" }}>
+                {[
+                  { href: "/", label: "BranCodeX — Professional Web Development Agency" },
+                  { href: "/contact", label: "Get a Free Quote" },
+                  { href: "/blog/best-web-developer-in-cameroon", label: "Best Web Developer in Cameroon" },
+                  { href: "/blog/best-web-developer-in-africa", label: "Best Web Developer in Africa" },
+                  { href: "/blog/best-web-developer-in-the-world", label: "Best Web Developers in the World" },
+                  { href: "/blog/web-development-services-cameroon", label: "Web Development Services" },
+                  { href: "/blog/how-much-does-a-website-cost-in-cameroon", label: "Website Pricing Guide" },
+                  { href: "/blog/how-to-rank-your-business-on-google-in-cameroon", label: "SEO Guide for Businesses" },
+                  { href: "/faq", label: "FAQ" },
+                ].map(({ href, label }) => (
+                  <Link
+                    key={href}
+                    href={href}
+                    style={{ color: "#22c55e", fontSize: "0.82rem", textDecoration: "underline", textUnderlineOffset: "3px" }}
+                  >
+                    {label}
+                  </Link>
+                ))}
               </div>
             </div>
           </div>
