@@ -6308,3 +6308,253 @@ textarea {
     gap: 1.25rem;
   }
 }
+
+/* ============================================================
+   WHATSAPP FLOATING BUTTON  (Bottom Left)
+   Exact design from original index.html — do not modify
+   ============================================================ */
+#bx-wa-container {
+  position: fixed;
+  bottom: 30px;
+  left: 30px;
+  z-index: 10000;
+  transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+}
+
+#bx-wa-link {
+  text-decoration: none;
+  display: block;
+}
+
+.bx-wa-flex {
+  background: rgba(255, 255, 255, 0.94);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  padding: 8px 24px 8px 8px;
+  border-radius: 50px;
+  display: flex;
+  align-items: center;
+  gap: 15px;
+  border: 1px solid rgba(0, 122, 94, 0.12);
+  box-shadow: 0 12px 35px rgba(0, 0, 0, 0.1);
+  position: relative;
+}
+
+.bx-wa-icon-box {
+  width: 46px;
+  height: 46px;
+  background: #007a5e;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+}
+
+.bx-wa-icon-box svg {
+  width: 24px;
+  height: 24px;
+  fill: white;
+}
+
+.bx-wa-text {
+  display: flex;
+  flex-direction: column;
+}
+
+.bx-label {
+  font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
+  font-size: 9px;
+  text-transform: uppercase;
+  letter-spacing: 1.2px;
+  color: #888;
+  font-weight: 700;
+  margin-bottom: -1px;
+}
+
+.bx-cta {
+  font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
+  font-size: 16px;
+  font-weight: 700;
+  color: #007a5e;
+  letter-spacing: -0.3px;
+}
+
+.bx-pulse-circle {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  background: #007a5e;
+  border-radius: 50%;
+  opacity: 0.4;
+  animation: bx-ripple 2.8s infinite;
+}
+
+@keyframes bx-ripple {
+  0%   { transform: scale(1);   opacity: 0.5; }
+  70%  { transform: scale(1.6); opacity: 0;   }
+  100% { transform: scale(1);   opacity: 0;   }
+}
+
+#bx-wa-container:hover {
+  transform: translateY(-5px);
+}
+
+#bx-wa-container:hover .bx-wa-flex {
+  background: white;
+  border-color: #fcd116;
+  box-shadow: 0 15px 45px rgba(0, 0, 0, 0.15);
+}
+
+#bx-wa-container:hover .bx-cta {
+  color: #ce1126;
+}
+
+@media (max-width: 480px) {
+  #bx-wa-container  { bottom: 20px; left: 15px; }
+  .bx-wa-flex       { padding: 6px 18px 6px 6px; gap: 10px; }
+  .bx-cta           { font-size: 14px; }
+  .bx-wa-icon-box   { width: 40px; height: 40px; }
+}
+
+/* ============================================================
+   BRANDON AI CHAT WIDGET  (Bottom Right)
+   Exact design from original index.html — do not modify
+   ============================================================ */
+#brancodex-chat-container {
+  position: fixed;
+  bottom: 20px;
+  right: 20px;
+  z-index: 9999;
+  font-family: 'Segoe UI', sans-serif;
+}
+
+#brancodex-bubble {
+  width: 60px;
+  height: 60px;
+  border-radius: 50%;
+  background: #007a5e;
+  color: white;
+  border: 3px solid #ce1126;
+  cursor: pointer;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
+  font-size: 26px;
+}
+
+#brancodex-chat-window {
+  width: 380px;
+  height: 550px;
+  max-width: 90vw;
+  max-height: 80vh;
+  background: white;
+  border-radius: 15px;
+  flex-direction: column;
+  overflow: hidden;
+  box-shadow: 0 10px 40px rgba(0, 0, 0, 0.2);
+  margin-bottom: 15px;
+  display: flex;
+  border: 1px solid #ddd;
+}
+
+@media (max-width: 480px) {
+  #brancodex-chat-window {
+    width: 95vw;
+    height: 85vh;
+    border-radius: 10px;
+  }
+  #header-name { font-size: 14px; }
+}
+
+#brancodex-chat-header {
+  background: #007a5e;
+  color: white;
+  padding: 15px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  border-bottom: 5px solid #ce1126;
+}
+
+#brancodex-status {
+  width: 10px;
+  height: 10px;
+  background: #fcd116;
+  border-radius: 50%;
+  border: 1px solid white;
+}
+
+.header-btn {
+  background: none;
+  border: none;
+  color: white;
+  cursor: pointer;
+  font-weight: bold;
+}
+
+#brancodex-messages {
+  flex: 1;
+  padding: 15px;
+  overflow-y: auto;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  background: #f4f7f6;
+}
+
+.grok-msg {
+  padding: 12px 15px;
+  border-radius: 12px;
+  max-width: 85%;
+  font-size: 14px;
+  line-height: 1.5;
+}
+
+.user-msg {
+  align-self: flex-end;
+  background: white;
+  color: #333;
+  border: 1px solid #eee;
+  border-bottom-right-radius: 2px;
+}
+
+.bot-msg {
+  align-self: flex-start;
+  background: #007a5e;
+  color: white;
+  border-bottom-left-radius: 2px;
+}
+
+.bot-msg a {
+  color: #fcd116;
+  font-weight: bold;
+  text-decoration: underline;
+}
+
+#brancodex-input-area {
+  display: flex;
+  padding: 12px;
+  background: white;
+  border-top: 1px solid #eee;
+  gap: 8px;
+}
+
+#brancodex-user-input {
+  flex: 1;
+  border: 1px solid #ddd;
+  padding: 10px;
+  border-radius: 8px;
+  outline: none;
+  font-size: 16px;
+  color: #333;
+  background: white;
+}
+
+#brancodex-send-btn {
+  background: #fcd116;
+  color: #000;
+  border: none;
+  padding: 0 15px;
+  border-radius: 8px;
+  font-weight: bold;
+  cursor: pointer;
+}

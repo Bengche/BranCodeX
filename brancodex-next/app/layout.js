@@ -17,6 +17,8 @@ import LoadingScreen from "@/components/LoadingScreen";
 import ExitIntentPopup from "@/components/ExitIntentPopup";
 import CookieConsent from "@/components/CookieConsent";
 import ScrollProgress from "@/components/ScrollProgress";
+import WhatsAppButton from "@/components/WhatsAppButton";
+import BrandonAI from "@/components/BrandonAI";
 import { Analytics } from "@vercel/analytics/react";
 
 /* --------------------------------------------------------------------------
@@ -251,6 +253,8 @@ export default function RootLayout({ children }) {
           initialized once on the client, making all data-aos attributes work.
         */}
         <AOSProvider>{children}</AOSProvider>
+        <WhatsAppButton />
+        <BrandonAI />
         <Analytics />
       </body>
     </html>
