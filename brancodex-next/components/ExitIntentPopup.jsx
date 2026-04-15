@@ -1,6 +1,7 @@
 "use client";
 
 import { useState, useEffect } from "react";
+import emailjs from "@emailjs/browser";
 
 export default function ExitIntentPopup() {
   const [show, setShow] = useState(false);
@@ -46,42 +47,32 @@ export default function ExitIntentPopup() {
     if (!name.trim() || !email.trim() || !website.trim()) return;
     setSending(true);
 
-    // Normalise website — add https:// if missing so it's a proper URL
+    // Normalise website — add https:// if missing
     const siteUrl = website.trim().startsWith("http")
       ? website.trim()
       : `https://${website.trim()}`;
 
     try {
-      const res = await fetch("https://api.emailjs.com/api/v1.0/email/send", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({
-          service_id: "service_4i8dgy8",
-          template_id: "template_cncjp0c",
-          user_id: "JwE9TMk7vUP9adouM",
-          template_params: {
-            // These match the variables in your EmailJS template
-            name: name.trim(),
-            email: email.trim(),
-            message:
-              `🎯 NEW FREE WEBSITE AUDIT REQUEST\n\n` +
-              `Name:    ${name.trim()}\n` +
-              `Email:   ${email.trim()}\n` +
-              `Website: ${siteUrl}\n\n` +
-              `Action: Visit their site, run PageSpeed Insights + SEO checks, ` +
-              `then reply to ${email.trim()} with the audit report within 24 h.`,
-          },
-        }),
-      });
-
-      if (!res.ok) {
-        // EmailJS returns non-200 on failure — show a real error
-        setError("Could not send — please try again or contact us directly.");
-        setSending(false);
-        return;
-      }
-    } catch {
-      setError("Network error — please check your connection and try again.");
+      await emailjs.send(
+        "service_4i8dgy8",
+        "template_cncjp0c",
+        {
+          // Variable names match the template exactly (same as contact form)
+          name: name.trim(),
+          email: email.trim(),
+          message:
+            `🎯 NEW FREE WEBSITE AUDIT REQUEST\n\n` +
+            `Name:    ${name.trim()}\n` +
+            `Email:   ${email.trim()}\n` +
+            `Website: ${siteUrl}\n\n` +
+            `Action: Visit their site, run PageSpeed Insights + SEO checks, ` +
+            `then reply to ${email.trim()} with the audit report within 24 h.`,
+        },
+        "JwE9TMk7vUP9adouM" // public key — same as emailjs.init() in index.html
+      );
+    } catch (err) {
+      console.error("EmailJS error:", err);
+      setError("Could not send — please try again or contact us directly.");
       setSending(false);
       return;
     }
@@ -121,10 +112,11 @@ export default function ExitIntentPopup() {
             <div className="exit-popup-icon">🎯</div>
             <h2 className="exit-popup-title">Wait — Before You Leave!</h2>
             <p className="exit-popup-text">
-              Get a <strong className="text-yellow-400">Free Website Audit</strong>{" "}
-              — we&apos;ll analyse your site&apos;s speed, SEO, mobile experience
-              and security, then send you a full actionable report within 24 hours.
-              100% free, no strings attached.
+              Get a{" "}
+              <strong className="text-yellow-400">Free Website Audit</strong> —
+              we&apos;ll analyse your site&apos;s speed, SEO, mobile experience
+              and security, then send you a full actionable report within 24
+              hours. 100% free, no strings attached.
             </p>
 
             <form className="exit-popup-form" onSubmit={handleSubmit}>
@@ -152,9 +144,7 @@ export default function ExitIntentPopup() {
                 required
                 className="exit-popup-input"
               />
-              {error && (
-                <p className="exit-popup-error">{error}</p>
-              )}
+              {error && <p className="exit-popup-error">{error}</p>}
               <button
                 type="submit"
                 className="exit-popup-btn"
@@ -165,7 +155,8 @@ export default function ExitIntentPopup() {
             </form>
 
             <a href="/guide" className="exit-popup-secondary" onClick={close}>
-              📄 Or read: &quot;5 Mistakes Cameroonian Businesses Make With Their Website&quot;
+              📄 Or read: &quot;5 Mistakes Cameroonian Businesses Make With
+              Their Website&quot;
             </a>
 
             <button type="button" className="exit-popup-skip" onClick={close}>
@@ -177,10 +168,12 @@ export default function ExitIntentPopup() {
             <div className="exit-popup-icon">✅</div>
             <h2 className="exit-popup-title">Request Received!</h2>
             <p className="exit-popup-text">
-              Thanks, <strong className="text-yellow-400">{name}</strong>! We&apos;ll
-              audit <strong className="text-yellow-400">{website}</strong> and send
+              Thanks, <strong className="text-yellow-400">{name}</strong>!
+              We&apos;ll audit{" "}
+              <strong className="text-yellow-400">{website}</strong> and send
               the full report to{" "}
-              <strong className="text-yellow-400">{email}</strong> within 24 hours.
+              <strong className="text-yellow-400">{email}</strong> within 24
+              hours.
             </p>
             <a href="/#contact" className="exit-popup-btn" onClick={close}>
               Or message us directly →
