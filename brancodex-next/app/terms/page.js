@@ -12,7 +12,10 @@ export default function Terms() {
   const updated = "April 15, 2026";
 
   return (
-    <main className="nf-main" style={{ alignItems: "flex-start", paddingTop: "7rem" }}>
+    <main
+      className="nf-main"
+      style={{ alignItems: "flex-start", paddingTop: "7rem" }}
+    >
       <article
         style={{
           maxWidth: "820px",
@@ -59,10 +62,14 @@ export default function Terms() {
 
         <Section title="1. Agreement to Terms">
           <p>
-            By engaging BranCodeX (&ldquo;we&rdquo;, &ldquo;us&rdquo;, &ldquo;our&rdquo;) for web development
-            services or by using this website, you (&ldquo;Client&rdquo;, &ldquo;you&rdquo;) agree to
-            be bound by these Terms of Service. If you do not agree, do not use
-            our services.
+            By engaging BranCodeX (&ldquo;we&rdquo;, &ldquo;us&rdquo;,
+            &ldquo;our&rdquo;) &mdash; legally registered as{" "}
+            <strong style={{ color: "#e2e8f0" }}>BRANCODEX SARL</strong>{" "}
+            (RCCM&nbsp;RC/EBWA/2026/B/65 &mdash; NIU&nbsp;M052618656154Z),
+            Bamenda, Cameroon &mdash; for web development services or by using this
+            website, you (&ldquo;Client&rdquo;, &ldquo;you&rdquo;) agree to be
+            bound by these Terms of Service. If you do not agree, do not use our
+            services.
           </p>
           <p>
             These terms apply to all projects, consultations, and contracts
@@ -122,18 +129,18 @@ export default function Terms() {
             </li>
           </ul>
           <p>
-            All prices are quoted in USD or XAF as agreed. Payments accepted
-            via bank transfer, Mobile Money (MTN/Orange), PayPal, or other
-            methods agreed in the proposal.
+            All prices are quoted in USD or XAF as agreed. Payments accepted via
+            bank transfer, Mobile Money (MTN/Orange), PayPal, or other methods
+            agreed in the proposal.
           </p>
         </Section>
 
         <Section title="5. Revisions">
           <p>
-            Each project package includes a defined number of revision rounds
-            as stated in the proposal. Additional revisions beyond the agreed
-            scope will be billed at our current hourly rate or a flat fee
-            agreed in writing before work begins.
+            Each project package includes a defined number of revision rounds as
+            stated in the proposal. Additional revisions beyond the agreed scope
+            will be billed at our current hourly rate or a flat fee agreed in
+            writing before work begins.
           </p>
           <p>
             A &ldquo;revision&rdquo; means adjustments to approved designs or
@@ -148,13 +155,11 @@ export default function Terms() {
             including the website design, custom code, and content created
             specifically for your project.
           </p>
-          <p>
-            BranCodeX retains the right to:
-          </p>
+          <p>BranCodeX retains the right to:</p>
           <ul>
             <li>
-              Display your project in our portfolio and case studies unless
-              you request otherwise in writing before project completion.
+              Display your project in our portfolio and case studies unless you
+              request otherwise in writing before project completion.
             </li>
             <li>
               Retain ownership of any reusable code libraries, frameworks, or
@@ -163,9 +168,9 @@ export default function Terms() {
           </ul>
           <p>
             Third-party assets (fonts, stock images, plugins, npm packages)
-            remain subject to their own licences. It is your responsibility
-            to ensure you have the appropriate licences for any content you
-            provide to us.
+            remain subject to their own licences. It is your responsibility to
+            ensure you have the appropriate licences for any content you provide
+            to us.
           </p>
         </Section>
 
@@ -183,9 +188,7 @@ export default function Terms() {
             <li>
               Respond to requests for feedback and approval in a timely manner.
             </li>
-            <li>
-              Pay all invoices by the agreed due dates.
-            </li>
+            <li>Pay all invoices by the agreed due dates.</li>
           </ul>
         </Section>
 
@@ -196,17 +199,17 @@ export default function Terms() {
             date, calculated at our standard hourly rate.
           </p>
           <p>
-            If BranCodeX cancels a project for any reason, any deposit paid
-            will be refunded in full within 14 days.
+            If BranCodeX cancels a project for any reason, any deposit paid will
+            be refunded in full within 14 days.
           </p>
         </Section>
 
         <Section title="9. Confidentiality">
           <p>
-            Both parties agree to keep confidential any proprietary or
-            sensitive information shared during the project (business plans,
-            unreleased products, internal processes). This obligation survives
-            the end of the project for a period of two (2) years.
+            Both parties agree to keep confidential any proprietary or sensitive
+            information shared during the project (business plans, unreleased
+            products, internal processes). This obligation survives the end of
+            the project for a period of two (2) years.
           </p>
         </Section>
 
@@ -230,15 +233,16 @@ export default function Terms() {
 
         <Section title="11. Website Use">
           <p>
-            You may use <strong style={{ color: "#e2e8f0" }}>brancodex.com</strong> for
+            You may use{" "}
+            <strong style={{ color: "#e2e8f0" }}>brancodex.com</strong> for
             lawful purposes only. You must not:
           </p>
           <ul>
             <li>Attempt to gain unauthorised access to our systems.</li>
             <li>Scrape, copy, or reproduce our content without permission.</li>
             <li>
-              Use our AI chat (Brandon) in a way that violates Groq&apos;s or our
-              own terms.
+              Use our AI chat (Brandon) in a way that violates Groq&apos;s or
+              our own terms.
             </li>
           </ul>
         </Section>
@@ -247,25 +251,26 @@ export default function Terms() {
           <p>
             These Terms are governed by the laws of the Republic of Cameroon.
             Any disputes that cannot be resolved amicably will be submitted to
-            the competent courts of Bamenda, Cameroon, unless both parties
-            agree in writing to an alternative dispute resolution mechanism.
+            the competent courts of Bamenda, Cameroon, unless both parties agree
+            in writing to an alternative dispute resolution mechanism.
           </p>
         </Section>
 
         <Section title="13. Changes to These Terms">
           <p>
-            We may update these Terms at any time. The &ldquo;Last updated&rdquo; date
-            at the top reflects the most recent revision. Continuing to use our
-            services after an update constitutes acceptance of the revised Terms.
+            We may update these Terms at any time. The &ldquo;Last
+            updated&rdquo; date at the top reflects the most recent revision.
+            Continuing to use our services after an update constitutes
+            acceptance of the revised Terms.
           </p>
         </Section>
 
         <Section title="14. Contact">
+          <p>If you have questions about these Terms, please contact:</p>
           <p>
-            If you have questions about these Terms, please contact:
-          </p>
-          <p>
-            <strong style={{ color: "#e2e8f0" }}>BranCodeX — Beng Brandon Che</strong>
+            <strong style={{ color: "#e2e8f0" }}>
+              BranCodeX — Beng Brandon Che
+            </strong>
             <br />
             Bamenda, Cameroon
             <br />
@@ -280,7 +285,13 @@ export default function Terms() {
         </Section>
 
         {/* Back links */}
-        <div style={{ marginTop: "3rem", paddingTop: "2rem", borderTop: "1px solid #1e293b" }}>
+        <div
+          style={{
+            marginTop: "3rem",
+            paddingTop: "2rem",
+            borderTop: "1px solid #1e293b",
+          }}
+        >
           <Link
             href="/"
             style={{

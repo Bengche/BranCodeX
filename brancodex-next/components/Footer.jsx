@@ -107,6 +107,30 @@ export default function Footer() {
         </div>
       </div>
 
+      {/* Legal registration bar */}
+      <div
+        style={{
+          borderTop: "1px solid #1e293b",
+          padding: "0.75rem 2rem",
+          display: "flex",
+          flexWrap: "wrap",
+          justifyContent: "center",
+          alignItems: "center",
+          gap: "0.4rem 1.5rem",
+          textAlign: "center",
+        }}
+      >
+        <span style={{ color: "#475569", fontSize: "0.72rem", letterSpacing: "0.04em", textTransform: "uppercase", fontWeight: 600 }}>
+          BRANCODEX SARL &mdash; Registered in Cameroon
+        </span>
+        <span style={{ color: "#334155", fontSize: "0.68rem", letterSpacing: "0.03em" }}>
+          RCCM&nbsp;RC/EBWA/2026/B/65
+        </span>
+        <span style={{ color: "#334155", fontSize: "0.68rem", letterSpacing: "0.03em" }}>
+          NIU&nbsp;M052618656154Z
+        </span>
+      </div>
+
       <div className="footer-bottom">
         <p>
           &copy; 2025&ndash;{currentYear} <span className="bran">Bran</span>
@@ -114,9 +138,32 @@ export default function Footer() {
           <span className="x">X</span> | All Rights Reserved.
         </p>
         <p style={{ marginTop: "0.5rem", fontSize: "0.78rem" }}>
-          <Link href="/privacy-policy" style={{ color: "#64748b", textDecoration: "none", marginRight: "1rem" }}>Privacy Policy</Link>
-          <Link href="/terms" style={{ color: "#64748b", textDecoration: "none", marginRight: "1rem" }}>Terms of Service</Link>
-          <a href="mailto:contact@brancodex.com" style={{ color: "#64748b", textDecoration: "none" }}>contact@brancodex.com</a>
+          <Link
+            href="/privacy-policy"
+            style={{
+              color: "#64748b",
+              textDecoration: "none",
+              marginRight: "1rem",
+            }}
+          >
+            Privacy Policy
+          </Link>
+          <Link
+            href="/terms"
+            style={{
+              color: "#64748b",
+              textDecoration: "none",
+              marginRight: "1rem",
+            }}
+          >
+            Terms of Service
+          </Link>
+          <a
+            href="mailto:contact@brancodex.com"
+            style={{ color: "#64748b", textDecoration: "none" }}
+          >
+            contact@brancodex.com
+          </a>
         </p>
       </div>
     </footer>

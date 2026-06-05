@@ -12,7 +12,10 @@ export default function PrivacyPolicy() {
   const updated = "April 15, 2026";
 
   return (
-    <main className="nf-main" style={{ alignItems: "flex-start", paddingTop: "7rem" }}>
+    <main
+      className="nf-main"
+      style={{ alignItems: "flex-start", paddingTop: "7rem" }}
+    >
       <article
         style={{
           maxWidth: "820px",
@@ -59,10 +62,12 @@ export default function PrivacyPolicy() {
 
         <Section title="1. Who We Are">
           <p>
-            BranCodeX (&ldquo;we&rdquo;, &ldquo;us&rdquo;, &ldquo;our&rdquo;) is a web development agency
-            operated by Beng Brandon Che, based in Bamenda, Cameroon. We build
-            websites and digital products for clients worldwide. You can reach
-            us at{" "}
+            BranCodeX (&ldquo;we&rdquo;, &ldquo;us&rdquo;, &ldquo;our&rdquo;) is
+            a web development agency legally registered in Cameroon as{" "}
+            <strong style={{ color: "#e2e8f0" }}>BRANCODEX SARL</strong>{" "}
+            (RCCM&nbsp;RC/EBWA/2026/B/65 &mdash; NIU&nbsp;M052618656154Z),
+            based in Bamenda, Cameroon. We build websites and digital products for
+            clients worldwide. You can reach us at{" "}
             <a href="mailto:contact@brancodex.com" style={{ color: "#22c55e" }}>
               contact@brancodex.com
             </a>
@@ -74,23 +79,26 @@ export default function PrivacyPolicy() {
           <p>We collect the following personal data:</p>
           <ul>
             <li>
-              <strong style={{ color: "#e2e8f0" }}>Contact form submissions</strong> — your name,
-              email address, and message when you use the contact form on our
-              website.
+              <strong style={{ color: "#e2e8f0" }}>
+                Contact form submissions
+              </strong>{" "}
+              — your name, email address, and message when you use the contact
+              form on our website.
             </li>
             <li>
-              <strong style={{ color: "#e2e8f0" }}>Booking requests</strong> — your name and email
-              if you schedule a consultation via Calendly.
+              <strong style={{ color: "#e2e8f0" }}>Booking requests</strong> —
+              your name and email if you schedule a consultation via Calendly.
             </li>
             <li>
-              <strong style={{ color: "#e2e8f0" }}>Usage analytics</strong> — anonymised page views
-              and interaction data collected by Vercel Analytics (no personally
-              identifiable information is stored).
+              <strong style={{ color: "#e2e8f0" }}>Usage analytics</strong> —
+              anonymised page views and interaction data collected by Vercel
+              Analytics (no personally identifiable information is stored).
             </li>
             <li>
-              <strong style={{ color: "#e2e8f0" }}>Cookies</strong> — a single functional cookie
-              that records whether you have accepted or declined our cookie
-              notice. We do not use advertising or tracking cookies.
+              <strong style={{ color: "#e2e8f0" }}>Cookies</strong> — a single
+              functional cookie that records whether you have accepted or
+              declined our cookie notice. We do not use advertising or tracking
+              cookies.
             </li>
           </ul>
           <p>
@@ -116,21 +124,21 @@ export default function PrivacyPolicy() {
 
         <Section title="4. Legal Basis for Processing (GDPR)">
           <p>
-            If you are located in the European Economic Area (EEA) or the
-            United Kingdom, our legal basis for processing your data is:
+            If you are located in the European Economic Area (EEA) or the United
+            Kingdom, our legal basis for processing your data is:
           </p>
           <ul>
             <li>
-              <strong style={{ color: "#e2e8f0" }}>Consent</strong> — you voluntarily submit your
-              information via a contact form.
+              <strong style={{ color: "#e2e8f0" }}>Consent</strong> — you
+              voluntarily submit your information via a contact form.
             </li>
             <li>
-              <strong style={{ color: "#e2e8f0" }}>Legitimate interests</strong> — understanding
-              how our site is used to improve it.
+              <strong style={{ color: "#e2e8f0" }}>Legitimate interests</strong>{" "}
+              — understanding how our site is used to improve it.
             </li>
             <li>
-              <strong style={{ color: "#e2e8f0" }}>Contract performance</strong> — processing data
-              needed to deliver a service you have requested.
+              <strong style={{ color: "#e2e8f0" }}>Contract performance</strong>{" "}
+              — processing data needed to deliver a service you have requested.
             </li>
           </ul>
         </Section>
@@ -139,8 +147,9 @@ export default function PrivacyPolicy() {
           <p>We use the following trusted third-party processors:</p>
           <ul>
             <li>
-              <strong style={{ color: "#e2e8f0" }}>EmailJS</strong> — transmits contact form data
-              to our email inbox. Their privacy policy is available at{" "}
+              <strong style={{ color: "#e2e8f0" }}>EmailJS</strong> — transmits
+              contact form data to our email inbox. Their privacy policy is
+              available at{" "}
               <a
                 href="https://www.emailjs.com/legal/privacy-policy/"
                 target="_blank"
@@ -152,8 +161,8 @@ export default function PrivacyPolicy() {
               .
             </li>
             <li>
-              <strong style={{ color: "#e2e8f0" }}>Calendly</strong> — manages consultation
-              bookings. Their privacy policy is at{" "}
+              <strong style={{ color: "#e2e8f0" }}>Calendly</strong> — manages
+              consultation bookings. Their privacy policy is at{" "}
               <a
                 href="https://calendly.com/legal/privacy-notice"
                 target="_blank"
@@ -165,8 +174,9 @@ export default function PrivacyPolicy() {
               .
             </li>
             <li>
-              <strong style={{ color: "#e2e8f0" }}>Vercel Analytics</strong> — privacy-preserving,
-              cookieless analytics. No personal data is stored. See{" "}
+              <strong style={{ color: "#e2e8f0" }}>Vercel Analytics</strong> —
+              privacy-preserving, cookieless analytics. No personal data is
+              stored. See{" "}
               <a
                 href="https://vercel.com/docs/analytics/privacy-policy"
                 target="_blank"
@@ -178,9 +188,10 @@ export default function PrivacyPolicy() {
               .
             </li>
             <li>
-              <strong style={{ color: "#e2e8f0" }}>Groq (AI chat)</strong> — your chat messages
-              are sent to Groq&apos;s API to generate responses. Do not share sensitive
-              personal information in the chat. Groq&apos;s privacy policy is at{" "}
+              <strong style={{ color: "#e2e8f0" }}>Groq (AI chat)</strong> —
+              your chat messages are sent to Groq&apos;s API to generate
+              responses. Do not share sensitive personal information in the
+              chat. Groq&apos;s privacy policy is at{" "}
               <a
                 href="https://groq.com/privacy-policy/"
                 target="_blank"
@@ -203,18 +214,18 @@ export default function PrivacyPolicy() {
         </Section>
 
         <Section title="7. Your Rights">
-          <p>
-            Depending on your location, you have the right to:
-          </p>
+          <p>Depending on your location, you have the right to:</p>
           <ul>
             <li>Access the personal data we hold about you.</li>
             <li>Request correction or deletion of your data.</li>
             <li>Withdraw consent at any time (GDPR).</li>
             <li>
-              Opt out of the sale of personal information (CCPA — we do not
-              sell data, so this is automatically satisfied).
+              Opt out of the sale of personal information (CCPA — we do not sell
+              data, so this is automatically satisfied).
             </li>
-            <li>Lodge a complaint with your local data protection authority.</li>
+            <li>
+              Lodge a complaint with your local data protection authority.
+            </li>
           </ul>
           <p>
             To exercise any of these rights, email us at{" "}
@@ -236,10 +247,10 @@ export default function PrivacyPolicy() {
         <Section title="9. Security">
           <p>
             Our website is served over HTTPS with strict transport security
-            headers. We apply industry-standard security headers (X-Frame-Options,
-            X-Content-Type-Options, Referrer-Policy, etc.) on every response.
-            No system is 100% secure, but we take reasonable technical measures
-            to protect your data in transit.
+            headers. We apply industry-standard security headers
+            (X-Frame-Options, X-Content-Type-Options, Referrer-Policy, etc.) on
+            every response. No system is 100% secure, but we take reasonable
+            technical measures to protect your data in transit.
           </p>
         </Section>
 
@@ -254,19 +265,19 @@ export default function PrivacyPolicy() {
 
         <Section title="11. Changes to This Policy">
           <p>
-            We may update this policy from time to time. The &ldquo;Last updated&rdquo;
-            date at the top of this page will always reflect the most recent
-            revision. Continued use of our website after an update constitutes
-            acceptance of the revised policy.
+            We may update this policy from time to time. The &ldquo;Last
+            updated&rdquo; date at the top of this page will always reflect the
+            most recent revision. Continued use of our website after an update
+            constitutes acceptance of the revised policy.
           </p>
         </Section>
 
         <Section title="12. Contact">
+          <p>For any privacy-related questions, contact us at:</p>
           <p>
-            For any privacy-related questions, contact us at:
-          </p>
-          <p>
-            <strong style={{ color: "#e2e8f0" }}>BranCodeX — Beng Brandon Che</strong>
+            <strong style={{ color: "#e2e8f0" }}>
+              BranCodeX — Beng Brandon Che
+            </strong>
             <br />
             Bamenda, Cameroon
             <br />
@@ -277,7 +288,13 @@ export default function PrivacyPolicy() {
         </Section>
 
         {/* Back link */}
-        <div style={{ marginTop: "3rem", paddingTop: "2rem", borderTop: "1px solid #1e293b" }}>
+        <div
+          style={{
+            marginTop: "3rem",
+            paddingTop: "2rem",
+            borderTop: "1px solid #1e293b",
+          }}
+        >
           <Link
             href="/"
             style={{
