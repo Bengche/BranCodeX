@@ -41,7 +41,9 @@ export default function ContactPage() {
           }}
         />
 
-        <div style={{ position: "relative", maxWidth: "640px", margin: "0 auto" }}>
+        <div
+          style={{ position: "relative", maxWidth: "640px", margin: "0 auto" }}
+        >
           <span
             style={{
               display: "inline-block",
@@ -78,9 +80,9 @@ export default function ContactPage() {
               margin: "0 auto",
             }}
           >
-            Whether you need a landing page, a full website, or a custom web
-            app — we&apos;d love to hear about your project. We respond within
-            24 hours.
+            Whether you need a landing page, a full website, or a custom web app
+            — we&apos;d love to hear about your project. We respond within 24
+            hours.
           </p>
 
           {/* Quick contact badges */}
@@ -209,7 +211,14 @@ export default function ContactPage() {
                 >
                   {card.title}
                 </p>
-                <p style={{ color: "#94a3b8", fontSize: "0.83rem", margin: 0, lineHeight: 1.6 }}>
+                <p
+                  style={{
+                    color: "#94a3b8",
+                    fontSize: "0.83rem",
+                    margin: 0,
+                    lineHeight: 1.6,
+                  }}
+                >
                   {card.body}
                 </p>
               </div>

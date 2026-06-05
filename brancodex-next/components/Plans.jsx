@@ -60,11 +60,7 @@ const websitePlans = [
       "Delivery in < 3 days",
       "⚡ Higher search ranking / off-page SEO — available as add-on",
     ],
-    notIncluded: [
-      "Blog / CMS",
-      "MoMo payment integration",
-      "Multiple pages",
-    ],
+    notIncluded: ["Blog / CMS", "MoMo payment integration", "Multiple pages"],
   },
   {
     title: "Starter Plan",
@@ -88,10 +84,7 @@ const websitePlans = [
       "Delivery in < 3 days",
       "⚡ Higher search ranking / off-page SEO — available as add-on",
     ],
-    notIncluded: [
-      "Blog / CMS",
-      "MoMo payment integration",
-    ],
+    notIncluded: ["Blog / CMS", "MoMo payment integration"],
   },
   {
     title: "Basic Plan",
@@ -115,10 +108,7 @@ const websitePlans = [
       "Delivery in < 7 days",
       "⚡ Higher search ranking / off-page SEO — available as add-on",
     ],
-    notIncluded: [
-      "CMS / Blog",
-      "MoMo payment gateway",
-    ],
+    notIncluded: ["CMS / Blog", "MoMo payment gateway"],
   },
   {
     title: "Standard Plan",
@@ -313,7 +303,7 @@ function PlanCard({ plan, xafRate }) {
                   <li key={f}>
                     <i className="fa fa-check-circle"></i> {f}
                   </li>
-                )
+                ),
               )}
               {plan.notIncluded?.map((f) => (
                 <li key={f} className="plan-feature--no">

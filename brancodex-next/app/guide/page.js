@@ -38,8 +38,7 @@ const guideSchema = {
 };
 
 export const metadata = {
-  title:
-    "5 Mistakes Businesses Make With Their Website | BranCodeX",
+  title: "5 Mistakes Businesses Make With Their Website | BranCodeX",
   description:
     "Discover the 5 most common website mistakes costing businesses clients and revenue worldwide — and how to fix them. Free guide by BranCodeX.",
   keywords: [
@@ -137,9 +136,7 @@ export default function GuidePage() {
         <header className="guide-hero">
           <div className="guide-hero-inner">
             <span className="guide-badge">FREE GUIDE</span>
-            <h1>
-              5 Costly Mistakes Businesses Make With Their Website
-            </h1>
+            <h1>5 Costly Mistakes Businesses Make With Their Website</h1>
             <p>
               And the exact fixes that will turn your website into a
               client-generating machine.

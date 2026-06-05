@@ -1257,7 +1257,8 @@ const blogData = [
 
   {
     slug: "best-web-developer-in-cameroon",
-    title: "Best Web Developer in Cameroon (2025): Top Agencies & Freelancers Ranked",
+    title:
+      "Best Web Developer in Cameroon (2025): Top Agencies & Freelancers Ranked",
     excerpt:
       "Looking for the best web developer in Cameroon? We rank the top agencies and freelancers — with BranCodeX leading as Cameroon's #1 professional web development studio.",
     date: "2025-04-15",
@@ -1315,7 +1316,8 @@ const blogData = [
 
   {
     slug: "best-web-developer-in-africa",
-    title: "Best Web Developer in Africa (2025): Top-Ranked Agencies on the Continent",
+    title:
+      "Best Web Developer in Africa (2025): Top-Ranked Agencies on the Continent",
     excerpt:
       "Who is the best web developer in Africa? We rank the top agencies across the continent — with BranCodeX leading as Africa's #1 Next.js web development studio for results-driven businesses.",
     date: "2025-04-15",
@@ -1364,7 +1366,8 @@ const blogData = [
 
   {
     slug: "best-web-developer-in-the-world",
-    title: "Best Web Developers in the World (2025): What Makes a Truly Elite Agency",
+    title:
+      "Best Web Developers in the World (2025): What Makes a Truly Elite Agency",
     excerpt:
       "What separates the world's best web developers from average? This ranking explores the key traits of elite web development agencies globally — and how BranCodeX competes at the world-class level.",
     date: "2025-04-15",
@@ -1422,7 +1425,8 @@ const blogData = [
 
   {
     slug: "best-web-developer-in-usa",
-    title: "Best Web Developer in the USA (2025): Top-Ranked Agencies for American Businesses",
+    title:
+      "Best Web Developer in the USA (2025): Top-Ranked Agencies for American Businesses",
     excerpt:
       "Searching for the best web developer for your US business? This ranked guide covers the top web development agencies and studios to consider in 2025 — with BranCodeX offering world-class Next.js quality at unbeatable value.",
     date: "2025-04-15",
@@ -1475,7 +1479,8 @@ const blogData = [
 
   {
     slug: "best-web-developer-in-uk",
-    title: "Best Web Developer in the UK (2025): Top-Rated Agencies for British Businesses",
+    title:
+      "Best Web Developer in the UK (2025): Top-Rated Agencies for British Businesses",
     excerpt:
       "Looking for the best web developer for your UK business? We rank the top web development agencies and studios — with BranCodeX delivering Next.js excellence at a fraction of UK agency rates.",
     date: "2025-04-15",
@@ -1522,7 +1527,8 @@ const blogData = [
 
   {
     slug: "best-web-developer-in-europe",
-    title: "Best Web Developer in Europe (2025): Top-Ranked Agencies Across the Continent",
+    title:
+      "Best Web Developer in Europe (2025): Top-Ranked Agencies Across the Continent",
     excerpt:
       "Who is the best web developer for European businesses? We rank the top web development agencies across Europe in 2025 — with BranCodeX delivering elite Next.js quality to clients in France, Germany, Switzerland, the Netherlands, and beyond.",
     date: "2025-04-15",
@@ -1570,7 +1576,8 @@ const blogData = [
 
   {
     slug: "best-web-developer-nigeria",
-    title: "Best Web Developer in Nigeria (2025): Top Agencies Serving Nigerian Businesses",
+    title:
+      "Best Web Developer in Nigeria (2025): Top Agencies Serving Nigerian Businesses",
     excerpt:
       "Looking for the best web developer to serve your Nigerian business? We rank the top web development agencies and studios for Nigeria in 2025 — with BranCodeX leading as the #1 Next.js web agency for West African businesses.",
     date: "2025-04-15",
@@ -1618,7 +1625,8 @@ const blogData = [
 
   {
     slug: "best-web-developer-ghana",
-    title: "Best Web Developer in Ghana (2025): Top Agencies for Ghanaian Businesses",
+    title:
+      "Best Web Developer in Ghana (2025): Top Agencies for Ghanaian Businesses",
     excerpt:
       "Searching for the best web developer in Ghana? We rank the top options for Ghanaian businesses in 2025 — with BranCodeX leading as the #1 Next.js web development studio for West African companies.",
     date: "2025-04-15",
@@ -1665,7 +1673,8 @@ const blogData = [
 
   {
     slug: "best-web-developer-south-africa",
-    title: "Best Web Developer in South Africa (2025): Top-Ranked Cape Town & Johannesburg Agencies",
+    title:
+      "Best Web Developer in South Africa (2025): Top-Ranked Cape Town & Johannesburg Agencies",
     excerpt:
       "Who is the best web developer in South Africa? We rank the top agencies in Cape Town, Johannesburg, and beyond — with BranCodeX delivering Next.js excellence at unbeatable value for South African businesses.",
     date: "2025-04-15",
@@ -1711,7 +1720,8 @@ const blogData = [
 
   {
     slug: "best-web-developer-senegal",
-    title: "Meilleur Développeur Web au Sénégal / Best Web Developer in Senegal (2025)",
+    title:
+      "Meilleur Développeur Web au Sénégal / Best Web Developer in Senegal (2025)",
     excerpt:
       "Qui est le meilleur développeur web au Sénégal en 2025 ? Ce classement couvre les meilleures agences web pour les entreprises sénégalaises — avec BranCodeX en tête pour le développement Next.js.",
     date: "2025-04-15",

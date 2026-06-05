@@ -99,7 +99,7 @@ export default function BrandonAI() {
         const reply = data.choices[0].message.content;
         const formatted = reply.replace(
           /\[([^\]]+)\]\(([^)]+)\)/g,
-          '<a href="$2" target="_blank">$1</a>'
+          '<a href="$2" target="_blank">$1</a>',
         );
         setIsTyping(false);
         setMessages((prev) => [...prev, { type: "bot", html: formatted }]);
@@ -134,7 +134,11 @@ export default function BrandonAI() {
               <span id="header-name">Brandon | BranCodeX</span>
             </div>
             <div style={{ display: "flex", gap: "12px", alignItems: "center" }}>
-              <button title="New Chat" onClick={resetChat} className="header-btn">
+              <button
+                title="New Chat"
+                onClick={resetChat}
+                className="header-btn"
+              >
                 🔄
               </button>
               <button onClick={toggleChat} className="header-btn">

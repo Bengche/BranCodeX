@@ -156,7 +156,8 @@ export default function ExitIntentPopup() {
             </form>
 
             <a href="/guide" className="exit-popup-secondary" onClick={close}>
-              📄 Or read: &quot;5 Costly Mistakes Businesses Make With Their Website&quot;
+              📄 Or read: &quot;5 Costly Mistakes Businesses Make With Their
+              Website&quot;
             </a>
 
             <button type="button" className="exit-popup-skip" onClick={close}>

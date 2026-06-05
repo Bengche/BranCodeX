@@ -6363,7 +6363,11 @@ textarea {
 }
 
 .bx-label {
-  font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
+  font-family:
+    "Segoe UI",
+    system-ui,
+    -apple-system,
+    sans-serif;
   font-size: 9px;
   text-transform: uppercase;
   letter-spacing: 1.2px;
@@ -6373,7 +6377,11 @@ textarea {
 }
 
 .bx-cta {
-  font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
+  font-family:
+    "Segoe UI",
+    system-ui,
+    -apple-system,
+    sans-serif;
   font-size: 16px;
   font-weight: 700;
   color: #007a5e;
@@ -6391,9 +6399,18 @@ textarea {
 }
 
 @keyframes bx-ripple {
-  0%   { transform: scale(1);   opacity: 0.5; }
-  70%  { transform: scale(1.6); opacity: 0;   }
-  100% { transform: scale(1);   opacity: 0;   }
+  0% {
+    transform: scale(1);
+    opacity: 0.5;
+  }
+  70% {
+    transform: scale(1.6);
+    opacity: 0;
+  }
+  100% {
+    transform: scale(1);
+    opacity: 0;
+  }
 }
 
 #bx-wa-container:hover {
@@ -6411,10 +6428,21 @@ textarea {
 }
 
 @media (max-width: 480px) {
-  #bx-wa-container  { bottom: 20px; left: 15px; }
-  .bx-wa-flex       { padding: 6px 18px 6px 6px; gap: 10px; }
-  .bx-cta           { font-size: 14px; }
-  .bx-wa-icon-box   { width: 40px; height: 40px; }
+  #bx-wa-container {
+    bottom: 20px;
+    left: 15px;
+  }
+  .bx-wa-flex {
+    padding: 6px 18px 6px 6px;
+    gap: 10px;
+  }
+  .bx-cta {
+    font-size: 14px;
+  }
+  .bx-wa-icon-box {
+    width: 40px;
+    height: 40px;
+  }
 }
 
 /* ============================================================
@@ -6426,7 +6454,7 @@ textarea {
   bottom: 20px;
   right: 20px;
   z-index: 9999;
-  font-family: 'Segoe UI', sans-serif;
+  font-family: "Segoe UI", sans-serif;
 }
 
 #brancodex-bubble {
@@ -6462,7 +6490,9 @@ textarea {
     height: 85vh;
     border-radius: 10px;
   }
-  #header-name { font-size: 14px; }
+  #header-name {
+    font-size: 14px;
+  }
 }
 
 #brancodex-chat-header {
