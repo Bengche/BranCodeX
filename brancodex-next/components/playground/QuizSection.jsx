@@ -21,19 +21,36 @@ import {
   DIFFICULTY,
 } from "../../data/quizData";
 
-// ─── Sound URLs (royalty-free, from Pixabay CDN) ──────────────────────────────
+// ─── Web Audio tones (no external URLs needed) ───────────────────────────────
 
-const SOUNDS = {
-  correct:
-    "https://cdn.pixabay.com/download/audio/2022/03/15/audio_7b89dfa72b.mp3?filename=correct-2-46134.mp3",
-  wrong:
-    "https://cdn.pixabay.com/download/audio/2023/09/14/audio_a03a90d6a1.mp3?filename=wrong-answer-126515.mp3",
-  next: "https://cdn.pixabay.com/download/audio/2022/03/15/audio_c8c8a13c49.mp3?filename=next-2-46205.mp3",
-};
+const SOUNDS = { correct: "correct", wrong: "wrong", next: "next" };
+
+function playSound(type) {
+  try {
+    const ctx = new (window.AudioContext || window.webkitAudioContext)();
+    const osc = ctx.createOscillator();
+    const gain = ctx.createGain();
+    osc.connect(gain);
+    gain.connect(ctx.destination);
+    gain.gain.value = 0.15;
+    if (type === "correct") {
+      osc.frequency.value = 880;
+      osc.type = "sine";
+    } else if (type === "wrong") {
+      osc.frequency.value = 220;
+      osc.type = "sawtooth";
+    } else {
+      osc.frequency.value = 520;
+      osc.type = "triangle";
+    }
+    osc.start();
+    osc.stop(ctx.currentTime + 0.18);
+  } catch (_) {}
+}
 
 // ─── Helpers ──────────────────────────────────────────────────────────────────
 
-function shuffle(arr) {
+function shuffle(arr) {  // reused below
   const a = [...arr];
   for (let i = a.length - 1; i > 0; i--) {
     const j = Math.floor(Math.random() * (i + 1));
@@ -83,15 +100,7 @@ async function loadQuestions() {
   return shuffle(pool).slice(0, TOTAL_QUESTIONS);
 }
 
-function playSound(url) {
-  try {
-    const a = new Audio(url);
-    a.volume = 0.4;
-    a.play().catch(() => {});
-  } catch {
-    // Audio may be unavailable in some environments
-  }
-}
+
 
 // ─── Sub-components ───────────────────────────────────────────────────────────
 
@@ -201,6 +210,14 @@ function QuizScreen({ playerName, highScore, onEnd, onQuit }) {
     }
   }
 
+  // Memoised here (before any early return) so hook call order is always stable
+  const q = questions[index];
+  const answers = useMemo(
+    () => (q ? shuffle([q.correct_answer, ...q.incorrect_answers]) : []),
+    [index, questions], // eslint-disable-line react-hooks/exhaustive-deps
+  );
+  const progress = (index / (questions.length || 1)) * 100;
+
   if (loading) {
     return (
       <div
@@ -218,14 +235,6 @@ function QuizScreen({ playerName, highScore, onEnd, onQuit }) {
       </div>
     );
   }
-
-  const q = questions[index];
-  // Memoised so answers don't reshuffle on every timer tick
-  const answers = useMemo(
-    () => (q ? shuffle([q.correct_answer, ...q.incorrect_answers]) : []),
-    [index, questions], // eslint-disable-line react-hooks/exhaustive-deps
-  );
-  const progress = (index / (questions.length || 1)) * 100;
 
   return (
     <div className="quiz-screen quiz-main">

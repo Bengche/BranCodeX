@@ -158,10 +158,9 @@ const STATIC_COUNTRIES = [
   },
 ];
 
-const SOUND_CORRECT =
-  "https://cdn.pixabay.com/download/audio/2022/03/15/audio_20fe5d7b46.mp3?filename=correct-2-46134.mp3";
-const SOUND_WRONG =
-  "https://cdn.pixabay.com/download/audio/2022/03/15/audio_fce676bfd6.mp3?filename=wrong-2-46134.mp3";
+// Web Audio tones — no external CDN needed
+const SOUND_CORRECT = "correct";
+const SOUND_WRONG = "wrong";
 
 // ─── Helpers ──────────────────────────────────────────────────────────────────
 
@@ -174,10 +173,23 @@ function shuffleArr(arr) {
   return a;
 }
 
-function playSound(url) {
+function playSound(type) {
   try {
-    const audio = new Audio(url);
-    audio.play();
+    const ctx = new (window.AudioContext || window.webkitAudioContext)();
+    const osc = ctx.createOscillator();
+    const gain = ctx.createGain();
+    osc.connect(gain);
+    gain.connect(ctx.destination);
+    gain.gain.value = 0.15;
+    if (type === "correct") {
+      osc.frequency.value = 880;
+      osc.type = "sine";
+    } else {
+      osc.frequency.value = 220;
+      osc.type = "sawtooth";
+    }
+    osc.start();
+    osc.stop(ctx.currentTime + 0.18);
   } catch (_) {}
 }
 
@@ -575,7 +587,7 @@ export default function GuessChallengeSection() {
               {topFive.map((entry, i) => (
                 <div
                   key={i}
-                  className="flex justify-between px-2 py-1 text-sm"
+                  className="flex justify-between px-2 py-1 text-sm text-gray-900"
                   style={{ background: i % 2 === 0 ? "#f3f4f6" : "#e0e7ff" }}
                 >
                   <span>
