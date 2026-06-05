@@ -605,7 +605,7 @@ export default function GuessChallengeSection() {
                 value={nameInput}
                 onChange={(e) => setNameInput(e.target.value)}
                 placeholder="Enter your name"
-                className="border p-2 rounded w-2/3 mb-4"
+                className="border p-2 rounded w-2/3 mb-4 text-gray-900"
                 onKeyDown={(e) => e.key === "Enter" && startGame()}
               />
               <br />
@@ -672,7 +672,7 @@ export default function GuessChallengeSection() {
                       <select
                         value={continent}
                         onChange={(e) => setContinent(e.target.value)}
-                        className="border p-2 rounded mr-2"
+                        className="border p-2 rounded mr-2 text-gray-900"
                       >
                         <option value="Africa">Africa</option>
                         <option value="Americas">Americas</option>
@@ -777,7 +777,7 @@ export default function GuessChallengeSection() {
                           value={capitalInput}
                           onChange={(e) => setCapitalInput(e.target.value)}
                           placeholder="Capital"
-                          className="border p-2 rounded mb-2 w-full"
+                          className="border p-2 rounded mb-2 w-full text-gray-900"
                           autoComplete="off"
                         />
                         <input
@@ -785,7 +785,7 @@ export default function GuessChallengeSection() {
                           value={currencyInput}
                           onChange={(e) => setCurrencyInput(e.target.value)}
                           placeholder="Currency"
-                          className="border p-2 rounded mb-2 w-full"
+                          className="border p-2 rounded mb-2 w-full text-gray-900"
                           autoComplete="off"
                           onKeyDown={(e) =>
                             e.key === "Enter" &&

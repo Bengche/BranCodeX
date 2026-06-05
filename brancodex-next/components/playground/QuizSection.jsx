@@ -12,7 +12,7 @@
 
 "use client";
 
-import { useState, useEffect, useRef, useCallback } from "react";
+import { useState, useEffect, useRef, useCallback, useMemo } from "react";
 import {
   cameroonHistoryQuestions,
   riddlesQuestions,
@@ -220,7 +220,11 @@ function QuizScreen({ playerName, highScore, onEnd, onQuit }) {
   }
 
   const q = questions[index];
-  const answers = q ? shuffle([q.correct_answer, ...q.incorrect_answers]) : [];
+  // Memoised so answers don't reshuffle on every timer tick
+  const answers = useMemo(
+    () => (q ? shuffle([q.correct_answer, ...q.incorrect_answers]) : []),
+    [index, questions], // eslint-disable-line react-hooks/exhaustive-deps
+  );
   const progress = (index / (questions.length || 1)) * 100;
 
   return (
