@@ -12,6 +12,7 @@ import JokesSection from "../../components/playground/JokesSection";
 import QuizSection from "../../components/playground/QuizSection";
 import GuessChallengeSection from "../../components/playground/GuessChallengeSection";
 import LiveCodeEditor from "../../components/playground/LiveCodeEditor";
+import WeeklyChallenge from "../../components/playground/WeeklyChallenge";
 
 export const metadata = {
   title: "Playground | BranCodeX — Interactive Web Tools & Quiz",
@@ -50,6 +51,9 @@ export default function PlaygroundPage() {
             </nav>
           </div>
         </header>
+
+        {/* Weekly Challenge */}
+        <WeeklyChallenge />
 
         {/* Jokes */}
         <section id="jokes">

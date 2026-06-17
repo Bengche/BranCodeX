@@ -108,6 +108,7 @@ const TEMPLATE_LABELS = {
 };
 
 const LS_KEY = "bx_live_editor";
+const BACKEND_URL = process.env.NEXT_PUBLIC_BACKEND_URL || "http://localhost:4000";
 
 function loadSaved() {
   try {
@@ -130,6 +131,9 @@ export default function LiveCodeEditor() {
   const [darkMode, setDarkMode] = useState(false);
   const [fullscreen, setFullscreen] = useState(false);
   const [saveMsg, setSaveMsg] = useState("");
+  const [shareUrl, setShareUrl]     = useState(null);
+  const [sharing, setSharing]       = useState(false);
+  const [copied, setCopied]         = useState(false);
 
   const previewRef = useRef(null);
   const wrapperRef = useRef(null);
@@ -199,6 +203,34 @@ export default function LiveCodeEditor() {
       document.exitFullscreen?.();
       setFullscreen(false);
     }
+  }
+
+  /** Share snippet to backend and return a short URL */
+  async function handleShare() {
+    setSharing(true);
+    setShareUrl(null);
+    try {
+      const res = await fetch(`${BACKEND_URL}/api/snippets`, {
+        method:  "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ html, css, js }),
+      });
+      const data = await res.json();
+      if (data.url) setShareUrl(data.url);
+    } catch {
+      setSaveMsg("Share failed — check your connection.");
+      setTimeout(() => setSaveMsg(""), 3000);
+    } finally {
+      setSharing(false);
+    }
+  }
+
+  function copyShareUrl() {
+    if (!shareUrl) return;
+    navigator.clipboard?.writeText(shareUrl).then(() => {
+      setCopied(true);
+      setTimeout(() => setCopied(false), 2500);
+    });
   }
 
   const editorContent = { html, css, js }[activeTab];
@@ -284,7 +316,52 @@ export default function LiveCodeEditor() {
           >
             <i className={`fa ${fullscreen ? "fa-compress" : "fa-expand"}`}></i>
           </button>
+
+          <button
+            type="button"
+            className="editor-tool-btn editor-share-btn"
+            onClick={handleShare}
+            disabled={sharing}
+            title="Share snippet"
+          >
+            <i className={`fa ${sharing ? "fa-spinner fa-spin" : "fa-share-nodes"}`}></i>
+            {sharing ? " Sharing…" : " Share"}
+          </button>
         </div>
+
+        {/* Share URL modal */}
+        {shareUrl && (
+          <div className="editor-share-modal">
+            <div className="editor-share-inner">
+              <p className="editor-share-label">
+                <i className="fa fa-link" /> Shareable link created!
+              </p>
+              <div className="editor-share-row">
+                <input
+                  type="text"
+                  readOnly
+                  value={shareUrl}
+                  className="editor-share-input"
+                  onClick={(e) => e.target.select()}
+                />
+                <button
+                  type="button"
+                  className="editor-copy-btn"
+                  onClick={copyShareUrl}
+                >
+                  {copied ? <><i className="fa fa-check" /> Copied!</> : <><i className="fa fa-copy" /> Copy</>}
+                </button>
+              </div>
+              <button
+                type="button"
+                className="editor-share-close"
+                onClick={() => setShareUrl(null)}
+              >
+                Dismiss
+              </button>
+            </div>
+          </div>
+        )}
 
         {/* ── Main panes ── */}
         <div className="editor-body">

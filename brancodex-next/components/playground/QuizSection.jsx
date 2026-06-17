@@ -20,6 +20,7 @@ import {
   TOTAL_QUESTIONS,
   DIFFICULTY,
 } from "../../data/quizData";
+import GlobalLeaderboard from "./GlobalLeaderboard";
 
 // ─── Web Audio tones (no external URLs needed) ───────────────────────────────
 
@@ -100,12 +101,34 @@ async function loadQuestions() {
   return shuffle(pool).slice(0, TOTAL_QUESTIONS);
 }
 
+// ─── Backend ──────────────────────────────────────────────────────────────────
 
+const BACKEND_URL =
+  process.env.NEXT_PUBLIC_BACKEND_URL || "http://localhost:4000";
+
+async function fetchGlobalBoard() {
+  const res = await fetch(`${BACKEND_URL}/api/leaderboard/quiz`, {
+    cache: "no-store",
+  });
+  if (!res.ok) throw new Error("Failed to fetch leaderboard");
+  const data = await res.json();
+  return data.leaderboard; // [{ rank, player, score, played_at }]
+}
+
+async function submitGlobalScore(player, score) {
+  const res = await fetch(`${BACKEND_URL}/api/leaderboard/quiz`, {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify({ player, score }),
+  });
+  if (!res.ok) throw new Error("Failed to submit score");
+  return res.json(); // { game, madeTopTen, leaderboard }
+}
 
 // ─── Sub-components ───────────────────────────────────────────────────────────
 
 /** The category/name entry screen shown before the game starts. */
-function SetupScreen({ onStart }) {
+function SetupScreen({ onStart, board, boardLoading, boardError, onRefreshBoard }) {
   const [name, setName] = useState("");
   return (
     <div className="quiz-screen quiz-setup">
@@ -135,6 +158,13 @@ function SetupScreen({ onStart }) {
       >
         Start Quiz
       </button>
+
+      <GlobalLeaderboard
+        board={board}
+        loading={boardLoading}
+        error={boardError}
+        onRefresh={onRefreshBoard}
+      />
     </div>
   );
 }
@@ -335,6 +365,11 @@ function ResultsScreen({
   total,
   highScore,
   onPlayAgain,
+  madeTopTen,
+  board,
+  boardLoading,
+  boardError,
+  onRefreshBoard,
 }) {
   const percentage = Math.round((passed / total) * 100);
   let verdict = "";
@@ -350,6 +385,12 @@ function ResultsScreen({
         {playerName}, you scored <strong>{passed}</strong> out of{" "}
         <strong>{total}</strong> ({percentage}%).
       </p>
+
+      {madeTopTen && (
+        <div className="quiz-top-ten-badge">
+          <i className="fa fa-trophy" /> You made the Global Top 10!
+        </div>
+      )}
 
       <div className="quiz-results-stats">
         <div className="res-stat passed">
@@ -369,6 +410,14 @@ function ResultsScreen({
       <button type="button" className="quiz-start-btn" onClick={onPlayAgain}>
         Play again
       </button>
+
+      <GlobalLeaderboard
+        board={board}
+        loading={boardLoading}
+        error={boardError}
+        onRefresh={onRefreshBoard}
+        madeTopTen={madeTopTen}
+      />
     </div>
   );
 }
@@ -382,23 +431,57 @@ export default function QuizSection() {
   const [results, setResults] = useState(null);
   const [highScore, setHighScore] = useState(0);
 
+  // Global leaderboard state
+  const [board, setBoard]               = useState([]);
+  const [boardLoading, setBoardLoading] = useState(false);
+  const [boardError, setBoardError]     = useState(false);
+  const [madeTopTen, setMadeTopTen]     = useState(false);
+
   // Load high score from localStorage
   useEffect(() => {
     const stored = Number(localStorage.getItem("quizHighScore") || 0);
     setHighScore(stored);
   }, []);
 
+  // Fetch global leaderboard on mount
+  useEffect(() => {
+    loadBoard();
+  }, []); // eslint-disable-line react-hooks/exhaustive-deps
+
+  async function loadBoard() {
+    setBoardLoading(true);
+    setBoardError(false);
+    try {
+      const data = await fetchGlobalBoard();
+      setBoard(data);
+    } catch {
+      setBoardError(true);
+    } finally {
+      setBoardLoading(false);
+    }
+  }
+
   function handleStart(name) {
     setPlayerName(name);
+    setMadeTopTen(false);
     setScreen("playing");
   }
 
-  function handleEnd({ passed, failed, total }) {
+  async function handleEnd({ passed, failed, total }) {
     const newHigh = Math.max(highScore, passed);
     setHighScore(newHigh);
     localStorage.setItem("quizHighScore", String(newHigh));
     setResults({ passed, failed, total });
     setScreen("results");
+
+    // Submit to global leaderboard
+    try {
+      const resp = await submitGlobalScore(playerName, passed);
+      setBoard(resp.leaderboard);
+      setMadeTopTen(resp.madeTopTen);
+    } catch {
+      // Non-fatal — local experience still works
+    }
   }
 
   function handleQuit() {
@@ -409,7 +492,15 @@ export default function QuizSection() {
   return (
     <section className="quiz-section">
       <div className="quiz-wrapper">
-        {screen === "setup" && <SetupScreen onStart={handleStart} />}
+        {screen === "setup" && (
+          <SetupScreen
+            onStart={handleStart}
+            board={board}
+            boardLoading={boardLoading}
+            boardError={boardError}
+            onRefreshBoard={loadBoard}
+          />
+        )}
 
         {screen === "playing" && (
           <QuizScreen
@@ -427,6 +518,11 @@ export default function QuizSection() {
             failed={results.failed}
             total={results.total}
             highScore={highScore}
+            madeTopTen={madeTopTen}
+            board={board}
+            boardLoading={boardLoading}
+            boardError={boardError}
+            onRefreshBoard={loadBoard}
             onPlayAgain={() => {
               setScreen("setup");
               setResults(null);

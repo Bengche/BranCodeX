@@ -1,11 +1,8 @@
 "use client";
 
 import { useState } from "react";
-import emailjs from "@emailjs/browser";
 
-const EMAILJS_SERVICE = "service_c5vabbm";
-const EMAILJS_TEMPLATE = "template_9q6e9vr";
-const EMAILJS_KEY = "n6JWvzVKqpFDqg1xt";
+const BACKEND_URL = process.env.NEXT_PUBLIC_BACKEND_URL || "http://localhost:4000";
 
 export default function Contact() {
   const [name, setName] = useState("");
@@ -13,33 +10,32 @@ export default function Contact() {
   const [message, setMessage] = useState("");
   const [statusMsg, setStatusMsg] = useState("");
   const [sending, setSending] = useState(false);
+  const [success, setSuccess] = useState(false);
 
   async function sendMessage(e) {
     e.preventDefault();
     if (!name.trim() || !email.trim() || !message.trim()) return;
     setSending(true);
-    setStatusMsg("Sending message...");
+    setStatusMsg("Sending your message…");
+    setSuccess(false);
     try {
-      await emailjs.send(
-        EMAILJS_SERVICE,
-        EMAILJS_TEMPLATE,
-        {
-          name: name.trim(),
-          email: email.trim(),
-          message: message.trim(),
-          title: "New Contact Form Message",
-          time: new Date().toLocaleString(),
-        },
-        EMAILJS_KEY,
-      );
-      setStatusMsg("✅ Message sent! I'll get back to you soon 😊");
-      setName("");
-      setEmail("");
-      setMessage("");
-    } catch (err) {
-      console.error("EmailJS error:", err);
-      const detail = err?.text || err?.message || JSON.stringify(err);
-      setStatusMsg(`❌ Failed to send: ${detail}`);
+      const res = await fetch(`${BACKEND_URL}/api/contact`, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ name: name.trim(), email: email.trim(), message: message.trim() }),
+      });
+      if (res.ok) {
+        setSuccess(true);
+        setStatusMsg("Message sent! You'll receive a confirmation email shortly.");
+        setName("");
+        setEmail("");
+        setMessage("");
+      } else {
+        const data = await res.json();
+        setStatusMsg(data?.error || "Something went wrong. Please try again.");
+      }
+    } catch {
+      setStatusMsg("Network error. Please check your connection and try again.");
     }
     setSending(false);
   }
@@ -101,13 +97,19 @@ export default function Contact() {
           </div>
           <button type="submit" className="contact-btn" disabled={sending}>
             <i className="fas fa-paper-plane"></i>{" "}
-            {sending ? "Sending..." : "Send Message"}
+            {sending ? "Sending…" : "Send Message"}
           </button>
         </form>
 
-        <div id="message-status" className="message-status">
-          {statusMsg}
-        </div>
+        {statusMsg && (
+          <div
+            id="message-status"
+            className={`message-status${success ? " success" : " error"}`}
+          >
+            {success ? <i className="fas fa-circle-check" /> : <i className="fas fa-triangle-exclamation" />}
+            {" "}{statusMsg}
+          </div>
+        )}
 
         <div className="social-links" data-aos="fade-up">
           <p>Or connect with us on social media 👇</p>

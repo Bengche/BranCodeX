@@ -112,7 +112,7 @@ export default function Testimonials() {
           ],
         }),
       });
-      alert("✅ Testimonial submitted!");
+      alert("✅ Thank you! Your review is pending approval and will appear on the site shortly.");
       closeModal();
       loadAllTestimonials();
     } catch {

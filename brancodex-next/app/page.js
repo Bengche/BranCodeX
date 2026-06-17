@@ -19,6 +19,7 @@ import Testimonials from "../components/Testimonials";
 import Contact from "../components/Contact";
 import BookingSection from "../components/BookingSection";
 import CTASection from "../components/CTASection";
+import NewsletterSection from "../components/NewsletterSection";
 import Footer from "../components/Footer";
 import Link from "next/link";
 
@@ -65,6 +66,7 @@ export default function HomePage() {
         <PlaygroundTeaser />
         <Testimonials />
         <CTASection />
+        <NewsletterSection />
         <Contact />
         <BookingSection />
       </main>

@@ -93,8 +93,24 @@ export default function Navbar() {
           ))}
         </div>
 
-        {/* ── Desktop "Hire Us" button ──────────────────────────────────── */}
-        <div className="hidden md:flex items-center space-x-4">
+        {/* ── Desktop auth + CTA buttons ─────────────────────────────── */}
+        <div className="hidden md:flex items-center space-x-3">
+          <Link
+            href="/auth/login"
+            className="nav-link text-sm hover:text-blue-400 transition"
+          >
+            Sign In
+          </Link>
+          <Link href="/auth/register" className="nav-register-btn">
+            Register
+          </Link>
+          <Link href="/#booking" className="nav-book-btn">
+            <i
+              className="fa fa-calendar-check"
+              style={{ marginRight: "5px" }}
+            />
+            Book a Call
+          </Link>
           <Link href="/#contact" className="contact-btn1">
             Hire Us
           </Link>
@@ -135,7 +151,42 @@ export default function Navbar() {
             </Link>
           ))}
 
-          <div className="mobile-footer mt-8">
+          <div
+            className="mobile-footer mt-8"
+            style={{ display: "flex", flexDirection: "column", gap: "12px" }}
+          >
+            <Link
+              href="/auth/login"
+              className="mobile-link"
+              style={{ textAlign: "center", color: "#818cf8" }}
+              onClick={closeMenu}
+            >
+              <i
+                className="fa fa-right-to-bracket"
+                style={{ marginRight: "6px" }}
+              />
+              Sign In
+            </Link>
+            <Link
+              href="/auth/register"
+              className="nav-register-btn"
+              style={{ textAlign: "center" }}
+              onClick={closeMenu}
+            >
+              Create Account
+            </Link>
+            <Link
+              href="/#booking"
+              className="nav-book-btn"
+              style={{ textAlign: "center" }}
+              onClick={closeMenu}
+            >
+              <i
+                className="fa fa-calendar-check"
+                style={{ marginRight: "5px" }}
+              />
+              Book a Call
+            </Link>
             <Link
               href="/#contact"
               className="hire-btn-mobile"

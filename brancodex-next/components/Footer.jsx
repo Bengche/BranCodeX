@@ -15,9 +15,13 @@ const quickLinks = [
   { label: "Skills", href: "/#skills" },
   { label: "Projects", href: "/#projects" },
   { label: "Blog", href: "/blog" },
+  { label: "Our Process", href: "/our-process" },
+  { label: "Guide", href: "/guide" },
   { label: "FAQ's", href: "/faq" },
   { label: "Playground", href: "/playground" },
   { label: "Contact", href: "/contact" },
+  { label: "Sign In", href: "/auth/login" },
+  { label: "Register", href: "/auth/register" },
   { label: "Privacy Policy", href: "/privacy-policy" },
   { label: "Terms of Service", href: "/terms" },
 ];
@@ -120,13 +124,33 @@ export default function Footer() {
           textAlign: "center",
         }}
       >
-        <span style={{ color: "#475569", fontSize: "0.72rem", letterSpacing: "0.04em", textTransform: "uppercase", fontWeight: 600 }}>
+        <span
+          style={{
+            color: "#475569",
+            fontSize: "0.72rem",
+            letterSpacing: "0.04em",
+            textTransform: "uppercase",
+            fontWeight: 600,
+          }}
+        >
           BRANCODEX SARL &mdash; Registered in Cameroon
         </span>
-        <span style={{ color: "#334155", fontSize: "0.68rem", letterSpacing: "0.03em" }}>
+        <span
+          style={{
+            color: "#334155",
+            fontSize: "0.68rem",
+            letterSpacing: "0.03em",
+          }}
+        >
           RCCM&nbsp;RC/EBWA/2026/B/65
         </span>
-        <span style={{ color: "#334155", fontSize: "0.68rem", letterSpacing: "0.03em" }}>
+        <span
+          style={{
+            color: "#334155",
+            fontSize: "0.68rem",
+            letterSpacing: "0.03em",
+          }}
+        >
           NIU&nbsp;M052618656154Z
         </span>
       </div>

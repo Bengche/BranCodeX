@@ -1,10 +1,49 @@
 "use client";
 
-import { useRef, useState } from "react";
+import { useRef, useState, useEffect } from "react";
+
+const BACKEND_URL = process.env.NEXT_PUBLIC_BACKEND_URL || "http://localhost:4000";
+const PROJECT_SLUGS = ["njimbong", "fonlok", "jobvibe", "country"];
+
+function formatViews(n) {
+  if (n >= 1000) return (n / 1000).toFixed(1).replace(/\.0$/, "") + "k";
+  return String(n);
+}
+
+function useProjectViews() {
+  const [views, setViews] = useState({});
+
+  useEffect(() => {
+    const stored = (() => {
+      try { return JSON.parse(localStorage.getItem("viewedProjects") || "{}"); }
+      catch { return {}; }
+    })();
+
+    PROJECT_SLUGS.forEach(async (slug) => {
+      try {
+        // Record view if first visit
+        if (!stored[slug]) {
+          const res = await fetch(`${BACKEND_URL}/api/projects/${slug}/view`, { method: "POST" });
+          const data = await res.json();
+          if (data.views) setViews((v) => ({ ...v, [slug]: data.views }));
+          stored[slug] = true;
+          localStorage.setItem("viewedProjects", JSON.stringify(stored));
+        } else {
+          const res = await fetch(`${BACKEND_URL}/api/projects/${slug}/views`);
+          const data = await res.json();
+          if (data.views) setViews((v) => ({ ...v, [slug]: data.views }));
+        }
+      } catch { /* non-fatal */ }
+    });
+  }, []); // eslint-disable-line react-hooks/exhaustive-deps
+
+  return views;
+}
 
 export default function Projects() {
   const viewportRef = useRef(null);
   const [loadedIframes, setLoadedIframes] = useState({});
+  const views = useProjectViews();
 
   function scrollSlider(direction) {
     const viewport = viewportRef.current;
@@ -17,6 +56,16 @@ export default function Projects() {
 
   function loadIframe(id, url) {
     setLoadedIframes((prev) => ({ ...prev, [id]: url }));
+  }
+
+  function ViewBadge({ slug }) {
+    const count = views[slug];
+    if (!count) return null;
+    return (
+      <span className="project-views-badge">
+        <i className="fa fa-eye" /> {formatViews(count)}
+      </span>
+    );
   }
 
   return (
@@ -72,7 +121,10 @@ export default function Projects() {
                 )}
               </div>
               <div className="p-6">
-                <h3 className="text-xl font-bold">Njimbong Marketplace</h3>
+                <div className="flex items-start justify-between gap-2 mb-1">
+                  <h3 className="text-xl font-bold">Njimbong Marketplace</h3>
+                  <ViewBadge slug="njimbong" />
+                </div>
                 <span className="text-xs bg-blue-600 px-2 py-1 rounded">
                   Next.js + Node.js
                 </span>
@@ -120,7 +172,10 @@ export default function Projects() {
                 )}
               </div>
               <div className="p-6">
-                <h3 className="text-xl font-bold">Fonlok Escrow</h3>
+                <div className="flex items-start justify-between gap-2 mb-1">
+                  <h3 className="text-xl font-bold">Fonlok Escrow</h3>
+                  <ViewBadge slug="fonlok" />
+                </div>
                 <span className="text-xs bg-green-600 px-2 py-1 rounded">
                   FinTech
                 </span>
@@ -171,7 +226,10 @@ export default function Projects() {
                 )}
               </div>
               <div className="p-6">
-                <h3 className="text-xl font-bold">Job Finder App</h3>
+                <div className="flex items-start justify-between gap-2 mb-1">
+                  <h3 className="text-xl font-bold">Job Finder App</h3>
+                  <ViewBadge slug="jobvibe" />
+                </div>
                 <span className="text-xs bg-purple-600 px-2 py-1 rounded">
                   React
                 </span>
@@ -222,7 +280,10 @@ export default function Projects() {
                 )}
               </div>
               <div className="p-6">
-                <h3 className="text-xl font-bold">Country Information</h3>
+                <div className="flex items-start justify-between gap-2 mb-1">
+                  <h3 className="text-xl font-bold">Country Information</h3>
+                  <ViewBadge slug="country" />
+                </div>
                 <span className="text-xs bg-orange-600 px-2 py-1 rounded">
                   JS API
                 </span>

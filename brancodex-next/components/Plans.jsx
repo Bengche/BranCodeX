@@ -8,6 +8,7 @@
 
 import { useState, useEffect } from "react";
 import Link from "next/link";
+import CurrencyBadge from "./CurrencyBadge";
 
 // ─── Live XAF rate ──────────────────────────────────────────────────────────
 
@@ -344,11 +345,65 @@ function PlanCard({ plan, xafRate }) {
 // ─── Main component ──────────────────────────────────────────────────────────
 
 export default function Plans() {
-  const xafRate = useXafRate();
+  const xafRate   = useXafRate();
+  const [tab, setTab] = useState("website"); // "website" | "ecommerce"
+
+  const activePlans = tab === "website" ? websitePlans : ecommercePlans;
+
+  const customCard =
+    tab === "website" ? (
+      <div className="plan-item plan-card custom-quote-card" key="custom">
+        <h3 className="plan-title">Custom Solutions</h3>
+        <p className="plan-tagline">Complex web apps &amp; unique logic.</p>
+        <p className="plan-price">Tailored Pricing</p>
+        <ul className="plan-features mb-6">
+          <li>
+            <i className="fa fa-robot" style={{ color: "#22c55e" }}></i>{" "}
+            <strong>Custom AI Agent Workflows</strong>
+          </li>
+          <li>
+            <i className="fa fa-check-circle" style={{ color: "green" }}></i>{" "}
+            Bespoke Database Architecture
+          </li>
+          <li>
+            <i className="fa fa-check-circle" style={{ color: "green" }}></i>{" "}
+            API &amp; Full-Stack Engineering
+          </li>
+        </ul>
+        <Link href="/#contact" className="btn-custom-cta">
+          Request a Custom Quote
+        </Link>
+      </div>
+    ) : (
+      <div className="plan-item plan-card custom-quote-card" key="enterprise">
+        <h3 className="plan-title">Enterprise Commerce</h3>
+        <p className="plan-tagline">Multi-vendor or high-volume stores.</p>
+        <p className="plan-price">Tailored Pricing</p>
+        <ul className="plan-features mb-6">
+          <li>
+            <i className="fa fa-robot" style={{ color: "#22c55e" }}></i>{" "}
+            <strong>AI Inventory Automation</strong>
+          </li>
+          <li>
+            <i className="fa fa-check-circle" style={{ color: "green" }}></i>{" "}
+            Advanced Payment Escrow
+          </li>
+          <li>
+            <i className="fa fa-check-circle" style={{ color: "green" }}></i>{" "}
+            Vendor Dashboards &amp; Logistics
+          </li>
+        </ul>
+        <Link href="/#contact" className="btn-custom-cta">
+          Start Enterprise Project
+        </Link>
+      </div>
+    );
+
   return (
     <section id="plans" className="plans-section">
+      {/* Header */}
       <div className="plans-header">
-        <h2 className="section-title text-black">Packages</h2>
+        <h2 className="section-title">Packages</h2>
         <p className="plans-intro">
           Scalable digital solutions designed for modern brands. Every project
           is engineered for conversion, performance, security, and growth.
@@ -357,74 +412,45 @@ export default function Plans() {
           Prices represent <strong>base investments</strong>. Final quotes are
           tailored to your specific feature requirements and scope.
         </p>
-      </div>
-
-      {/* Website plans grid */}
-      <div className="plans-grid">
-        {websitePlans.map((plan) => (
-          <PlanCard key={plan.title} plan={plan} xafRate={xafRate} />
-        ))}
-
-        {/* Custom Solutions card — no features toggle, just a CTA */}
-        <div className="plan-item plan-card custom-quote-card">
-          <h3 className="plan-title">Custom Solutions</h3>
-          <p className="plan-tagline">Complex web apps &amp; unique logic.</p>
-          <p className="plan-price">Tailored Pricing</p>
-          <ul className="plan-features mb-6">
-            <li>
-              <i className="fa fa-robot" style={{ color: "#22c55e" }}></i>{" "}
-              <strong>Custom AI Agent Workflows</strong>
-            </li>
-            <li>
-              <i className="fa fa-check-circle" style={{ color: "green" }}></i>{" "}
-              Bespoke Database Architecture
-            </li>
-            <li>
-              <i className="fa fa-check-circle" style={{ color: "green" }}></i>{" "}
-              API &amp; Full-Stack Engineering
-            </li>
-          </ul>
-          <Link href="/#contact" className="btn-custom-cta">
-            Request a Custom Quote
-          </Link>
+        <div style={{ marginTop: "16px", display: "flex", justifyContent: "center" }}>
+          <CurrencyBadge />
         </div>
       </div>
 
-      {/* E-commerce plans */}
-      <div className="plans-category-divider">
-        <span className="plans-category-badge">
-          <i className="fa fa-shopping-cart"></i> E-Commerce Ecosystems
-        </span>
+      {/* ── Category tabs ── */}
+      <div className="plans-tabs" role="tablist" aria-label="Plan categories">
+        <button
+          role="tab"
+          aria-selected={tab === "website"}
+          className={`plans-tab-btn${tab === "website" ? " plans-tab-btn--active" : ""}`}
+          onClick={() => setTab("website")}
+        >
+          <i className="fa fa-globe" />
+          Website Plans
+        </button>
+        <button
+          role="tab"
+          aria-selected={tab === "ecommerce"}
+          className={`plans-tab-btn${tab === "ecommerce" ? " plans-tab-btn--active" : ""}`}
+          onClick={() => setTab("ecommerce")}
+        >
+          <i className="fa fa-shopping-cart" />
+          E-Commerce
+        </button>
       </div>
-      <div className="plans-grid">
-        {ecommercePlans.map((plan) => (
+
+      {/* ── Plan cards (grid on desktop, snap-scroll on mobile) ── */}
+      <div className="plans-grid" role="tabpanel">
+        {activePlans.map((plan) => (
           <PlanCard key={plan.title} plan={plan} xafRate={xafRate} />
         ))}
-
-        {/* Enterprise card */}
-        <div className="plan-item plan-card custom-quote-card">
-          <h3 className="plan-title">Enterprise Commerce</h3>
-          <p className="plan-tagline">Multi-vendor or high-volume stores.</p>
-          <p className="plan-price">Tailored Pricing</p>
-          <ul className="plan-features mb-6">
-            <li>
-              <i className="fa fa-robot" style={{ color: "#22c55e" }}></i>{" "}
-              <strong>AI Inventory Automation</strong>
-            </li>
-            <li>
-              <i className="fa fa-check-circle" style={{ color: "green" }}></i>{" "}
-              Advanced Payment Escrow
-            </li>
-            <li>
-              <i className="fa fa-check-circle" style={{ color: "green" }}></i>{" "}
-              Vendor Dashboards &amp; Logistics
-            </li>
-          </ul>
-          <Link href="/#contact" className="btn-custom-cta">
-            Start Enterprise Project
-          </Link>
-        </div>
+        {customCard}
       </div>
+
+      {/* Mobile scroll hint */}
+      <p className="plans-scroll-hint" aria-hidden="true">
+        <i className="fa fa-hand-pointer" /> Swipe to see more plans
+      </p>
 
       {/* Trust signal */}
       <div className="plans-trust-bar">

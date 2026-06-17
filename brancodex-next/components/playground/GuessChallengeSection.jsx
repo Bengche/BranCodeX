@@ -12,6 +12,35 @@
 "use client";
 
 import { useState, useEffect, useRef, useCallback } from "react";
+import GlobalLeaderboard from "./GlobalLeaderboard";
+
+// ─── Backend ──────────────────────────────────────────────────────────────────
+
+const BACKEND_URL =
+  process.env.NEXT_PUBLIC_BACKEND_URL || "http://localhost:4000";
+
+async function fetchGCBoard() {
+  const res = await fetch(
+    `${BACKEND_URL}/api/leaderboard/guess-challenge`,
+    { cache: "no-store" },
+  );
+  if (!res.ok) throw new Error("Failed to fetch leaderboard");
+  const data = await res.json();
+  return data.leaderboard;
+}
+
+async function submitGCScore(player, score) {
+  const res = await fetch(
+    `${BACKEND_URL}/api/leaderboard/guess-challenge`,
+    {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ player, score }),
+    },
+  );
+  if (!res.ok) throw new Error("Failed to submit score");
+  return res.json();
+}
 
 // ─── Static country data (fallback when API is unavailable) ──────────────────
 
@@ -240,6 +269,12 @@ export default function GuessChallengeSection() {
   // --- final ---
   const [finalScore, setFinalScore] = useState(0);
 
+  // --- global leaderboard ---
+  const [globalBoard, setGlobalBoard]           = useState([]);
+  const [globalLoading, setGlobalLoading]       = useState(false);
+  const [globalError, setGlobalError]           = useState(false);
+  const [madeTopTen, setMadeTopTen]             = useState(false);
+
   const timerRef = useRef(null);
   const scoreRef = useRef(0); // track score synchronously for end-of-timer
 
@@ -257,9 +292,29 @@ export default function GuessChallengeSection() {
     } catch (_) {}
   }, []);
 
-  // ── Leaderboard save ─────────────────────────────────────────────────────
+  // ── Global leaderboard load ───────────────────────────────────────────────
+
+  useEffect(() => {
+    loadGlobalBoard();
+  }, []); // eslint-disable-line react-hooks/exhaustive-deps
+
+  async function loadGlobalBoard() {
+    setGlobalLoading(true);
+    setGlobalError(false);
+    try {
+      const data = await fetchGCBoard();
+      setGlobalBoard(data);
+    } catch {
+      setGlobalError(true);
+    } finally {
+      setGlobalLoading(false);
+    }
+  }
+
+  // ── Leaderboard save (local + global) ────────────────────────────────────
 
   const saveToLeaderboard = useCallback((name, score) => {
+    // Local device leaderboard
     setLeaderboard((prev) => {
       const updated = [...prev, { name, score }]
         .sort((a, b) => b.score - a.score)
@@ -279,6 +334,14 @@ export default function GuessChallengeSection() {
       } catch (_) {}
       return next;
     });
+
+    // Global leaderboard — non-fatal if it fails
+    submitGCScore(name, score)
+      .then((resp) => {
+        setGlobalBoard(resp.leaderboard);
+        setMadeTopTen(resp.madeTopTen);
+      })
+      .catch(() => {});
   }, []);
 
   // ── Timer management ─────────────────────────────────────────────────────
@@ -525,9 +588,10 @@ export default function GuessChallengeSection() {
     setContinent("Africa");
     setContinentPicked(false);
     setLoadingCountries(false);
+    setMadeTopTen(false);
   }
 
-  // ── Top 5 leaderboard ────────────────────────────────────────────────────
+  // ── Top 5 local leaderboard ───────────────────────────────────────────────
 
   const topFive = [...leaderboard]
     .sort((a, b) => b.score - a.score)
@@ -575,39 +639,50 @@ export default function GuessChallengeSection() {
             </p>
           </div>
 
-          {/* Leaderboard */}
-          <div className="mb-6">
-            <h2 className="text-xl font-bold text-indigo-700 mb-2">
-              🏆 Leaderboard
+          {/* Local device leaderboard — compact top 5 */}
+          <div className="mb-4">
+            <h2 className="text-base font-bold text-indigo-600 mb-1 flex items-center gap-1">
+              <i className="fa fa-laptop" /> This Device — Top 5
             </h2>
-            <div className="rounded bg-indigo-50 p-2 mb-2">
+            <div className="rounded bg-indigo-50 p-2 mb-1">
               {topFive.length === 0 && (
-                <p className="text-gray-500 text-sm">No entries yet.</p>
+                <p className="text-gray-500 text-xs">No entries yet.</p>
               )}
               {topFive.map((entry, i) => (
                 <div
                   key={i}
-                  className="flex justify-between px-2 py-1 text-sm text-gray-900"
+                  className="flex justify-between px-2 py-0.5 text-xs text-gray-900"
                   style={{ background: i % 2 === 0 ? "#f3f4f6" : "#e0e7ff" }}
                 >
                   <span>
                     {i + 1}. {entry.name}
                   </span>
-                  <span>{entry.score}</span>
+                  <span className="font-semibold">{entry.score}</span>
                 </div>
               ))}
             </div>
-            <div className="flex justify-between text-sm text-gray-600">
+            <div className="flex justify-between text-xs text-gray-500">
               <span>
-                High Score: <span className="font-bold">{highScore}</span>
+                Personal best:{" "}
+                <span className="font-bold text-indigo-700">{highScore}</span>
               </span>
               {playerName && (
                 <span>
-                  Player: <span className="font-bold">{playerName}</span>
+                  Playing as:{" "}
+                  <span className="font-bold text-indigo-700">{playerName}</span>
                 </span>
               )}
             </div>
           </div>
+
+          {/* Global leaderboard */}
+          <GlobalLeaderboard
+            board={globalBoard}
+            loading={globalLoading}
+            error={globalError}
+            onRefresh={loadGlobalBoard}
+            madeTopTen={phase === PHASE.FINAL && madeTopTen}
+          />
 
           {/* ── SETUP ── */}
           {phase === PHASE.SETUP && (
