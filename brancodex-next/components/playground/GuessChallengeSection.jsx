@@ -20,24 +20,20 @@ const BACKEND_URL =
   process.env.NEXT_PUBLIC_BACKEND_URL || "http://localhost:4000";
 
 async function fetchGCBoard() {
-  const res = await fetch(
-    `${BACKEND_URL}/api/leaderboard/guess-challenge`,
-    { cache: "no-store" },
-  );
+  const res = await fetch(`${BACKEND_URL}/api/leaderboard/guess-challenge`, {
+    cache: "no-store",
+  });
   if (!res.ok) throw new Error("Failed to fetch leaderboard");
   const data = await res.json();
   return data.leaderboard;
 }
 
 async function submitGCScore(player, score) {
-  const res = await fetch(
-    `${BACKEND_URL}/api/leaderboard/guess-challenge`,
-    {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ player, score }),
-    },
-  );
+  const res = await fetch(`${BACKEND_URL}/api/leaderboard/guess-challenge`, {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify({ player, score }),
+  });
   if (!res.ok) throw new Error("Failed to submit score");
   return res.json();
 }
@@ -270,10 +266,10 @@ export default function GuessChallengeSection() {
   const [finalScore, setFinalScore] = useState(0);
 
   // --- global leaderboard ---
-  const [globalBoard, setGlobalBoard]           = useState([]);
-  const [globalLoading, setGlobalLoading]       = useState(false);
-  const [globalError, setGlobalError]           = useState(false);
-  const [madeTopTen, setMadeTopTen]             = useState(false);
+  const [globalBoard, setGlobalBoard] = useState([]);
+  const [globalLoading, setGlobalLoading] = useState(false);
+  const [globalError, setGlobalError] = useState(false);
+  const [madeTopTen, setMadeTopTen] = useState(false);
 
   const timerRef = useRef(null);
   const scoreRef = useRef(0); // track score synchronously for end-of-timer
@@ -634,10 +630,7 @@ export default function GuessChallengeSection() {
                 <p className="guess-local-empty">No entries yet.</p>
               )}
               {topFive.map((entry, i) => (
-                <div
-                  key={i}
-                  className="guess-local-row"
-                >
+                <div key={i} className="guess-local-row">
                   <span>
                     {i + 1}. {entry.name}
                   </span>
@@ -691,9 +684,7 @@ export default function GuessChallengeSection() {
           {/* ── GUESS ── */}
           {phase === PHASE.GUESS && (
             <div>
-              <h2 className="guess-phase-title">
-                Guess: Odd or Even?
-              </h2>
+              <h2 className="guess-phase-title">Guess: Odd or Even?</h2>
               <div className="guess-phase-sub">
                 Round <strong>{guessRound}</strong> of 5
               </div>
@@ -795,9 +786,7 @@ export default function GuessChallengeSection() {
               )}
 
               {loadingCountries && (
-                <p className="guess-loading-msg">
-                  Loading countries…
-                </p>
+                <p className="guess-loading-msg">Loading countries…</p>
               )}
 
               {!loadingCountries &&
@@ -805,9 +794,7 @@ export default function GuessChallengeSection() {
                 challengeIdx < countries.length && (
                   <div>
                     {/* Timer */}
-                    <p className="guess-timer">
-                      {timeLeft}s remaining
-                    </p>
+                    <p className="guess-timer">{timeLeft}s remaining</p>
 
                     {/* Country flag + name */}
                     <div className="guess-country-row">
@@ -915,12 +902,8 @@ export default function GuessChallengeSection() {
           {/* ── FINAL ── */}
           {phase === PHASE.FINAL && (
             <div className="guess-final">
-              <h2 className="guess-final-title">
-                Game Complete
-              </h2>
-              <p className="guess-final-score">
-                Final Score: {finalScore}
-              </p>
+              <h2 className="guess-final-title">Game Complete</h2>
+              <p className="guess-final-score">Final Score: {finalScore}</p>
               <button
                 onClick={resetAll}
                 className="guess-btn guess-btn--primary"
