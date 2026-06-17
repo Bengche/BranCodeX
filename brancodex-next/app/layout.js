@@ -19,7 +19,6 @@ import CookieConsent from "@/components/CookieConsent";
 import ScrollProgress from "@/components/ScrollProgress";
 import WhatsAppButton from "@/components/WhatsAppButton";
 import BrandonAI from "@/components/BrandonAI";
-import { Analytics } from "@vercel/analytics/react";
 
 /* --------------------------------------------------------------------------
    SITE-WIDE SEO DEFAULTS
@@ -255,7 +254,6 @@ export default function RootLayout({ children }) {
         <AOSProvider>{children}</AOSProvider>
         <WhatsAppButton />
         <BrandonAI />
-        <Analytics />
       </body>
     </html>
   );

@@ -1799,7 +1799,9 @@ body.mobile-menu-open #brancodex-chat-container {
   font-size: 14px;
   color: #f1f5f9;
   outline: none;
-  transition: border-color 0.2s, background 0.2s;
+  transition:
+    border-color 0.2s,
+    background 0.2s;
 }
 
 .newsletter-input::placeholder {
@@ -1821,7 +1823,9 @@ body.mobile-menu-open #brancodex-chat-container {
   border-radius: 10px;
   cursor: pointer;
   white-space: nowrap;
-  transition: opacity 0.2s, transform 0.2s;
+  transition:
+    opacity 0.2s,
+    transform 0.2s;
   box-shadow: 0 4px 16px rgba(34, 197, 94, 0.3);
 }
 

@@ -3,7 +3,8 @@
 import { useState, useEffect, useRef } from "react";
 
 const IMGBB_API_KEY = "69c45289e2873d6bd5719277ac377ceb";
-const BACKEND_URL = process.env.NEXT_PUBLIC_BACKEND_URL || "http://localhost:4000";
+const BACKEND_URL =
+  process.env.NEXT_PUBLIC_BACKEND_URL || "http://localhost:4000";
 
 export default function Testimonials() {
   const [testimonials, setTestimonials] = useState([]);
@@ -113,7 +114,9 @@ export default function Testimonials() {
           ],
         }),
       });
-      alert("✅ Thank you! Your review is pending approval and will appear on the site shortly.");
+      alert(
+        "✅ Thank you! Your review is pending approval and will appear on the site shortly.",
+      );
       closeModal();
       loadAllTestimonials();
     } catch {

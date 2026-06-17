@@ -15,9 +15,12 @@ import AOS from "aos";
 export default function AOSProvider({ children }) {
   useEffect(() => {
     AOS.init({
-      once: true, // Only animate once per element
-      duration: 1000, // 1 second animation
+      once: true,
+      duration: 1000,
       easing: "ease-in-out",
+      // Disable mutation observer — prevents "Node cannot be found" errors
+      // caused by React replacing DOM nodes between renders
+      disableMutationObserver: true,
     });
   }, []);
 
