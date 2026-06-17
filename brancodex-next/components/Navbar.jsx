@@ -14,7 +14,7 @@
 
 "use client";
 
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import Link from "next/link";
 import Image from "next/image";
 
@@ -35,6 +35,21 @@ const navLinks = [
 export default function Navbar() {
   const [menuOpen, setMenuOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
+  const [isLoggedIn, setIsLoggedIn] = useState(false);
+  const [accountMenuOpen, setAccountMenuOpen] = useState(false);
+  const [currentUser, setCurrentUser] = useState(null);
+  const accountMenuRef = useRef(null);
+
+  const desktopNavLinks = navLinks.filter((link) =>
+    [
+      "Home",
+      "Services",
+      "Projects",
+      "Testimonials",
+      "Blog",
+      "Contact",
+    ].includes(link.label),
+  );
 
   // Glass effect on scroll
   useEffect(() => {
@@ -58,8 +73,78 @@ export default function Navbar() {
     };
   }, [menuOpen]);
 
+  // Reflect auth state from localStorage so nav actions are accurate.
+  useEffect(() => {
+    const syncAuthState = () => {
+      if (typeof window === "undefined") return;
+      const token = localStorage.getItem("bx_token");
+      const rawUser = localStorage.getItem("bx_user");
+      let parsedUser = null;
+
+      if (rawUser) {
+        try {
+          parsedUser = JSON.parse(rawUser);
+        } catch {
+          parsedUser = null;
+        }
+      }
+
+      setIsLoggedIn(Boolean(token));
+      setCurrentUser(parsedUser);
+    };
+
+    syncAuthState();
+    window.addEventListener("storage", syncAuthState);
+    window.addEventListener("focus", syncAuthState);
+    return () => {
+      window.removeEventListener("storage", syncAuthState);
+      window.removeEventListener("focus", syncAuthState);
+    };
+  }, []);
+
+  // Close account menu when clicking outside or pressing Escape.
+  useEffect(() => {
+    const onMouseDown = (event) => {
+      if (!accountMenuRef.current) return;
+      if (!accountMenuRef.current.contains(event.target)) {
+        setAccountMenuOpen(false);
+      }
+    };
+
+    const onKeyDown = (event) => {
+      if (event.key === "Escape") setAccountMenuOpen(false);
+    };
+
+    window.addEventListener("mousedown", onMouseDown);
+    window.addEventListener("keydown", onKeyDown);
+    return () => {
+      window.removeEventListener("mousedown", onMouseDown);
+      window.removeEventListener("keydown", onKeyDown);
+    };
+  }, []);
+
   function closeMenu() {
     setMenuOpen(false);
+  }
+
+  function getUserInitials() {
+    const name = currentUser?.name?.trim();
+    if (!name) return "AC";
+    const parts = name.split(/\s+/).filter(Boolean);
+    if (parts.length === 1) return parts[0].slice(0, 2).toUpperCase();
+    return `${parts[0][0]}${parts[1][0]}`.toUpperCase();
+  }
+
+  function signOut() {
+    localStorage.removeItem("bx_token");
+    localStorage.removeItem("bx_user");
+    setIsLoggedIn(false);
+    setCurrentUser(null);
+    setAccountMenuOpen(false);
+    closeMenu();
+    if (typeof window !== "undefined") {
+      window.location.href = "/";
+    }
   }
 
   return (
@@ -67,9 +152,9 @@ export default function Navbar() {
       id="navbar"
       className={`fixed top-0 left-0 w-full z-50 text-white transition-all duration-500${scrolled ? " navbar--scrolled" : ""}`}
     >
-      <div className="max-w-7xl mx-auto px-6 py-4 flex items-center justify-between">
+      <div className="max-w-7xl mx-auto px-4 lg:px-6 py-4 flex items-center justify-between">
         {/* ── Logo ───────────────────────────────────────────────────────── */}
-        <div className="flex items-center space-x-2 mr-10">
+        <div className="flex items-center space-x-2 mr-6 xl:mr-10">
           <Image
             src="/images/favicon.png"
             alt="BranCodeX Logo"
@@ -87,12 +172,12 @@ export default function Navbar() {
         </div>
 
         {/* ── Desktop links ──────────────────────────────────────────────── */}
-        <div className="hidden lg:flex flex-wrap items-center space-x-6">
-          {navLinks.map((link) => (
+        <div className="hidden lg:flex items-center gap-4 xl:gap-5 nav-desktop-links">
+          {desktopNavLinks.map((link) => (
             <Link
               key={link.href}
               href={link.href}
-              className="nav-link hover:text-blue-400 transition text-sm"
+              className="nav-link text-slate-200 hover:text-emerald-300 transition-colors text-[13px] xl:text-sm"
             >
               {link.label}
             </Link>
@@ -100,16 +185,64 @@ export default function Navbar() {
         </div>
 
         {/* ── Desktop auth + CTA buttons ─────────────────────────────── */}
-        <div className="hidden lg:flex items-center space-x-3">
-          <Link
-            href="/auth/login"
-            className="nav-link text-sm hover:text-blue-400 transition"
-          >
-            Sign In
-          </Link>
-          <Link href="/auth/register" className="nav-register-btn">
-            Register
-          </Link>
+        <div className="hidden lg:flex items-center gap-2 xl:gap-3 nav-desktop-actions">
+          {isLoggedIn ? (
+            <div className="nav-account" ref={accountMenuRef}>
+              <button
+                type="button"
+                className="nav-account-trigger"
+                aria-expanded={accountMenuOpen}
+                aria-haspopup="menu"
+                onClick={() => setAccountMenuOpen((prev) => !prev)}
+              >
+                <span className="nav-account-avatar">{getUserInitials()}</span>
+                <span className="nav-account-name">
+                  {currentUser?.name || "Account"}
+                </span>
+                <i className="fa fa-chevron-down" aria-hidden="true" />
+              </button>
+
+              <div
+                className={`nav-account-menu${accountMenuOpen ? " is-open" : ""}`}
+                role="menu"
+              >
+                <div className="nav-account-menu-header">Account</div>
+                <div className="nav-account-menu-user">
+                  {currentUser?.name || "Signed in user"}
+                </div>
+                <Link
+                  href="/auth/login"
+                  className="nav-account-menu-item"
+                  onClick={() => setAccountMenuOpen(false)}
+                  role="menuitem"
+                >
+                  <i className="fa fa-user" aria-hidden="true" />
+                  Account
+                </Link>
+                <button
+                  type="button"
+                  className="nav-account-menu-item nav-account-menu-item--danger"
+                  onClick={signOut}
+                  role="menuitem"
+                >
+                  <i className="fa fa-right-from-bracket" aria-hidden="true" />
+                  Sign Out
+                </button>
+              </div>
+            </div>
+          ) : (
+            <>
+              <Link
+                href="/auth/login"
+                className="nav-link text-sm text-slate-200 hover:text-emerald-300 transition-colors"
+              >
+                Sign In
+              </Link>
+              <Link href="/auth/register" className="nav-register-btn">
+                Register
+              </Link>
+            </>
+          )}
           <Link href="/#booking" className="nav-book-btn">
             <i
               className="fa fa-calendar-check"
@@ -151,24 +284,35 @@ export default function Navbar() {
           {/* ── Primary CTAs — always visible at the top ───────────────── */}
           <div className="mobile-menu-ctas">
             {/* Auth row — side by side */}
-            <div className="mobile-auth-row">
-              <Link
-                href="/auth/login"
-                className="mobile-cta-secondary mobile-cta-secondary--half"
-                onClick={closeMenu}
+            {isLoggedIn ? (
+              <button
+                type="button"
+                className="mobile-cta-secondary mobile-cta-secondary--danger"
+                onClick={signOut}
               >
-                <i className="fa fa-right-to-bracket" />
-                Sign In
-              </Link>
-              <Link
-                href="/auth/register"
-                className="mobile-cta-secondary mobile-cta-secondary--purple mobile-cta-secondary--half"
-                onClick={closeMenu}
-              >
-                <i className="fa fa-user-plus" />
-                Register
-              </Link>
-            </div>
+                <i className="fa fa-right-from-bracket" />
+                Sign Out
+              </button>
+            ) : (
+              <div className="mobile-auth-row">
+                <Link
+                  href="/auth/login"
+                  className="mobile-cta-secondary mobile-cta-secondary--half"
+                  onClick={closeMenu}
+                >
+                  <i className="fa fa-right-to-bracket" />
+                  Sign In
+                </Link>
+                <Link
+                  href="/auth/register"
+                  className="mobile-cta-secondary mobile-cta-secondary--purple mobile-cta-secondary--half"
+                  onClick={closeMenu}
+                >
+                  <i className="fa fa-user-plus" />
+                  Register
+                </Link>
+              </div>
+            )}
 
             {/* Primary action buttons */}
             <Link

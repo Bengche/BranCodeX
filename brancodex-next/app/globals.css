@@ -56,6 +56,14 @@ body {
   border-bottom: 1px solid rgba(255, 255, 255, 0.07);
   box-shadow: 0 2px 40px rgba(0, 0, 0, 0.12);
 }
+.nav-desktop-links {
+  flex: 1;
+  min-width: 0;
+  justify-content: center;
+}
+.nav-desktop-actions {
+  flex-shrink: 0;
+}
 
 /* Offset page content so it doesn't hide under the fixed navbar */
 body {
@@ -557,6 +565,155 @@ body.mobile-menu-open #brancodex-chat-container {
     background 0.2s,
     color 0.2s;
 }
+.nav-signout-btn {
+  display: inline-block;
+  padding: 7px 16px;
+  border-radius: 9999px;
+  font-size: 0.875rem;
+  font-weight: 600;
+  color: #fca5a5;
+  border: 1px solid rgba(248, 113, 113, 0.45);
+  background: rgba(127, 29, 29, 0.12);
+  transition:
+    background 0.2s,
+    color 0.2s,
+    border-color 0.2s;
+}
+.nav-signout-btn:hover,
+.nav-signout-btn:focus-visible {
+  background: rgba(127, 29, 29, 0.24);
+  color: #fecaca;
+  border-color: rgba(248, 113, 113, 0.75);
+}
+
+.nav-account {
+  position: relative;
+}
+
+.nav-account-trigger {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  border: 1px solid rgba(100, 116, 139, 0.45);
+  background: rgba(15, 23, 42, 0.55);
+  color: #e2e8f0;
+  padding: 5px 10px 5px 6px;
+  border-radius: 9999px;
+  font-size: 0.84rem;
+  font-weight: 600;
+  line-height: 1;
+  transition:
+    border-color 0.2s,
+    background 0.2s;
+}
+
+.nav-account-trigger:hover,
+.nav-account-trigger:focus-visible {
+  border-color: rgba(16, 185, 129, 0.5);
+  background: rgba(15, 23, 42, 0.75);
+}
+
+.nav-account-avatar {
+  width: 28px;
+  height: 28px;
+  border-radius: 9999px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  background: linear-gradient(135deg, #22c55e, #16a34a);
+  color: #f8fafc;
+  font-size: 0.72rem;
+  font-weight: 800;
+  letter-spacing: 0.05em;
+}
+
+.nav-account-name {
+  max-width: 104px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.nav-account-trigger .fa-chevron-down {
+  font-size: 0.7rem;
+  color: #94a3b8;
+}
+
+.nav-account-menu {
+  position: absolute;
+  top: calc(100% + 10px);
+  right: 0;
+  width: 220px;
+  border-radius: 14px;
+  overflow: hidden;
+  background: rgba(9, 14, 28, 0.98);
+  border: 1px solid rgba(100, 116, 139, 0.4);
+  box-shadow: 0 16px 36px rgba(2, 8, 23, 0.45);
+  opacity: 0;
+  transform: translateY(-6px);
+  pointer-events: none;
+  transition:
+    opacity 0.2s,
+    transform 0.2s;
+  z-index: 60;
+}
+
+.nav-account-menu.is-open {
+  opacity: 1;
+  transform: translateY(0);
+  pointer-events: auto;
+}
+
+.nav-account-menu-header {
+  padding: 12px 14px 6px;
+  color: #94a3b8;
+  font-size: 0.68rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+}
+
+.nav-account-menu-user {
+  padding: 0 14px 12px;
+  color: #f8fafc;
+  font-size: 0.86rem;
+  font-weight: 600;
+  border-bottom: 1px solid rgba(100, 116, 139, 0.28);
+}
+
+.nav-account-menu-item {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 11px 14px;
+  background: transparent;
+  border: 0;
+  color: #cbd5e1;
+  font-size: 0.85rem;
+  font-weight: 600;
+  text-decoration: none;
+  text-align: left;
+  transition:
+    background 0.2s,
+    color 0.2s;
+}
+
+.nav-account-menu-item:hover,
+.nav-account-menu-item:focus-visible {
+  background: rgba(100, 116, 139, 0.18);
+  color: #f8fafc;
+}
+
+.nav-account-menu-item--danger {
+  color: #fca5a5;
+}
+
+.nav-account-menu-item--danger:hover,
+.nav-account-menu-item--danger:focus-visible {
+  background: rgba(127, 29, 29, 0.28);
+  color: #fecaca;
+}
 
 .nav-register-btn:hover {
   background: rgba(79, 70, 229, 0.15);
@@ -581,6 +738,18 @@ body.mobile-menu-open #brancodex-chat-container {
   background: rgba(16, 185, 129, 0.12);
   color: #6ee7b7;
   border-color: rgba(52, 211, 153, 0.7);
+}
+
+.mobile-cta-secondary--danger {
+  color: #fca5a5;
+  border-color: rgba(248, 113, 113, 0.35);
+  background: rgba(127, 29, 29, 0.16);
+}
+
+.mobile-cta-secondary--danger:hover {
+  color: #fecaca;
+  border-color: rgba(248, 113, 113, 0.65);
+  background: rgba(127, 29, 29, 0.28);
 }
 
 .glow-btn {
@@ -3210,16 +3379,23 @@ textarea {
   min-height: 100vh;
 }
 
+.playground-page > section {
+  scroll-margin-top: 98px;
+}
+
 .playground-hero {
-  background: linear-gradient(135deg, #1e293b, #0f172a);
-  padding: 5rem 1.5rem 4rem;
+  background:
+    radial-gradient(circle at 10% 8%, rgba(34, 197, 94, 0.14), transparent 28%),
+    radial-gradient(circle at 90% 18%, rgba(56, 189, 248, 0.14), transparent 24%),
+    linear-gradient(135deg, #1e293b, #0f172a 55%);
+  padding: 5.2rem 1.5rem 4.1rem;
   text-align: center;
   color: white;
-  border-bottom: 1px solid #1e293b;
+  border-bottom: 1px solid rgba(148, 163, 184, 0.2);
 }
 
 .playground-hero-inner {
-  max-width: 720px;
+  max-width: 760px;
   margin: 0 auto;
 }
 
@@ -3231,29 +3407,39 @@ textarea {
 
 .playground-hero p {
   color: #94a3b8;
-  font-size: 1.05rem;
-  line-height: 1.7;
-  margin-bottom: 1.5rem;
+  font-size: 1.02rem;
+  line-height: 1.75;
+  margin-bottom: 1.7rem;
 }
 
 .playground-quick-nav {
   display: flex;
   justify-content: center;
-  gap: 1.25rem;
+  gap: 0.75rem;
   flex-wrap: wrap;
 }
 
 .playground-quick-nav a {
-  color: #38bdf8;
+  color: #cbd5e1;
   font-weight: 600;
-  font-size: 0.9rem;
+  font-size: 0.84rem;
   text-decoration: none;
-  border-bottom: 1px solid transparent;
-  transition: border-color 0.2s;
+  border: 1px solid rgba(148, 163, 184, 0.25);
+  background: rgba(15, 23, 42, 0.6);
+  border-radius: 999px;
+  padding: 0.45rem 0.88rem;
+  transition:
+    border-color 0.2s,
+    color 0.2s,
+    background 0.2s,
+    transform 0.2s;
 }
 
 .playground-quick-nav a:hover {
-  border-color: #38bdf8;
+  border-color: rgba(34, 197, 94, 0.65);
+  color: #dcfce7;
+  background: rgba(34, 197, 94, 0.15);
+  transform: translateY(-1px);
 }
 
 .playground-back-home {
@@ -3280,7 +3466,7 @@ textarea {
    ========================================================================= */
 .jokes-section {
   padding: 4rem 1.5rem;
-  background: #1e293b;
+  background: linear-gradient(180deg, #1e293b 0%, #1a2536 100%);
   color: #f8fafc;
   text-align: center;
 }
@@ -3297,7 +3483,7 @@ textarea {
 }
 
 .jokes-btn {
-  background: #3b82f6;
+  background: linear-gradient(135deg, #22c55e, #16a34a);
   color: white;
   border: none;
   padding: 0.75rem 1.8rem;
@@ -3316,7 +3502,7 @@ textarea {
   cursor: not-allowed;
 }
 .jokes-btn:not(:disabled):hover {
-  background: #2563eb;
+  background: linear-gradient(135deg, #16a34a, #15803d);
 }
 
 .jokes-error {
@@ -3328,7 +3514,7 @@ textarea {
 .joke-card {
   margin-top: 1.75rem;
   background: #0f172a;
-  border: 1px solid #334155;
+  border: 1px solid rgba(34, 197, 94, 0.28);
   border-radius: 16px;
   padding: 1.5rem 2rem;
   animation: fadeIn 0.4s ease;
@@ -3357,7 +3543,7 @@ textarea {
 }
 
 .quiz-wrapper {
-  max-width: 700px;
+  max-width: 760px;
   margin: 0 auto;
 }
 
@@ -3365,7 +3551,7 @@ textarea {
   background: #1e293b;
   border-radius: 20px;
   border: 1px solid #334155;
-  padding: 2.5rem 2rem;
+  padding: 2.2rem 1.75rem;
   animation: fadeIn 0.35s ease;
 }
 
@@ -3410,7 +3596,7 @@ textarea {
 
 .quiz-start-btn {
   width: 100%;
-  background: linear-gradient(135deg, #3b82f6, #6366f1);
+  background: linear-gradient(135deg, #22c55e, #16a34a);
   color: white;
   border: none;
   padding: 0.85rem;
@@ -3422,7 +3608,7 @@ textarea {
 }
 
 .quiz-start-btn:hover {
-  opacity: 0.9;
+  opacity: 0.92;
 }
 
 /* Playing screen */
@@ -3618,7 +3804,7 @@ textarea {
 }
 
 .quiz-next-btn {
-  background: #6366f1;
+  background: #16a34a;
   color: white;
   border: none;
   padding: 0.7rem 1.5rem;
@@ -3631,7 +3817,402 @@ textarea {
 }
 
 .quiz-next-btn:hover {
-  background: #4f46e5;
+  background: #15803d;
+}
+
+/* =========================================================================
+   GUESS & CHALLENGE
+   ========================================================================= */
+.guess-section-hero {
+  padding: 2.8rem 1.25rem 1.6rem;
+  background:
+    radial-gradient(circle at 10% 20%, rgba(34, 197, 94, 0.14), transparent 34%),
+    linear-gradient(160deg, #0b1222 0%, #111827 58%, #0f172a 100%);
+  border-top: 1px solid rgba(148, 163, 184, 0.15);
+  border-bottom: 1px solid rgba(148, 163, 184, 0.13);
+}
+
+.guess-section-hero-inner {
+  max-width: 760px;
+  margin: 0 auto;
+  text-align: center;
+}
+
+.guess-section-hero h2 {
+  margin: 0;
+  font-size: clamp(1.8rem, 3vw, 2.25rem);
+  font-weight: 800;
+  color: #f8fafc;
+  letter-spacing: 0.01em;
+}
+
+.guess-section-hero p {
+  margin: 0.75rem auto 0;
+  max-width: 680px;
+  color: #94a3b8;
+  line-height: 1.7;
+  font-size: 0.98rem;
+}
+
+.guess-challenge {
+  padding: 1.65rem 1.25rem 3rem;
+  display: flex;
+  justify-content: center;
+}
+
+.guess-card {
+  width: 100%;
+  max-width: 860px;
+  background: linear-gradient(180deg, #f8fafc 0%, #f1f5f9 100%);
+  border-radius: 18px;
+  padding: 1.4rem 1.35rem;
+  border: 1px solid #dbe3ef;
+  box-shadow:
+    0 14px 32px rgba(2, 6, 23, 0.18),
+    inset 0 1px 0 rgba(255, 255, 255, 0.75);
+}
+
+.guess-header {
+  text-align: center;
+  margin-bottom: 1rem;
+}
+
+.guess-header h1 {
+  margin: 0;
+  font-size: clamp(1.45rem, 2.2vw, 1.95rem);
+  color: #0f172a;
+  font-weight: 800;
+}
+
+.guess-header p {
+  margin: 0.4rem auto 0;
+  max-width: 640px;
+  color: #475569;
+  font-size: 0.94rem;
+  line-height: 1.6;
+}
+
+.guess-local-board {
+  margin-bottom: 1rem;
+}
+
+.guess-local-board-title {
+  margin: 0 0 0.45rem;
+  font-size: 0.9rem;
+  color: #0f172a;
+  font-weight: 700;
+  display: flex;
+  align-items: center;
+  gap: 0.4rem;
+}
+
+.guess-local-board-card {
+  border: 1px solid #d1ddee;
+  border-radius: 10px;
+  background: #eef3fb;
+  padding: 0.45rem;
+}
+
+.guess-local-empty {
+  margin: 0;
+  font-size: 0.78rem;
+  color: #64748b;
+}
+
+.guess-local-row {
+  display: flex;
+  justify-content: space-between;
+  font-size: 0.78rem;
+  color: #0f172a;
+  border-radius: 6px;
+  padding: 0.28rem 0.5rem;
+}
+
+.guess-local-row:nth-child(even) {
+  background: rgba(15, 23, 42, 0.04);
+}
+
+.guess-local-score {
+  font-weight: 700;
+}
+
+.guess-local-meta {
+  margin-top: 0.4rem;
+  display: flex;
+  justify-content: space-between;
+  gap: 0.65rem;
+  flex-wrap: wrap;
+  color: #64748b;
+  font-size: 0.75rem;
+}
+
+.guess-local-meta-val {
+  color: #0f172a;
+  font-weight: 700;
+}
+
+.guess-setup {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.75rem;
+  margin-bottom: 1.2rem;
+}
+
+.guess-input,
+.guess-select {
+  width: 100%;
+  background: #ffffff;
+  border: 1px solid #cbd5e1;
+  border-radius: 9px;
+  color: #0f172a;
+  font-size: 0.93rem;
+  padding: 0.62rem 0.72rem;
+}
+
+.guess-input {
+  max-width: 460px;
+}
+
+.guess-input:focus,
+.guess-select:focus {
+  outline: none;
+  border-color: #16a34a;
+  box-shadow: 0 0 0 3px rgba(34, 197, 94, 0.18);
+}
+
+.guess-btn {
+  border: none;
+  border-radius: 10px;
+  color: #fff;
+  padding: 0.62rem 1.05rem;
+  font-size: 0.88rem;
+  font-weight: 700;
+  cursor: pointer;
+  transition:
+    transform 0.15s,
+    filter 0.2s,
+    opacity 0.2s;
+}
+
+.guess-btn:hover {
+  filter: brightness(1.06);
+}
+
+.guess-btn:active {
+  transform: translateY(1px);
+}
+
+.guess-btn:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+.guess-btn--block {
+  width: 100%;
+}
+
+.guess-btn--primary {
+  background: linear-gradient(135deg, #22c55e, #16a34a);
+}
+
+.guess-btn--secondary {
+  background: linear-gradient(135deg, #0ea5e9, #0284c7);
+}
+
+.guess-btn--success {
+  background: linear-gradient(135deg, #16a34a, #15803d);
+}
+
+.guess-phase-title {
+  margin: 0 0 0.35rem;
+  color: #0f172a;
+  font-size: 1.2rem;
+  font-weight: 800;
+}
+
+.guess-phase-sub {
+  color: #475569;
+  margin-bottom: 0.7rem;
+  font-size: 0.9rem;
+}
+
+.guess-round-actions {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 0.65rem;
+  margin-bottom: 0.9rem;
+}
+
+.guess-round-message {
+  margin: 0 0 0.5rem;
+  padding: 0.55rem 0.68rem;
+  border-radius: 8px;
+  font-size: 0.9rem;
+  font-weight: 700;
+}
+
+.guess-round-message--ok {
+  background: #dcfce7;
+  color: #166534;
+}
+
+.guess-round-message--bad {
+  background: #fee2e2;
+  color: #991b1b;
+}
+
+.guess-streak-msg {
+  margin: 0 0 0.35rem;
+  color: #166534;
+  font-size: 0.84rem;
+  font-weight: 700;
+}
+
+.guess-proceed {
+  margin-top: 0.9rem;
+  text-align: center;
+}
+
+.guess-proceed-title {
+  margin: 0 0 0.68rem;
+  color: #0f172a;
+  font-weight: 700;
+}
+
+.guess-continent-picker {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  flex-wrap: wrap;
+  margin-bottom: 0.65rem;
+}
+
+.guess-continent-label {
+  color: #334155;
+  font-size: 0.86rem;
+  font-weight: 600;
+}
+
+.guess-select {
+  max-width: 180px;
+}
+
+.guess-config-note {
+  margin: 0 0 0.75rem;
+  font-size: 0.84rem;
+  font-weight: 700;
+}
+
+.guess-config-note--ok {
+  color: #166534;
+}
+
+.guess-config-note--warn {
+  color: #9a3412;
+}
+
+.guess-loading-msg {
+  color: #166534;
+  font-weight: 700;
+}
+
+.guess-timer {
+  margin: 0 0 0.5rem;
+  color: #be123c;
+  font-size: 0.92rem;
+  font-weight: 800;
+}
+
+.guess-country-row,
+.guess-country-summary {
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+  margin-bottom: 0.65rem;
+}
+
+.guess-country-flag {
+  width: 46px;
+  height: 32px;
+  border-radius: 5px;
+  border: 1px solid #cbd5e1;
+  object-fit: cover;
+}
+
+.guess-country-flag--small {
+  width: 40px;
+  height: 28px;
+}
+
+.guess-country-name,
+.guess-country-summary-name {
+  font-size: 1rem;
+  font-weight: 800;
+  color: #0f172a;
+}
+
+.guess-hint-msg {
+  margin: 0 0 0.55rem;
+  color: #92400e;
+  background: #fef3c7;
+  border: 1px solid #fde68a;
+  border-radius: 8px;
+  padding: 0.52rem 0.68rem;
+  font-size: 0.84rem;
+}
+
+.guess-inputs-wrap {
+  display: flex;
+  flex-direction: column;
+  gap: 0.52rem;
+  margin-bottom: 0.75rem;
+}
+
+.guess-result-wrap {
+  margin-top: 0.3rem;
+}
+
+.guess-result-pill {
+  padding: 0.44rem 0.6rem;
+  border-radius: 8px;
+  color: #fff;
+  font-size: 0.82rem;
+  font-weight: 700;
+  margin-bottom: 0.38rem;
+}
+
+.guess-result-pill--ok {
+  background: #16a34a;
+}
+
+.guess-result-pill--bad {
+  background: #dc2626;
+}
+
+.guess-country-summary-meta {
+  margin: 0 0 0.72rem;
+  color: #334155;
+  font-size: 0.86rem;
+}
+
+.guess-final {
+  text-align: center;
+}
+
+.guess-final-title {
+  margin: 0 0 0.52rem;
+  color: #0f172a;
+  font-weight: 800;
+  font-size: 1.5rem;
+}
+
+.guess-final-score {
+  margin: 0 0 0.8rem;
+  color: #166534;
+  font-size: 1rem;
+  font-weight: 800;
 }
 
 /* Results screen */
@@ -3697,6 +4278,10 @@ textarea {
   font-size: 1rem;
 }
 
+.live-editor-section .section-title {
+  margin-bottom: 0.6rem;
+}
+
 .editor-toolbar {
   display: flex;
   flex-wrap: wrap;
@@ -3705,7 +4290,7 @@ textarea {
   background: #1e293b;
   border: 1px solid #334155;
   border-radius: 12px;
-  padding: 0.75rem 1rem;
+  padding: 0.8rem 0.85rem;
   margin-bottom: 1rem;
 }
 
@@ -3734,7 +4319,7 @@ textarea {
 }
 
 .editor-tool-btn:hover {
-  border-color: #3b82f6;
+  border-color: #22c55e;
 }
 
 .editor-save-msg {
@@ -3746,14 +4331,74 @@ textarea {
 .editor-body {
   display: grid;
   grid-template-columns: 1fr 1fr;
-  gap: 1rem;
+  gap: 0.85rem;
   height: 520px;
 }
 
 @media (max-width: 768px) {
+  .playground-hero {
+    padding: 4.5rem 1rem 3.3rem;
+  }
+
+  .playground-quick-nav {
+    gap: 0.55rem;
+  }
+
+  .playground-quick-nav a {
+    font-size: 0.79rem;
+    padding: 0.42rem 0.72rem;
+  }
+
+  .jokes-section,
+  .quiz-section,
+  .live-editor-section {
+    padding: 3rem 1rem;
+  }
+
+  .quiz-screen {
+    padding: 1.45rem 1rem;
+    border-radius: 14px;
+  }
+
+  .quiz-results-stats {
+    gap: 1rem;
+  }
+
+  .res-val {
+    font-size: 1.75rem;
+  }
+
+  .guess-section-hero {
+    padding: 2.2rem 1rem 1.3rem;
+  }
+
+  .guess-card {
+    padding: 1rem 0.9rem;
+    border-radius: 14px;
+  }
+
+  .guess-round-actions {
+    grid-template-columns: 1fr;
+  }
+
+  .guess-local-meta {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
   .editor-body {
     grid-template-columns: 1fr;
     height: auto;
+  }
+
+  .editor-toolbar {
+    gap: 0.4rem;
+  }
+
+  .editor-tool-btn,
+  .editor-select {
+    font-size: 0.8rem;
+    padding: 0.38rem 0.58rem;
   }
 }
 

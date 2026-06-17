@@ -44,6 +44,7 @@ export default function PlaygroundPage() {
               required. Just open the page and dive in.
             </p>
             <nav className="playground-quick-nav" aria-label="Jump to section">
+              <a href="#weekly-challenge">Weekly Challenge</a>
               <a href="#jokes">Jokes</a>
               <a href="#quiz">Quiz</a>
               <a href="#guess-challenge">Guess &amp; Challenge</a>
@@ -53,7 +54,9 @@ export default function PlaygroundPage() {
         </header>
 
         {/* Weekly Challenge */}
-        <WeeklyChallenge />
+        <section id="weekly-challenge">
+          <WeeklyChallenge />
+        </section>
 
         {/* Jokes */}
         <section id="jokes">

@@ -383,13 +383,13 @@ export default function GuessChallengeSection() {
       setGuessStreak((s) => s + 1);
       playSound(SOUND_CORRECT);
       setGuessMsg(
-        `✅ Correct! Computer chose ${num} (${isEven ? "Even" : "Odd"})`,
+        `Correct! Computer chose ${num} (${isEven ? "Even" : "Odd"})`,
       );
     } else {
       setGuessStreak(0);
       playSound(SOUND_WRONG);
       setGuessMsg(
-        `❌ Wrong! Computer chose ${num} (${isEven ? "Even" : "Odd"})`,
+        `Incorrect. Computer chose ${num} (${isEven ? "Even" : "Odd"})`,
       );
     }
 
@@ -538,7 +538,7 @@ export default function GuessChallengeSection() {
       }
     } else {
       parts.push({
-        text: `⏰ Time's up! Capital: ${country.capital[0]} | Currency: ${Object.values(country.currencies)[0].name}`,
+        text: `Time is up. Capital: ${country.capital[0]} | Currency: ${Object.values(country.currencies)[0].name}`,
         ok: false,
       });
       playSound(SOUND_WRONG);
@@ -602,74 +602,58 @@ export default function GuessChallengeSection() {
   return (
     <>
       {/* Section intro header */}
-      <div className="bg-gradient-to-br from-gray-900 via-black to-gray-900 text-white py-14 text-center shadow-xl">
-        <div className="max-w-4xl mx-auto px-6">
-          <h2 className="text-4xl md:text-5xl font-extrabold mb-4 tracking-wide animate-bounce">
-            🎮 Logic Meets Geography
-          </h2>
-          <p className="text-lg md:text-xl font-light text-gray-300">
-            Test your luck with numbers and sharpen your mind with capital &amp;
-            currency challenges. Are you ready to conquer both worlds?
+      <div className="guess-section-hero">
+        <div className="guess-section-hero-inner">
+          <h2>Logic Meets Geography</h2>
+          <p>
+            Test your instincts with odd-or-even rounds, then move into a fast
+            capital and currency challenge.
           </p>
         </div>
       </div>
 
       {/* Game card */}
-      <div
-        className="guess-challenge"
-        style={{
-          padding: "20px",
-          margin: "0 auto",
-          display: "flex",
-          justifyContent: "center",
-        }}
-      >
-        <div
-          className="bg-white bg-opacity-95 rounded-xl shadow-2xl p-8 max-w-2xl w-full fade-in"
-          style={{ boxShadow: "5px 5px 10px 0 rgba(0,0,0,0.7)" }}
-        >
+      <div className="guess-challenge">
+        <div className="guess-card fade-in">
           {/* Header */}
-          <div className="mb-6 text-center">
-            <h1 className="text-3xl font-extrabold text-indigo-700 mb-2">
-              🎲 Guess &amp; Challenge 🌍
-            </h1>
-            <p className="text-lg text-gray-700">
-              Test your luck and knowledge! Guess odd/even, then conquer the
-              Capitals &amp; Currencies Challenge!
+          <div className="guess-header">
+            <h1>Guess &amp; Challenge</h1>
+            <p>
+              Guess odd or even, then prove your geography knowledge across
+              timed challenge rounds.
             </p>
           </div>
 
           {/* Local device leaderboard — compact top 5 */}
-          <div className="mb-4">
-            <h2 className="text-base font-bold text-indigo-600 mb-1 flex items-center gap-1">
+          <div className="guess-local-board">
+            <h2 className="guess-local-board-title">
               <i className="fa fa-laptop" /> This Device — Top 5
             </h2>
-            <div className="rounded bg-indigo-50 p-2 mb-1">
+            <div className="guess-local-board-card">
               {topFive.length === 0 && (
-                <p className="text-gray-500 text-xs">No entries yet.</p>
+                <p className="guess-local-empty">No entries yet.</p>
               )}
               {topFive.map((entry, i) => (
                 <div
                   key={i}
-                  className="flex justify-between px-2 py-0.5 text-xs text-gray-900"
-                  style={{ background: i % 2 === 0 ? "#f3f4f6" : "#e0e7ff" }}
+                  className="guess-local-row"
                 >
                   <span>
                     {i + 1}. {entry.name}
                   </span>
-                  <span className="font-semibold">{entry.score}</span>
+                  <span className="guess-local-score">{entry.score}</span>
                 </div>
               ))}
             </div>
-            <div className="flex justify-between text-xs text-gray-500">
+            <div className="guess-local-meta">
               <span>
                 Personal best:{" "}
-                <span className="font-bold text-indigo-700">{highScore}</span>
+                <span className="guess-local-meta-val">{highScore}</span>
               </span>
               {playerName && (
                 <span>
                   Playing as:{" "}
-                  <span className="font-bold text-indigo-700">{playerName}</span>
+                  <span className="guess-local-meta-val">{playerName}</span>
                 </span>
               )}
             </div>
@@ -686,19 +670,18 @@ export default function GuessChallengeSection() {
 
           {/* ── SETUP ── */}
           {phase === PHASE.SETUP && (
-            <div className="mb-6 text-center">
+            <div className="guess-setup">
               <input
                 type="text"
                 value={nameInput}
                 onChange={(e) => setNameInput(e.target.value)}
                 placeholder="Enter your name"
-                className="border p-2 rounded w-2/3 mb-4 text-gray-900"
+                className="guess-input"
                 onKeyDown={(e) => e.key === "Enter" && startGame()}
               />
-              <br />
               <button
                 onClick={startGame}
-                className="bg-indigo-600 hover:bg-indigo-700 text-white px-6 py-2 rounded font-bold transition"
+                className="guess-btn guess-btn--primary"
               >
                 Start Game
               </button>
@@ -708,58 +691,58 @@ export default function GuessChallengeSection() {
           {/* ── GUESS ── */}
           {phase === PHASE.GUESS && (
             <div>
-              <h2 className="text-xl font-bold text-indigo-700 mb-2">
+              <h2 className="guess-phase-title">
                 Guess: Odd or Even?
               </h2>
-              <div className="mb-2 text-gray-700">
+              <div className="guess-phase-sub">
                 Round <strong>{guessRound}</strong> of 5
               </div>
-              <div className="flex justify-center gap-6 mb-4">
+              <div className="guess-round-actions">
                 <button
                   onClick={() => handleGuess("odd")}
                   disabled={guessBusy || showProceed}
-                  className="bg-blue-500 hover:bg-blue-600 disabled:opacity-50 text-white px-6 py-2 rounded font-bold transition"
+                  className="guess-btn guess-btn--secondary"
                 >
                   Odd
                 </button>
                 <button
                   onClick={() => handleGuess("even")}
                   disabled={guessBusy || showProceed}
-                  className="bg-green-500 hover:bg-green-600 disabled:opacity-50 text-white px-6 py-2 rounded font-bold transition"
+                  className="guess-btn guess-btn--success"
                 >
                   Even
                 </button>
               </div>
               {guessMsg && (
                 <p
-                  className={`text-lg mb-2 font-semibold ${guessMsg.startsWith("✅") ? "text-green-700" : "text-red-600"}`}
+                  className={`guess-round-message ${guessMsg.startsWith("Correct") ? "guess-round-message--ok" : "guess-round-message--bad"}`}
                 >
                   {guessMsg}
                 </p>
               )}
               {guessStreak > 0 && !showProceed && (
-                <p className="text-sm text-indigo-700 mb-2">
+                <p className="guess-streak-msg">
                   Current Streak: {guessStreak}
                 </p>
               )}
               {showProceed && (
-                <div className="text-center mt-4">
-                  <p className="font-bold text-indigo-700 mb-3">
+                <div className="guess-proceed">
+                  <p className="guess-proceed-title">
                     {guessResults.every(Boolean)
-                      ? "🔥 Perfect streak! You unlocked bonuses!"
+                      ? "Perfect streak. Bonus mode unlocked."
                       : "Guess rounds complete! Time for the challenge."}
                   </p>
 
                   {/* Continent picker — only shown on perfect streak */}
                   {guessResults.every(Boolean) && !continentPicked && (
-                    <div className="mb-4">
-                      <label className="font-semibold text-gray-700 mr-2">
+                    <div className="guess-continent-picker">
+                      <label className="guess-continent-label">
                         Choose a continent:
                       </label>
                       <select
                         value={continent}
                         onChange={(e) => setContinent(e.target.value)}
-                        className="border p-2 rounded mr-2 text-gray-900"
+                        className="guess-select"
                       >
                         <option value="Africa">Africa</option>
                         <option value="Americas">Americas</option>
@@ -772,7 +755,7 @@ export default function GuessChallengeSection() {
                           setContinentPicked(true);
                           goToChallenge(continent);
                         }}
-                        className="bg-indigo-600 hover:bg-indigo-700 text-white px-4 py-1 rounded font-bold transition"
+                        className="guess-btn guess-btn--primary"
                       >
                         Go
                       </button>
@@ -783,7 +766,7 @@ export default function GuessChallengeSection() {
                   {!guessResults.every(Boolean) && (
                     <button
                       onClick={() => goToChallenge(null)}
-                      className="bg-indigo-600 hover:bg-indigo-700 text-white px-6 py-2 rounded font-bold transition"
+                      className="guess-btn guess-btn--primary"
                     >
                       Go to Challenge
                     </button>
@@ -796,23 +779,23 @@ export default function GuessChallengeSection() {
           {/* ── CHALLENGE ── */}
           {phase === PHASE.CHALLENGE && (
             <div>
-              <h2 className="text-xl font-bold text-indigo-700 mb-2">
-                🌍 Capital &amp; Currency Challenge
+              <h2 className="guess-phase-title">
+                Capital &amp; Currency Challenge
               </h2>
 
               {/* Config info */}
               {challengeConfig && (
                 <p
-                  className={`mb-3 font-semibold text-sm ${perfectStreak ? "text-green-700" : "text-red-700"}`}
+                  className={`guess-config-note ${perfectStreak ? "guess-config-note--ok" : "guess-config-note--warn"}`}
                 >
                   {perfectStreak
-                    ? "🔥 Perfect streak bonus! 30s, hints enabled, 2 pts per correct answer."
+                    ? "Bonus mode: 30s, hints enabled, 2 points per correct answer."
                     : "No perfect streak. 20s, no hints, 1 pt per correct answer."}
                 </p>
               )}
 
               {loadingCountries && (
-                <p className="text-indigo-600 font-semibold">
+                <p className="guess-loading-msg">
                   Loading countries…
                 </p>
               )}
@@ -822,27 +805,27 @@ export default function GuessChallengeSection() {
                 challengeIdx < countries.length && (
                   <div>
                     {/* Timer */}
-                    <p className="text-pink-700 font-bold mb-2">
-                      ⏰ {timeLeft}s
+                    <p className="guess-timer">
+                      {timeLeft}s remaining
                     </p>
 
                     {/* Country flag + name */}
-                    <div className="flex items-center gap-4 mb-4">
+                    <div className="guess-country-row">
                       {countries[challengeIdx].flags.png && (
                         <img
                           src={countries[challengeIdx].flags.png}
                           alt="Flag"
-                          className="w-12 h-8 border rounded shadow"
+                          className="guess-country-flag"
                         />
                       )}
-                      <span className="font-bold text-indigo-700 text-lg">
+                      <span className="guess-country-name">
                         {countries[challengeIdx].name.common}
                       </span>
                     </div>
 
                     {/* Hint */}
                     {challengeConfig?.hints && !submitted && (
-                      <p className="text-yellow-700 font-semibold mb-2">
+                      <p className="guess-hint-msg">
                         Hint: Capital starts with{" "}
                         <strong>
                           {countries[challengeIdx].capital[0].charAt(0)}
@@ -858,13 +841,13 @@ export default function GuessChallengeSection() {
 
                     {/* Inputs */}
                     {!submitted && (
-                      <div className="mb-4">
+                      <div className="guess-inputs-wrap">
                         <input
                           type="text"
                           value={capitalInput}
                           onChange={(e) => setCapitalInput(e.target.value)}
                           placeholder="Capital"
-                          className="border p-2 rounded mb-2 w-full text-gray-900"
+                          className="guess-input"
                           autoComplete="off"
                         />
                         <input
@@ -872,7 +855,7 @@ export default function GuessChallengeSection() {
                           value={currencyInput}
                           onChange={(e) => setCurrencyInput(e.target.value)}
                           placeholder="Currency"
-                          className="border p-2 rounded mb-2 w-full text-gray-900"
+                          className="guess-input"
                           autoComplete="off"
                           onKeyDown={(e) =>
                             e.key === "Enter" &&
@@ -882,7 +865,7 @@ export default function GuessChallengeSection() {
                         />
                         <button
                           onClick={() => handleSubmit(false)}
-                          className="bg-green-600 hover:bg-green-700 text-white px-6 py-2 rounded font-bold transition w-full"
+                          className="guess-btn guess-btn--success guess-btn--block"
                         >
                           Submit
                         </button>
@@ -891,34 +874,34 @@ export default function GuessChallengeSection() {
 
                     {/* Result */}
                     {challengeResult && (
-                      <div className="mb-4">
+                      <div className="guess-result-wrap">
                         {challengeResult.parts.map((p, i) => (
                           <div
                             key={i}
-                            className={`px-3 py-1 rounded mb-1 text-white font-semibold ${p.ok ? "bg-green-500" : "bg-red-500"}`}
+                            className={`guess-result-pill ${p.ok ? "guess-result-pill--ok" : "guess-result-pill--bad"}`}
                           >
                             {p.text}
                           </div>
                         ))}
-                        <div className="mt-2 flex items-center gap-2 text-gray-800">
+                        <div className="guess-country-summary">
                           {challengeResult.flag && (
                             <img
                               src={challengeResult.flag}
                               alt="Flag"
-                              className="w-10 h-7 border rounded shadow"
+                              className="guess-country-flag guess-country-flag--small"
                             />
                           )}
-                          <span className="font-bold">
+                          <span className="guess-country-summary-name">
                             {challengeResult.countryName}
                           </span>
                         </div>
-                        <p className="text-gray-700 text-sm mt-1">
+                        <p className="guess-country-summary-meta">
                           Capital: <strong>{challengeResult.capital}</strong> |
                           Currency: <strong>{challengeResult.currency}</strong>
                         </p>
                         <button
                           onClick={nextChallenge}
-                          className="mt-3 bg-indigo-600 hover:bg-indigo-700 text-white px-6 py-2 rounded font-bold transition"
+                          className="guess-btn guess-btn--primary"
                         >
                           Next
                         </button>
@@ -931,16 +914,16 @@ export default function GuessChallengeSection() {
 
           {/* ── FINAL ── */}
           {phase === PHASE.FINAL && (
-            <div className="text-center">
-              <h2 className="text-2xl font-bold text-indigo-700 mb-4">
-                🎉 Game Over!
+            <div className="guess-final">
+              <h2 className="guess-final-title">
+                Game Complete
               </h2>
-              <p className="text-lg font-bold text-indigo-700 mb-4">
+              <p className="guess-final-score">
                 Final Score: {finalScore}
               </p>
               <button
                 onClick={resetAll}
-                className="bg-indigo-600 hover:bg-indigo-700 text-white px-6 py-2 rounded font-bold transition"
+                className="guess-btn guess-btn--primary"
               >
                 Play Again
               </button>
