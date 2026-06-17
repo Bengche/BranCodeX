@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useRef, useEffect } from "react";
 import Link from "next/link";
 
 // ─── Pricing logic (mirrors BranCodeX Groq AI instructions exactly) ─────────
@@ -108,16 +108,28 @@ export default function PriceCalculator() {
   const [pages, setPages] = useState(5);
   const [ecomType, setEcomType] = useState("basic"); // 'basic' | 'advanced' | 'custom'
   const [customCount, setCustomCount] = useState("");
-  const [showResult, setShowResult] = useState(false);
+  const [resultModalOpen, setResultModalOpen] = useState(false);
+
+  const stepRef = useRef(null);
 
   function handleTypeSelect(type) {
     setProjectType(type);
-    setShowResult(false);
+    setResultModalOpen(false);
   }
 
   function handleCalculate() {
-    setShowResult(true);
+    setResultModalOpen(true);
   }
+
+  // Auto-scroll to the step panel when a project type is selected
+  useEffect(() => {
+    if (projectType) {
+      const timer = setTimeout(() => {
+        stepRef.current?.scrollIntoView({ behavior: "smooth", block: "nearest" });
+      }, 80);
+      return () => clearTimeout(timer);
+    }
+  }, [projectType]);
 
   const websiteResult = projectType === "website" ? calcWebsite(pages) : null;
   const ecomResult =
@@ -125,6 +137,8 @@ export default function PriceCalculator() {
   const features = websiteResult
     ? PLAN_FEATURES[websiteResult.basePlanPages] || PLAN_FEATURES[15]
     : null;
+
+  const hasResult = resultModalOpen && (websiteResult || ecomResult);
 
   return (
     <section id="calculator" className="calculator-section">
@@ -177,285 +191,306 @@ export default function PriceCalculator() {
           ))}
         </div>
 
-        {/* Step 2 — Website options */}
-        {projectType === "website" && (
-          <div className="calc-step" data-aos="fade-up">
-            <h3>How many pages do you need?</h3>
-            <div className="calc-slider-label">
-              <span>Pages</span>
-              <span className="calc-slider-value">{pages}</span>
-            </div>
-            <input
-              type="range"
-              min={1}
-              max={15}
-              value={pages}
-              onChange={(e) => {
-                setPages(Number(e.target.value));
-                setShowResult(false);
-              }}
-              className="calc-slider"
-            />
-            <div
-              style={{
-                display: "flex",
-                justifyContent: "space-between",
-                color: "#64748b",
-                fontSize: "0.75rem",
-                marginTop: "0.25rem",
-              }}
-            >
-              <span>1 page</span>
-              <span>5</span>
-              <span>10</span>
-              <span>15 pages</span>
-            </div>
-            <button
-              className="calc-estimate-btn"
-              onClick={handleCalculate}
-              style={{ marginTop: "1.5rem" }}
-            >
-              Calculate My Estimate →
-            </button>
-          </div>
-        )}
-
-        {/* Step 2 — E-Commerce options */}
-        {projectType === "ecommerce" && (
-          <div className="calc-step" data-aos="fade-up">
-            <h3>How many products will you sell?</h3>
-            <div className="calc-product-options">
-              {[
-                {
-                  id: "basic",
-                  label: "Up to 20 products",
-                  sublabel: "Basic E-Commerce — $589",
-                },
-                {
-                  id: "advanced",
-                  label: "Up to 110 products",
-                  sublabel: "Advanced E-Commerce — MoMo/Card payments",
-                },
-                {
-                  id: "custom",
-                  label: "Custom product count",
-                  sublabel: "Enter your exact number below",
-                },
-              ].map((opt) => (
-                <label
-                  key={opt.id}
-                  className={`calc-radio-option${ecomType === opt.id ? " active" : ""}`}
-                  onClick={() => {
-                    setEcomType(opt.id);
-                    setShowResult(false);
-                  }}
-                >
-                  <input
-                    type="radio"
-                    name="ecomType"
-                    value={opt.id}
-                    checked={ecomType === opt.id}
-                    readOnly
-                  />
-                  <div>
-                    <div style={{ fontWeight: 600 }}>{opt.label}</div>
-                    <div style={{ fontSize: "0.8rem", color: "#64748b" }}>
-                      {opt.sublabel}
-                    </div>
-                  </div>
-                </label>
-              ))}
-            </div>
-
-            {ecomType === "custom" && (
+        {/* Step panel — ref lets us scroll here on mobile */}
+        <div ref={stepRef}>
+          {/* Step 2 — Website options */}
+          {projectType === "website" && (
+            <div className="calc-step">
+              <h3>How many pages do you need?</h3>
+              <div className="calc-slider-label">
+                <span>Pages</span>
+                <span className="calc-slider-value">{pages}</span>
+              </div>
               <input
-                type="number"
+                type="range"
                 min={1}
-                max={999}
-                placeholder="e.g. 45"
-                value={customCount}
+                max={15}
+                value={pages}
                 onChange={(e) => {
-                  setCustomCount(e.target.value);
-                  setShowResult(false);
+                  setPages(Number(e.target.value));
+                  setResultModalOpen(false);
                 }}
-                className="calc-custom-input"
+                className="calc-slider"
               />
-            )}
-
-            <button
-              className="calc-estimate-btn"
-              onClick={handleCalculate}
-              style={{ marginTop: "1.5rem" }}
-              disabled={ecomType === "custom" && !customCount}
-            >
-              Calculate My Estimate →
-            </button>
-          </div>
-        )}
-
-        {/* Custom project — direct to team */}
-        {projectType === "custom" && (
-          <div className="calc-custom-redirect" data-aos="fade-up">
-            <div style={{ fontSize: "2.5rem", marginBottom: "0.75rem" }}>
-              🤝
-            </div>
-            <h3>Custom Projects Deserve Custom Quotes</h3>
-            <p>
-              Your project includes unique features — portals, tracking systems,
-              dashboards, or specialised functionality. We don&apos;t provide
-              automated estimates for these because we believe you deserve an
-              accurate, personalised quote.
-            </p>
-            <p style={{ color: "#facc15", fontWeight: 600, margin: "1rem 0" }}>
-              Our team will assess your project and provide the best price based
-              on your exact requirements.
-            </p>
-            <div className="calc-custom-links">
-              <a
-                href="https://wa.me/237654155218"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="calc-custom-link whatsapp"
+              <div
+                style={{
+                  display: "flex",
+                  justifyContent: "space-between",
+                  color: "#64748b",
+                  fontSize: "0.75rem",
+                  marginTop: "0.25rem",
+                }}
               >
-                <i
-                  className="fab fa-whatsapp"
-                  style={{ marginRight: "0.4rem" }}
-                ></i>
-                WhatsApp Us
-              </a>
-              <a
-                href="mailto:contact@brancodex.com"
-                className="calc-custom-link email"
+                <span>1 page</span>
+                <span>5</span>
+                <span>10</span>
+                <span>15 pages</span>
+              </div>
+              <button
+                className="calc-estimate-btn"
+                onClick={handleCalculate}
+                style={{ marginTop: "1.5rem" }}
               >
-                <i
-                  className="fas fa-envelope"
-                  style={{ marginRight: "0.4rem" }}
-                ></i>
-                Email Us
-              </a>
-              <a href="tel:+237654155218" className="calc-custom-link call">
-                <i
-                  className="fas fa-phone"
-                  style={{ marginRight: "0.4rem" }}
-                ></i>
-                Call Us
-              </a>
+                Calculate My Estimate →
+              </button>
             </div>
-          </div>
-        )}
+          )}
 
-        {/* Result — Website */}
-        {showResult && websiteResult && (
-          <div className="calc-result" data-aos="zoom-in">
-            <div className="calc-result-plan">{websiteResult.name}</div>
-            <div className="calc-result-price">
-              Starting from US${websiteResult.price.toLocaleString()}
-            </div>
-            {websiteResult.note && (
-              <div className="calc-result-note">{websiteResult.note}</div>
-            )}
-            <div className="calc-result-note">
-              🚀 Delivery: {websiteResult.delivery} &nbsp;|&nbsp; All prices in
-              USD
-            </div>
-            <ul className="calc-result-features">
-              {features.map((f) => (
-                <li key={f}>
-                  <i className="fas fa-check-circle"></i> {f}
-                </li>
-              ))}
-            </ul>
-            <p
-              style={{
-                color: "#64748b",
-                fontSize: "0.8rem",
-                marginBottom: "1.25rem",
-              }}
-            >
-              This is a starting estimate. Final quote is tailored to your exact
-              requirements.
-            </p>
-            <div className="calc-cta-row">
-              <a
-                href="https://wa.me/237654155218"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="calc-cta-primary"
+          {/* Step 2 — E-Commerce options */}
+          {projectType === "ecommerce" && (
+            <div className="calc-step">
+              <h3>How many products will you sell?</h3>
+              <div className="calc-product-options">
+                {[
+                  {
+                    id: "basic",
+                    label: "Up to 20 products",
+                    sublabel: "Basic E-Commerce — $589",
+                  },
+                  {
+                    id: "advanced",
+                    label: "Up to 110 products",
+                    sublabel: "Advanced E-Commerce — MoMo/Card payments",
+                  },
+                  {
+                    id: "custom",
+                    label: "Custom product count",
+                    sublabel: "Enter your exact number below",
+                  },
+                ].map((opt) => (
+                  <label
+                    key={opt.id}
+                    className={`calc-radio-option${ecomType === opt.id ? " active" : ""}`}
+                    onClick={() => {
+                      setEcomType(opt.id);
+                      setResultModalOpen(false);
+                    }}
+                  >
+                    <input
+                      type="radio"
+                      name="ecomType"
+                      value={opt.id}
+                      checked={ecomType === opt.id}
+                      readOnly
+                    />
+                    <div>
+                      <div style={{ fontWeight: 600 }}>{opt.label}</div>
+                      <div style={{ fontSize: "0.8rem", color: "#64748b" }}>
+                        {opt.sublabel}
+                      </div>
+                    </div>
+                  </label>
+                ))}
+              </div>
+
+              {ecomType === "custom" && (
+                <input
+                  type="number"
+                  min={1}
+                  max={999}
+                  placeholder="e.g. 45"
+                  value={customCount}
+                  onChange={(e) => {
+                    setCustomCount(e.target.value);
+                    setResultModalOpen(false);
+                  }}
+                  className="calc-custom-input"
+                />
+              )}
+
+              <button
+                className="calc-estimate-btn"
+                onClick={handleCalculate}
+                style={{ marginTop: "1.5rem" }}
+                disabled={ecomType === "custom" && !customCount}
               >
-                Get Started on WhatsApp
-              </a>
-              <Link href="/#contact" className="calc-cta-secondary">
-                Send a Message
-              </Link>
+                Calculate My Estimate →
+              </button>
             </div>
-          </div>
-        )}
+          )}
 
-        {/* Result — E-Commerce */}
-        {showResult && ecomResult && (
-          <div className="calc-result" data-aos="zoom-in">
-            <div className="calc-result-plan">{ecomResult.name}</div>
-            <div className="calc-result-price">
-              Starting from US${ecomResult.price.toLocaleString()}
+          {/* Custom project — direct to team */}
+          {projectType === "custom" && (
+            <div className="calc-custom-redirect">
+              <div style={{ fontSize: "2.5rem", marginBottom: "0.75rem" }}>
+                🤝
+              </div>
+              <h3>Custom Projects Deserve Custom Quotes</h3>
+              <p>
+                Your project includes unique features — portals, tracking
+                systems, dashboards, or specialised functionality. We don&apos;t
+                provide automated estimates for these because we believe you
+                deserve an accurate, personalised quote.
+              </p>
+              <p style={{ color: "#facc15", fontWeight: 600, margin: "1rem 0" }}>
+                Our team will assess your project and provide the best price
+                based on your exact requirements.
+              </p>
+              <div className="calc-custom-links">
+                <a
+                  href="https://wa.me/237654155218"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="calc-custom-link whatsapp"
+                >
+                  <i
+                    className="fab fa-whatsapp"
+                    style={{ marginRight: "0.4rem" }}
+                  ></i>
+                  WhatsApp Us
+                </a>
+                <a
+                  href="mailto:contact@brancodex.com"
+                  className="calc-custom-link email"
+                >
+                  <i
+                    className="fas fa-envelope"
+                    style={{ marginRight: "0.4rem" }}
+                  ></i>
+                  Email Us
+                </a>
+                <a href="tel:+237654155218" className="calc-custom-link call">
+                  <i
+                    className="fas fa-phone"
+                    style={{ marginRight: "0.4rem" }}
+                  ></i>
+                  Call Us
+                </a>
+              </div>
             </div>
-            {ecomResult.note && (
-              <div className="calc-result-note">{ecomResult.note}</div>
-            )}
-            <div className="calc-result-note">
-              📦 Products: {ecomResult.products} &nbsp;|&nbsp; Delivery:{" "}
-              {ecomResult.delivery}
+          )}
+        </div>
+      </div>
+
+      {/* ── Result modal / bottom-sheet ─────────────────────────────── */}
+      {hasResult && (
+        <div
+          className="calc-result-overlay"
+          onClick={() => setResultModalOpen(false)}
+          role="dialog"
+          aria-modal="true"
+          aria-label="Your project estimate"
+        >
+          <div
+            className="calc-result-sheet"
+            onClick={(e) => e.stopPropagation()}
+          >
+            {/* Sheet header */}
+            <div className="calc-result-sheet-header">
+              <span className="calc-result-sheet-title">Your Estimate</span>
+              <button
+                className="calc-result-sheet-close"
+                onClick={() => setResultModalOpen(false)}
+                aria-label="Close estimate"
+              >
+                <i className="fas fa-times"></i>
+              </button>
             </div>
-            <ul className="calc-result-features">
-              <li>
-                <i className="fas fa-check-circle"></i> AI Shopping Assistant
-              </li>
-              <li>
-                <i className="fas fa-check-circle"></i> WhatsApp Order
-                Notifications
-              </li>
-              {ecomResult.name === "Advanced E-Commerce" && (
+
+            {/* Sheet scrollable body */}
+            <div className="calc-result-sheet-body">
+              {/* Website result */}
+              {websiteResult && (
                 <>
-                  <li>
-                    <i className="fas fa-check-circle"></i> MoMo & Card Payment
-                    Gateways
-                  </li>
-                  <li>
-                    <i className="fas fa-check-circle"></i> Advanced SEO &
-                    Customer Accounts
-                  </li>
+                  <div className="calc-result-plan">{websiteResult.name}</div>
+                  <div className="calc-result-price">
+                    Starting from US$
+                    {websiteResult.price.toLocaleString()}
+                  </div>
+                  {websiteResult.note && (
+                    <div className="calc-result-note">{websiteResult.note}</div>
+                  )}
+                  <div className="calc-result-note">
+                    🚀 Delivery: {websiteResult.delivery} &nbsp;|&nbsp; All
+                    prices in USD
+                  </div>
+                  <ul className="calc-result-features">
+                    {features.map((f) => (
+                      <li key={f}>
+                        <i className="fas fa-check-circle"></i> {f}
+                      </li>
+                    ))}
+                  </ul>
                 </>
               )}
-              <li>
-                <i className="fas fa-check-circle"></i> Mobile-first &
-                SEO-optimized
-              </li>
-            </ul>
-            <p
-              style={{
-                color: "#64748b",
-                fontSize: "0.8rem",
-                marginBottom: "1.25rem",
-              }}
-            >
-              This is a starting estimate. Final quote is tailored to your exact
-              requirements.
-            </p>
-            <div className="calc-cta-row">
-              <a
-                href="https://wa.me/237654155218"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="calc-cta-primary"
+
+              {/* E-Commerce result */}
+              {ecomResult && (
+                <>
+                  <div className="calc-result-plan">{ecomResult.name}</div>
+                  <div className="calc-result-price">
+                    Starting from US$
+                    {ecomResult.price.toLocaleString()}
+                  </div>
+                  {ecomResult.note && (
+                    <div className="calc-result-note">{ecomResult.note}</div>
+                  )}
+                  <div className="calc-result-note">
+                    📦 Products: {ecomResult.products} &nbsp;|&nbsp; Delivery:{" "}
+                    {ecomResult.delivery}
+                  </div>
+                  <ul className="calc-result-features">
+                    <li>
+                      <i className="fas fa-check-circle"></i> AI Shopping
+                      Assistant
+                    </li>
+                    <li>
+                      <i className="fas fa-check-circle"></i> WhatsApp Order
+                      Notifications
+                    </li>
+                    {ecomResult.name === "Advanced E-Commerce" && (
+                      <>
+                        <li>
+                          <i className="fas fa-check-circle"></i> MoMo & Card
+                          Payment Gateways
+                        </li>
+                        <li>
+                          <i className="fas fa-check-circle"></i> Advanced SEO
+                          & Customer Accounts
+                        </li>
+                      </>
+                    )}
+                    <li>
+                      <i className="fas fa-check-circle"></i> Mobile-first &
+                      SEO-optimized
+                    </li>
+                  </ul>
+                </>
+              )}
+
+              <p
+                style={{
+                  color: "#64748b",
+                  fontSize: "0.8rem",
+                  marginBottom: "1.5rem",
+                  marginTop: "0.25rem",
+                }}
               >
-                Get Started on WhatsApp
-              </a>
-              <Link href="/#contact" className="calc-cta-secondary">
-                Send a Message
-              </Link>
+                This is a starting estimate. Final quote is tailored to your
+                exact requirements.
+              </p>
+
+              <div className="calc-cta-row">
+                <a
+                  href="https://wa.me/237654155218"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="calc-cta-primary"
+                >
+                  Get Started on WhatsApp
+                </a>
+                <Link
+                  href="/#contact"
+                  className="calc-cta-secondary"
+                  onClick={() => setResultModalOpen(false)}
+                >
+                  Send a Message
+                </Link>
+              </div>
             </div>
           </div>
-        )}
-      </div>
+        </div>
+      )}
     </section>
   );
 }

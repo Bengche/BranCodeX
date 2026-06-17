@@ -5184,6 +5184,108 @@ textarea {
   color: #94a3b8;
 }
 
+/* --- Result overlay & sheet (modal on desktop, bottom-sheet on mobile) --- */
+.calc-result-overlay {
+  position: fixed;
+  inset: 0;
+  z-index: 9000;
+  background: rgba(0, 0, 0, 0.65);
+  backdrop-filter: blur(4px);
+  display: flex;
+  align-items: flex-end;
+  justify-content: center;
+  animation: calcOverlayIn 0.25s ease;
+  padding: 0;
+}
+
+@keyframes calcOverlayIn {
+  from { opacity: 0; }
+  to   { opacity: 1; }
+}
+
+.calc-result-sheet {
+  background: #1e293b;
+  border: 2px solid #22c55e;
+  box-shadow: 0 -8px 60px rgba(34, 197, 94, 0.18), 0 0 0 1px rgba(34,197,94,0.08);
+  width: 100%;
+  max-height: 90dvh;
+  display: flex;
+  flex-direction: column;
+  border-radius: 1.25rem 1.25rem 0 0;
+  animation: calcSheetUp 0.32s cubic-bezier(0.34, 1.4, 0.64, 1);
+  overflow: hidden;
+}
+
+@keyframes calcSheetUp {
+  from { transform: translateY(100%); opacity: 0.6; }
+  to   { transform: translateY(0);    opacity: 1; }
+}
+
+.calc-result-sheet-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 1.1rem 1.5rem 1rem;
+  border-bottom: 1px solid #334155;
+  flex-shrink: 0;
+}
+
+.calc-result-sheet-title {
+  font-size: 1rem;
+  font-weight: 700;
+  color: #22c55e;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+}
+
+.calc-result-sheet-close {
+  background: #0f172a;
+  border: 1px solid #334155;
+  color: #94a3b8;
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  font-size: 0.85rem;
+  transition: color 0.2s, border-color 0.2s;
+  flex-shrink: 0;
+}
+.calc-result-sheet-close:hover {
+  color: #f1f5f9;
+  border-color: #22c55e;
+}
+
+.calc-result-sheet-body {
+  padding: 1.5rem;
+  overflow-y: auto;
+  -webkit-overflow-scrolling: touch;
+  flex: 1;
+}
+
+/* On larger screens: render as a centred modal dialog instead */
+@media (min-width: 640px) {
+  .calc-result-overlay {
+    align-items: center;
+    padding: 1.5rem;
+  }
+
+  .calc-result-sheet {
+    width: 100%;
+    max-width: 620px;
+    border-radius: 1.25rem;
+    max-height: 85vh;
+    animation: calcModalIn 0.28s cubic-bezier(0.34, 1.3, 0.64, 1);
+  }
+
+  @keyframes calcModalIn {
+    from { transform: scale(0.92) translateY(20px); opacity: 0; }
+    to   { transform: scale(1)    translateY(0);    opacity: 1; }
+  }
+}
+
 /* ============================================================
    BOOKING SECTION
    ============================================================ */
