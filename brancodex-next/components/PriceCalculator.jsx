@@ -125,7 +125,10 @@ export default function PriceCalculator() {
   useEffect(() => {
     if (projectType) {
       const timer = setTimeout(() => {
-        stepRef.current?.scrollIntoView({ behavior: "smooth", block: "nearest" });
+        stepRef.current?.scrollIntoView({
+          behavior: "smooth",
+          block: "nearest",
+        });
       }, 80);
       return () => clearTimeout(timer);
     }
@@ -322,7 +325,9 @@ export default function PriceCalculator() {
                 provide automated estimates for these because we believe you
                 deserve an accurate, personalised quote.
               </p>
-              <p style={{ color: "#facc15", fontWeight: 600, margin: "1rem 0" }}>
+              <p
+                style={{ color: "#facc15", fontWeight: 600, margin: "1rem 0" }}
+              >
                 Our team will assess your project and provide the best price
                 based on your exact requirements.
               </p>
@@ -445,8 +450,8 @@ export default function PriceCalculator() {
                           Payment Gateways
                         </li>
                         <li>
-                          <i className="fas fa-check-circle"></i> Advanced SEO
-                          & Customer Accounts
+                          <i className="fas fa-check-circle"></i> Advanced SEO &
+                          Customer Accounts
                         </li>
                       </>
                     )}
