@@ -345,7 +345,7 @@ function PlanCard({ plan, xafRate }) {
 // ─── Main component ──────────────────────────────────────────────────────────
 
 export default function Plans() {
-  const xafRate   = useXafRate();
+  const xafRate = useXafRate();
   const [tab, setTab] = useState("website"); // "website" | "ecommerce"
 
   const activePlans = tab === "website" ? websitePlans : ecommercePlans;
@@ -412,7 +412,13 @@ export default function Plans() {
           Prices represent <strong>base investments</strong>. Final quotes are
           tailored to your specific feature requirements and scope.
         </p>
-        <div style={{ marginTop: "16px", display: "flex", justifyContent: "center" }}>
+        <div
+          style={{
+            marginTop: "16px",
+            display: "flex",
+            justifyContent: "center",
+          }}
+        >
           <CurrencyBadge />
         </div>
       </div>

@@ -43,12 +43,18 @@ export default function Navbar() {
     return () => window.removeEventListener("scroll", onScroll);
   }, []);
 
-  // When the mobile menu is open, prevent the page from scrolling behind it
+  // When the mobile menu is open, prevent body scroll and hide floating widgets
   useEffect(() => {
-    document.body.style.overflow = menuOpen ? "hidden" : "auto";
-    // Cleanup when the component unmounts
+    if (menuOpen) {
+      document.body.style.overflow = "hidden";
+      document.body.classList.add("mobile-menu-open");
+    } else {
+      document.body.style.overflow = "auto";
+      document.body.classList.remove("mobile-menu-open");
+    }
     return () => {
       document.body.style.overflow = "auto";
+      document.body.classList.remove("mobile-menu-open");
     };
   }, [menuOpen]);
 
@@ -81,7 +87,7 @@ export default function Navbar() {
         </div>
 
         {/* ── Desktop links ──────────────────────────────────────────────── */}
-        <div className="hidden sm:flex flex-wrap items-center space-x-6">
+        <div className="hidden lg:flex flex-wrap items-center space-x-6">
           {navLinks.map((link) => (
             <Link
               key={link.href}
@@ -94,7 +100,7 @@ export default function Navbar() {
         </div>
 
         {/* ── Desktop auth + CTA buttons ─────────────────────────────── */}
-        <div className="hidden md:flex items-center space-x-3">
+        <div className="hidden lg:flex items-center space-x-3">
           <Link
             href="/auth/login"
             className="nav-link text-sm hover:text-blue-400 transition"
@@ -117,7 +123,7 @@ export default function Navbar() {
         </div>
 
         {/* ── Mobile hamburger button ───────────────────────────────────── */}
-        <div className="md:hidden z-50">
+        <div className="lg:hidden z-50">
           <button
             id="menu-btn"
             aria-label="Toggle navigation menu"
@@ -138,8 +144,10 @@ export default function Navbar() {
         id="mobile-menu"
         className={menuOpen ? "active" : ""}
         aria-hidden={!menuOpen}
+        aria-modal={menuOpen}
+        role="dialog"
       >
-        <nav className="mobile-nav-content">
+        <nav className="mobile-nav-content" aria-label="Mobile navigation">
           {navLinks.map((link) => (
             <Link
               key={link.href}
@@ -151,40 +159,29 @@ export default function Navbar() {
             </Link>
           ))}
 
-          <div
-            className="mobile-footer mt-8"
-            style={{ display: "flex", flexDirection: "column", gap: "12px" }}
-          >
+          <div className="mobile-menu-ctas">
             <Link
               href="/auth/login"
-              className="mobile-link"
-              style={{ textAlign: "center", color: "#818cf8" }}
+              className="mobile-cta-secondary"
               onClick={closeMenu}
             >
-              <i
-                className="fa fa-right-to-bracket"
-                style={{ marginRight: "6px" }}
-              />
+              <i className="fa fa-right-to-bracket" />
               Sign In
             </Link>
             <Link
               href="/auth/register"
-              className="nav-register-btn"
-              style={{ textAlign: "center" }}
+              className="mobile-cta-secondary mobile-cta-secondary--purple"
               onClick={closeMenu}
             >
+              <i className="fa fa-user-plus" />
               Create Account
             </Link>
             <Link
               href="/#booking"
-              className="nav-book-btn"
-              style={{ textAlign: "center" }}
+              className="mobile-cta-secondary mobile-cta-secondary--green"
               onClick={closeMenu}
             >
-              <i
-                className="fa fa-calendar-check"
-                style={{ marginRight: "5px" }}
-              />
+              <i className="fa fa-calendar-check" />
               Book a Call
             </Link>
             <Link
