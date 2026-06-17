@@ -3,6 +3,7 @@
 import { useState, useEffect, useRef } from "react";
 
 const IMGBB_API_KEY = "69c45289e2873d6bd5719277ac377ceb";
+const BACKEND_URL = process.env.NEXT_PUBLIC_BACKEND_URL || "http://localhost:4000";
 
 export default function Testimonials() {
   const [testimonials, setTestimonials] = useState([]);
@@ -46,7 +47,7 @@ export default function Testimonials() {
   async function loadAllTestimonials() {
     setLoading(true);
     try {
-      const res = await fetch("/api/testimonials");
+      const res = await fetch(`${BACKEND_URL}/api/testimonials`);
       const data = await res.json();
       setTestimonials(Array.isArray(data) ? data : []);
     } catch {
@@ -97,7 +98,7 @@ export default function Testimonials() {
         const data = await res.json();
         if (data?.data?.url) photo_url = data.data.url;
       }
-      await fetch("/api/testimonials", {
+      await fetch(`${BACKEND_URL}/api/testimonials`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({

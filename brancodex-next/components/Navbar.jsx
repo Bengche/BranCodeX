@@ -148,6 +148,51 @@ export default function Navbar() {
         role="dialog"
       >
         <nav className="mobile-nav-content" aria-label="Mobile navigation">
+          {/* ── Primary CTAs — always visible at the top ───────────────── */}
+          <div className="mobile-menu-ctas">
+            {/* Auth row — side by side */}
+            <div className="mobile-auth-row">
+              <Link
+                href="/auth/login"
+                className="mobile-cta-secondary mobile-cta-secondary--half"
+                onClick={closeMenu}
+              >
+                <i className="fa fa-right-to-bracket" />
+                Sign In
+              </Link>
+              <Link
+                href="/auth/register"
+                className="mobile-cta-secondary mobile-cta-secondary--purple mobile-cta-secondary--half"
+                onClick={closeMenu}
+              >
+                <i className="fa fa-user-plus" />
+                Register
+              </Link>
+            </div>
+
+            {/* Primary action buttons */}
+            <Link
+              href="/#booking"
+              className="mobile-cta-secondary mobile-cta-secondary--green"
+              onClick={closeMenu}
+            >
+              <i className="fa fa-calendar-check" />
+              Book a Free Call
+            </Link>
+            <Link
+              href="/#contact"
+              className="hire-btn-mobile"
+              onClick={closeMenu}
+            >
+              Hire Us
+            </Link>
+          </div>
+
+          {/* ── Nav links — below the fold with a divider ─────────────── */}
+          <div className="mobile-nav-divider">
+            <span>Navigate</span>
+          </div>
+
           {navLinks.map((link) => (
             <Link
               key={link.href}
@@ -158,40 +203,6 @@ export default function Navbar() {
               {link.label}
             </Link>
           ))}
-
-          <div className="mobile-menu-ctas">
-            <Link
-              href="/auth/login"
-              className="mobile-cta-secondary"
-              onClick={closeMenu}
-            >
-              <i className="fa fa-right-to-bracket" />
-              Sign In
-            </Link>
-            <Link
-              href="/auth/register"
-              className="mobile-cta-secondary mobile-cta-secondary--purple"
-              onClick={closeMenu}
-            >
-              <i className="fa fa-user-plus" />
-              Create Account
-            </Link>
-            <Link
-              href="/#booking"
-              className="mobile-cta-secondary mobile-cta-secondary--green"
-              onClick={closeMenu}
-            >
-              <i className="fa fa-calendar-check" />
-              Book a Call
-            </Link>
-            <Link
-              href="/#contact"
-              className="hire-btn-mobile"
-              onClick={closeMenu}
-            >
-              Hire Us
-            </Link>
-          </div>
         </nav>
       </div>
     </nav>
