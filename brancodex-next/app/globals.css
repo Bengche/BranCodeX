@@ -7293,8 +7293,6 @@ textarea {
   /* Applied by template.js motion.div — ensure it doesn't clip content */
   min-height: 100vh;
 }
-  margin-bottom: 1rem;
-}
 
 /* Responsive — tighten on small screens */
 @media (max-width: 480px) {
