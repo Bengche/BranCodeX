@@ -4,7 +4,12 @@ import { Suspense, useState, useEffect, useRef } from "react";
 import { useSearchParams } from "next/navigation";
 import Link from "next/link";
 
-const TYPE_LABELS = { css: "CSS", js: "JavaScript", html: "HTML", puzzle: "Puzzle" };
+const TYPE_LABELS = {
+  css: "CSS",
+  js: "JavaScript",
+  html: "HTML",
+  puzzle: "Puzzle",
+};
 
 function buildSrcDoc(html, css, js) {
   return `<!DOCTYPE html><html><head><meta charset="utf-8"><style>${css}</style></head><body>${html}<script>${js}\x3c/script></body></html>`;
@@ -13,26 +18,33 @@ function buildSrcDoc(html, css, js) {
 function ChallengeEditor() {
   const params = useSearchParams();
 
-  const initHtml  = params.get("ch_html")  || "";
-  const initCss   = params.get("ch_css")   || "";
-  const initJs    = params.get("ch_js")    || "";
-  const title     = params.get("ch_title") || "Weekly Challenge";
-  const type      = params.get("ch_type")  || "";
+  const initHtml  = params.get("ch_html")     || "";
+  const initCss   = params.get("ch_css")      || "";
+  const initJs    = params.get("ch_js")       || "";
+  const solHtml   = params.get("ch_sol_html") || "";
+  const solCss    = params.get("ch_sol_css")  || "";
+  const solJs     = params.get("ch_sol_js")   || "";
+  const title     = params.get("ch_title")    || "Weekly Challenge";
+  const type      = params.get("ch_type")     || "";
 
-  const [html, setHtml]           = useState(initHtml);
-  const [css, setCss]             = useState(initCss);
-  const [js, setJs]               = useState(initJs);
+  const hasSolution = !!(solHtml || solCss || solJs);
+  const solutionDoc = hasSolution ? buildSrcDoc(solHtml, solCss, solJs) : "";
+
+  const [html, setHtml] = useState(initHtml);
+  const [css, setCss] = useState(initCss);
+  const [js, setJs] = useState(initJs);
   const [activeTab, setActiveTab] = useState("html");
-  const [srcDoc, setSrcDoc]       = useState("");
-  const [saveMsg, setSaveMsg]     = useState("");
-  const wrapperRef                = useRef(null);
+  const [srcDoc, setSrcDoc]     = useState("");
+  const [saveMsg, setSaveMsg]   = useState("");
+  const [showTarget, setShowTarget] = useState(false);
+  const wrapperRef              = useRef(null);
 
   useEffect(() => {
     const id = setTimeout(() => setSrcDoc(buildSrcDoc(html, css, js)), 300);
     return () => clearTimeout(id);
   }, [html, css, js]);
 
-  const tabValue  = { html, css, js }[activeTab];
+  const tabValue = { html, css, js }[activeTab];
   const tabSetter = { html: setHtml, css: setCss, js: setJs }[activeTab];
 
   function handleDownload() {
@@ -46,8 +58,8 @@ function ChallengeEditor() {
       zip.file("script.js", js);
       zip.generateAsync({ type: "blob" }).then((blob) => {
         const url = URL.createObjectURL(blob);
-        const a   = document.createElement("a");
-        a.href     = url;
+        const a = document.createElement("a");
+        a.href = url;
         a.download = "challenge-solution.zip";
         a.click();
         URL.revokeObjectURL(url);
@@ -63,7 +75,10 @@ function ChallengeEditor() {
   }
 
   function handleSave() {
-    localStorage.setItem("bx_challenge_editor", JSON.stringify({ html, css, js }));
+    localStorage.setItem(
+      "bx_challenge_editor",
+      JSON.stringify({ html, css, js }),
+    );
     setSaveMsg("Saved!");
     setTimeout(() => setSaveMsg(""), 2000);
   }
@@ -104,14 +119,29 @@ function ChallengeEditor() {
             ))}
             {/* Mini toolbar inside pane */}
             <div className="challenge-pane-toolbar">
-              <button type="button" className="editor-tool-btn" onClick={handleSave} title="Save to browser">
+              <button
+                type="button"
+                className="editor-tool-btn"
+                onClick={handleSave}
+                title="Save to browser"
+              >
                 <i className="fa fa-floppy-disk" /> Save
               </button>
               {saveMsg && <span className="editor-save-msg">{saveMsg}</span>}
-              <button type="button" className="editor-tool-btn" onClick={handleReset} title="Reset to starter code">
+              <button
+                type="button"
+                className="editor-tool-btn"
+                onClick={handleReset}
+                title="Reset to starter code"
+              >
                 <i className="fa fa-rotate-left" /> Reset
               </button>
-              <button type="button" className="editor-tool-btn" onClick={handleDownload} title="Download ZIP">
+              <button
+                type="button"
+                className="editor-tool-btn"
+                onClick={handleDownload}
+                title="Download ZIP"
+              >
                 <i className="fa fa-download" /> ZIP
               </button>
             </div>
@@ -128,13 +158,34 @@ function ChallengeEditor() {
 
         {/* Preview pane */}
         <div className="challenge-preview-pane">
-          <div className="editor-preview-label">
-            <i className="fa fa-eye" /> Preview
+          <div className="challenge-preview-header">
+            {hasSolution ? (
+              <>
+                <button
+                  type="button"
+                  className={`challenge-view-toggle${!showTarget ? " active" : ""}`}
+                  onClick={() => setShowTarget(false)}
+                >
+                  <i className="fa fa-code" /> Your Work
+                </button>
+                <button
+                  type="button"
+                  className={`challenge-view-toggle${showTarget ? " active" : ""}`}
+                  onClick={() => setShowTarget(true)}
+                >
+                  <i className="fa fa-bullseye" /> Target
+                </button>
+              </>
+            ) : (
+              <span className="challenge-preview-label-text">
+                <i className="fa fa-eye" /> Preview
+              </span>
+            )}
           </div>
           <iframe
-            title="challenge-preview"
+            title={showTarget ? "challenge-target" : "challenge-preview"}
             className="editor-preview-frame"
-            srcDoc={srcDoc}
+            srcDoc={showTarget ? solutionDoc : srcDoc}
             sandbox="allow-scripts"
           />
         </div>
