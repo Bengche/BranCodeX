@@ -18,14 +18,14 @@ function buildSrcDoc(html, css, js) {
 function ChallengeEditor() {
   const params = useSearchParams();
 
-  const initHtml  = params.get("ch_html")     || "";
-  const initCss   = params.get("ch_css")      || "";
-  const initJs    = params.get("ch_js")       || "";
-  const solHtml   = params.get("ch_sol_html") || "";
-  const solCss    = params.get("ch_sol_css")  || "";
-  const solJs     = params.get("ch_sol_js")   || "";
-  const title     = params.get("ch_title")    || "Weekly Challenge";
-  const type      = params.get("ch_type")     || "";
+  const initHtml = params.get("ch_html") || "";
+  const initCss = params.get("ch_css") || "";
+  const initJs = params.get("ch_js") || "";
+  const solHtml = params.get("ch_sol_html") || "";
+  const solCss = params.get("ch_sol_css") || "";
+  const solJs = params.get("ch_sol_js") || "";
+  const title = params.get("ch_title") || "Weekly Challenge";
+  const type = params.get("ch_type") || "";
 
   const hasSolution = !!(solHtml || solCss || solJs);
   const solutionDoc = hasSolution ? buildSrcDoc(solHtml, solCss, solJs) : "";
@@ -34,10 +34,10 @@ function ChallengeEditor() {
   const [css, setCss] = useState(initCss);
   const [js, setJs] = useState(initJs);
   const [activeTab, setActiveTab] = useState("html");
-  const [srcDoc, setSrcDoc]     = useState("");
-  const [saveMsg, setSaveMsg]   = useState("");
+  const [srcDoc, setSrcDoc] = useState("");
+  const [saveMsg, setSaveMsg] = useState("");
   const [showTarget, setShowTarget] = useState(false);
-  const wrapperRef              = useRef(null);
+  const wrapperRef = useRef(null);
 
   useEffect(() => {
     const id = setTimeout(() => setSrcDoc(buildSrcDoc(html, css, js)), 300);

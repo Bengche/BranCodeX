@@ -19,7 +19,7 @@ function buildSrcDoc(html, css, js) {
 
 export default function WeeklyChallenge() {
   const [challenge, setChallenge] = useState(null);
-  const [loading, setLoading]     = useState(true);
+  const [loading, setLoading] = useState(true);
   const [showPreview, setShowPreview] = useState(false);
 
   useEffect(() => {
@@ -33,28 +33,35 @@ export default function WeeklyChallenge() {
   // Close modal on Escape
   useEffect(() => {
     if (!showPreview) return;
-    function onKey(e) { if (e.key === "Escape") setShowPreview(false); }
+    function onKey(e) {
+      if (e.key === "Escape") setShowPreview(false);
+    }
     window.addEventListener("keydown", onKey);
     return () => window.removeEventListener("keydown", onKey);
   }, [showPreview]);
 
   if (loading || !challenge) return null;
 
-  const typeLabel    = TYPE_LABELS[challenge.type] || challenge.type;
-  const hasSolution  = challenge.solution_html || challenge.solution_css || challenge.solution_js;
-  const solutionDoc  = hasSolution
-    ? buildSrcDoc(challenge.solution_html || "", challenge.solution_css || "", challenge.solution_js || "")
+  const typeLabel = TYPE_LABELS[challenge.type] || challenge.type;
+  const hasSolution =
+    challenge.solution_html || challenge.solution_css || challenge.solution_js;
+  const solutionDoc = hasSolution
+    ? buildSrcDoc(
+        challenge.solution_html || "",
+        challenge.solution_css || "",
+        challenge.solution_js || "",
+      )
     : "";
 
   const editorParams = new URLSearchParams({
-    ch_html:     challenge.starter_html  || "",
-    ch_css:      challenge.starter_css   || "",
-    ch_js:       challenge.starter_js    || "",
+    ch_html: challenge.starter_html || "",
+    ch_css: challenge.starter_css || "",
+    ch_js: challenge.starter_js || "",
     ch_sol_html: challenge.solution_html || "",
-    ch_sol_css:  challenge.solution_css  || "",
-    ch_sol_js:   challenge.solution_js   || "",
-    ch_title:    challenge.title,
-    ch_type:     challenge.type,
+    ch_sol_css: challenge.solution_css || "",
+    ch_sol_js: challenge.solution_js || "",
+    ch_title: challenge.title,
+    ch_type: challenge.type,
   });
 
   return (
@@ -73,7 +80,9 @@ export default function WeeklyChallenge() {
                 })}
               </p>
             </div>
-            <span className={`wc-type-badge ${challenge.type}`}>{typeLabel}</span>
+            <span className={`wc-type-badge ${challenge.type}`}>
+              {typeLabel}
+            </span>
           </header>
 
           <div className="wc-body">
@@ -128,7 +137,8 @@ export default function WeeklyChallenge() {
               </button>
             </div>
             <div className="wc-preview-modal-note">
-              This is the expected result. Build it in the editor using your own code.
+              This is the expected result. Build it in the editor using your own
+              code.
             </div>
             <iframe
               className="wc-preview-frame"
