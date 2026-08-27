@@ -7593,150 +7593,251 @@ textarea {
   margin: 0 auto;
 }
 .weekly-challenge-inner {
-  background: linear-gradient(135deg, #1e1b4b 0%, #0f172a 100%);
-  border: 1px solid rgba(129, 140, 248, 0.25);
-  border-radius: 16px;
+  background: #1e293b;
+  border: 1px solid rgba(34, 197, 94, 0.2);
+  border-radius: 14px;
   overflow: hidden;
-  position: relative;
 }
-.wc-accent-bar {
-  height: 4px;
-  background: linear-gradient(90deg, #4f46e5 0%, #7c3aed 50%, #fbbf24 100%);
-  width: 100%;
-}
-.wc-content {
-  padding: 1.75rem 2rem;
-}
-@media (max-width: 600px) {
-  .wc-content {
-    padding: 1.25rem 1.25rem;
-  }
-}
-.wc-pill {
-  display: inline-flex;
-  align-items: center;
-  gap: 0.45rem;
-  background: rgba(251, 191, 36, 0.12);
-  border: 1px solid rgba(251, 191, 36, 0.3);
-  color: #fbbf24;
-  font-size: 0.72rem;
-  font-weight: 800;
-  padding: 4px 12px;
-  border-radius: 20px;
-  text-transform: uppercase;
-  letter-spacing: 0.08em;
-  margin-bottom: 1rem;
-}
-.wc-pulse {
-  display: inline-block;
-  width: 7px;
-  height: 7px;
-  border-radius: 50%;
-  background: #fbbf24;
-  animation: wc-pulse 1.6s ease-in-out infinite;
-}
-@keyframes wc-pulse {
-  0%,
-  100% {
-    opacity: 1;
-    transform: scale(1);
-  }
-  50% {
-    opacity: 0.45;
-    transform: scale(0.7);
-  }
-}
-.wc-meta {
+.wc-header {
   display: flex;
-  align-items: center;
-  gap: 0.75rem;
-  flex-wrap: wrap;
-  margin-bottom: 0.85rem;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 1rem;
+  padding: 1.5rem 1.75rem 1rem;
+  border-bottom: 1px solid rgba(148, 163, 184, 0.1);
+}
+.wc-header-text {
+  display: flex;
+  flex-direction: column;
+  gap: 0.2rem;
+}
+.wc-heading {
+  font-size: 0.72rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.12em;
+  color: #22c55e;
+  margin: 0;
+}
+.wc-subheading {
+  font-size: 0.82rem;
+  color: #64748b;
+  margin: 0;
 }
 .wc-type-badge {
   font-size: 0.72rem;
   font-weight: 700;
   padding: 3px 10px;
-  border-radius: 20px;
+  border-radius: 6px;
   text-transform: uppercase;
   letter-spacing: 0.05em;
+  flex-shrink: 0;
 }
 .wc-type-badge.css {
-  background: rgba(59, 130, 246, 0.18);
+  background: rgba(59, 130, 246, 0.15);
   color: #93c5fd;
-  border: 1px solid rgba(59, 130, 246, 0.3);
+  border: 1px solid rgba(59, 130, 246, 0.25);
 }
 .wc-type-badge.js {
-  background: rgba(251, 191, 36, 0.12);
+  background: rgba(251, 191, 36, 0.1);
   color: #fbbf24;
-  border: 1px solid rgba(251, 191, 36, 0.3);
+  border: 1px solid rgba(251, 191, 36, 0.25);
 }
 .wc-type-badge.html {
-  background: rgba(239, 68, 68, 0.12);
-  color: #fca5a5;
-  border: 1px solid rgba(239, 68, 68, 0.3);
+  background: rgba(249, 115, 22, 0.1);
+  color: #fb923c;
+  border: 1px solid rgba(249, 115, 22, 0.25);
 }
-.wc-type-badge.full {
-  background: rgba(79, 70, 229, 0.18);
-  color: #a5b4fc;
-  border: 1px solid rgba(79, 70, 229, 0.3);
+.wc-type-badge.puzzle {
+  background: rgba(168, 85, 247, 0.1);
+  color: #c084fc;
+  border: 1px solid rgba(168, 85, 247, 0.25);
 }
-.wc-week {
-  font-size: 0.78rem;
-  color: #64748b;
+.wc-body {
+  padding: 1.25rem 1.75rem;
 }
 .wc-title {
-  font-size: 1.35rem;
-  font-weight: 800;
-  color: #f8fafc;
-  line-height: 1.25;
-  margin-bottom: 0.65rem;
-}
-@media (max-width: 480px) {
-  .wc-title {
-    font-size: 1.1rem;
-  }
+  font-size: 1.25rem;
+  font-weight: 700;
+  color: #f1f5f9;
+  line-height: 1.35;
+  margin: 0 0 0.6rem;
 }
 .wc-description {
   font-size: 0.92rem;
   color: #94a3b8;
-  line-height: 1.6;
-  margin-bottom: 1.25rem;
+  line-height: 1.65;
+  margin: 0;
 }
-.wc-actions {
-  display: flex;
-  align-items: center;
-  gap: 1rem;
-  flex-wrap: wrap;
+.wc-footer {
+  padding: 1rem 1.75rem 1.5rem;
 }
 .wc-cta-btn {
   display: inline-flex;
   align-items: center;
   gap: 0.5rem;
-  background: linear-gradient(90deg, #4f46e5 0%, #7c3aed 100%);
+  background: #22c55e;
   color: #fff;
-  font-size: 0.88rem;
+  font-size: 0.875rem;
   font-weight: 700;
   padding: 10px 22px;
   border-radius: 8px;
   text-decoration: none;
   transition:
-    opacity 0.2s ease,
+    background 0.2s ease,
     transform 0.2s ease;
 }
 .wc-cta-btn:hover {
-  opacity: 0.88;
+  background: #16a34a;
   transform: translateY(-1px);
 }
-.wc-tip {
-  font-size: 0.76rem;
+@media (max-width: 600px) {
+  .wc-header {
+    padding: 1.25rem 1.25rem 0.875rem;
+    flex-wrap: wrap;
+  }
+  .wc-body {
+    padding: 1rem 1.25rem;
+  }
+  .wc-footer {
+    padding: 0.875rem 1.25rem 1.25rem;
+  }
+  .wc-title {
+    font-size: 1.05rem;
+  }
+}
+
+/* =========================================================================
+   CHALLENGE EDITOR PAGE  (/playground/challenge)
+   ========================================================================= */
+.challenge-page {
+  background: #0f172a;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+.challenge-loading {
+  color: #94a3b8;
+  font-size: 1rem;
+  padding: 4rem 1.5rem;
+  text-align: center;
+}
+.challenge-pg-header {
+  background: #1e293b;
+  border-bottom: 1px solid #334155;
+  padding: 1rem 1.5rem;
+  flex-shrink: 0;
+}
+.challenge-pg-header-inner {
+  max-width: 1400px;
+  margin: 0 auto;
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+.challenge-back-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
   color: #64748b;
+  font-size: 0.82rem;
+  font-weight: 600;
+  text-decoration: none;
+  transition: color 0.2s;
+}
+.challenge-back-link:hover {
+  color: #94a3b8;
+}
+.challenge-pg-meta {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  flex-wrap: wrap;
+}
+.challenge-pg-title {
+  font-size: 1.1rem;
+  font-weight: 700;
+  color: #f1f5f9;
+  margin: 0;
+  line-height: 1.3;
+}
+.challenge-editor-wrap {
+  flex: 1;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 0;
+  min-height: 0;
+}
+.challenge-code-pane {
+  display: flex;
+  flex-direction: column;
+  border-right: 1px solid #334155;
+  background: #0f172a;
+  min-height: 0;
+}
+.challenge-code-pane .editor-tabs {
+  display: flex;
+  align-items: center;
+  background: #1e293b;
+  border-bottom: 1px solid #334155;
+  flex-shrink: 0;
+}
+.challenge-pane-toolbar {
   display: flex;
   align-items: center;
   gap: 0.35rem;
+  margin-left: auto;
+  padding: 0 0.6rem;
 }
-.wc-tip i {
-  color: #fbbf24;
+.challenge-textarea {
+  flex: 1;
+  width: 100%;
+  background: #0a0f1e;
+  color: #e2e8f0;
+  border: none;
+  padding: 1rem;
+  font-family: "Fira Code", "Consolas", "Monaco", monospace;
+  font-size: 0.875rem;
+  line-height: 1.65;
+  resize: none;
+  outline: none;
+  min-height: calc(100vh - 130px);
+}
+.challenge-preview-pane {
+  display: flex;
+  flex-direction: column;
+  background: white;
+  min-height: 0;
+}
+.challenge-preview-pane .editor-preview-label {
+  background: #1e293b;
+  color: #64748b;
+  font-size: 0.75rem;
+  font-weight: 600;
+  padding: 0.4rem 0.75rem;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  border-bottom: 1px solid #334155;
+  flex-shrink: 0;
+}
+.challenge-preview-pane .editor-preview-frame {
+  flex: 1;
+  border: none;
+  width: 100%;
+  min-height: calc(100vh - 130px);
+}
+@media (max-width: 768px) {
+  .challenge-editor-wrap {
+    grid-template-columns: 1fr;
+  }
+  .challenge-code-pane {
+    border-right: none;
+    border-bottom: 1px solid #334155;
+  }
+  .challenge-textarea,
+  .challenge-preview-pane .editor-preview-frame {
+    min-height: 40vh;
+  }
 }
 
 /* =========================================================================

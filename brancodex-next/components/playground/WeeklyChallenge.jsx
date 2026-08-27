@@ -6,7 +6,6 @@ import Link from "next/link";
 const BACKEND_URL = process.env.NEXT_PUBLIC_BACKEND_URL || "http://localhost:4000";
 
 const TYPE_LABELS = { css: "CSS", js: "JavaScript", html: "HTML", puzzle: "Puzzle" };
-const TYPE_COLORS = { css: "#38bdf8", js: "#fbbf24", html: "#f97316", puzzle: "#a78bfa" };
 
 export default function WeeklyChallenge() {
   const [challenge, setChallenge] = useState(null);
@@ -20,59 +19,48 @@ export default function WeeklyChallenge() {
       .finally(() => setLoading(false));
   }, []);
 
-  if (loading) return null; // silent — don't show skeleton on SSR
-  if (!challenge) return null;
+  if (loading || !challenge) return null;
 
-  const typeColor = TYPE_COLORS[challenge.type] || "#4f46e5";
   const typeLabel = TYPE_LABELS[challenge.type] || challenge.type;
 
-  // Build the editor deep-link with starter code pre-loaded via URL search params
   const editorParams = new URLSearchParams({
-    ch_html: challenge.starter_html || "",
-    ch_css:  challenge.starter_css  || "",
-    ch_js:   challenge.starter_js   || "",
+    ch_html:  challenge.starter_html || "",
+    ch_css:   challenge.starter_css  || "",
+    ch_js:    challenge.starter_js   || "",
+    ch_title: challenge.title,
+    ch_type:  challenge.type,
   });
 
   return (
     <section className="weekly-challenge-section">
       <div className="weekly-challenge-inner">
-        {/* Pill header */}
-        <div className="wc-pill">
-          <span className="wc-pulse" />
-          Weekly Challenge
+        <header className="wc-header">
+          <div className="wc-header-text">
+            <h2 className="wc-heading">Weekly Challenge</h2>
+            <p className="wc-subheading">
+              Week of{" "}
+              {new Date(challenge.week_start).toLocaleDateString("en-US", {
+                month: "long",
+                day: "numeric",
+                year: "numeric",
+              })}
+            </p>
+          </div>
+          <span className={`wc-type-badge ${challenge.type}`}>{typeLabel}</span>
+        </header>
+
+        <div className="wc-body">
+          <h3 className="wc-title">{challenge.title}</h3>
+          <p className="wc-description">{challenge.description}</p>
         </div>
 
-        <div className="wc-card">
-          {/* Left accent bar */}
-          <div className="wc-accent-bar" style={{ background: typeColor }} />
-
-          <div className="wc-content">
-            <div className="wc-meta">
-              <span className="wc-type-badge" style={{ color: typeColor, borderColor: typeColor }}>
-                {typeLabel}
-              </span>
-              <span className="wc-week">
-                Week of {new Date(challenge.week_start).toLocaleDateString("en-US", {
-                  month: "short", day: "numeric", year: "numeric",
-                })}
-              </span>
-            </div>
-
-            <h3 className="wc-title">{challenge.title}</h3>
-            <p className="wc-description">{challenge.description}</p>
-
-            <div className="wc-actions">
-              <Link
-                href={`/playground/challenge?${editorParams.toString()}`}
-                className="wc-cta-btn"
-              >
-                <i className="fa fa-code" /> Accept Challenge
-              </Link>
-              <span className="wc-tip">
-                <i className="fa fa-trophy" /> Top solution this week gets featured
-              </span>
-            </div>
-          </div>
+        <div className="wc-footer">
+          <Link
+            href={`/playground/challenge?${editorParams.toString()}`}
+            className="wc-cta-btn"
+          >
+            <i className="fa fa-code" /> Accept Challenge
+          </Link>
         </div>
       </div>
     </section>
