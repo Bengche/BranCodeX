@@ -399,16 +399,23 @@ function Dashboard({ token }) {
 
   // Challenge form
   const EMPTY_CF = {
-    title: "", description: "", type: "css", week_start: "",
-    starter_html: "", starter_css: "", starter_js: "",
-    solution_html: "", solution_css: "", solution_js: "",
+    title: "",
+    description: "",
+    type: "css",
+    week_start: "",
+    starter_html: "",
+    starter_css: "",
+    starter_js: "",
+    solution_html: "",
+    solution_css: "",
+    solution_js: "",
   };
-  const [cfOpen, setCfOpen]       = useState(false);
-  const [cf, setCf]               = useState(EMPTY_CF);
-  const [cfStTab, setCfStTab]     = useState("html");
-  const [cfSolTab, setCfSolTab]   = useState("html");
-  const [cfSaving, setCfSaving]   = useState(false);
-  const [cfError, setCfError]     = useState("");
+  const [cfOpen, setCfOpen] = useState(false);
+  const [cf, setCf] = useState(EMPTY_CF);
+  const [cfStTab, setCfStTab] = useState("html");
+  const [cfSolTab, setCfSolTab] = useState("html");
+  const [cfSaving, setCfSaving] = useState(false);
+  const [cfError, setCfError] = useState("");
 
   async function submitChallenge(e) {
     e.preventDefault();
@@ -618,7 +625,10 @@ function Dashboard({ token }) {
                 <button
                   type="button"
                   className={`admin-add-btn${cfOpen ? " active" : ""}`}
-                  onClick={() => { setCfOpen((v) => !v); setCfError(""); }}
+                  onClick={() => {
+                    setCfOpen((v) => !v);
+                    setCfError("");
+                  }}
                 >
                   <i className={`fa ${cfOpen ? "fa-xmark" : "fa-plus"}`} />
                   {cfOpen ? "Cancel" : "New Challenge"}
@@ -626,15 +636,22 @@ function Dashboard({ token }) {
               </div>
 
               {cfOpen && (
-                <form className="admin-challenge-form" onSubmit={submitChallenge}>
+                <form
+                  className="admin-challenge-form"
+                  onSubmit={submitChallenge}
+                >
                   {/* Basic fields */}
                   <div className="admin-cf-grid">
                     <div className="admin-field">
                       <label>Title</label>
                       <input
-                        type="text" required maxLength={200}
+                        type="text"
+                        required
+                        maxLength={200}
                         value={cf.title}
-                        onChange={(e) => setCf((p) => ({ ...p, title: e.target.value }))}
+                        onChange={(e) =>
+                          setCf((p) => ({ ...p, title: e.target.value }))
+                        }
                         placeholder="e.g. Build a Pricing Card"
                       />
                     </div>
@@ -642,7 +659,9 @@ function Dashboard({ token }) {
                       <label>Type</label>
                       <select
                         value={cf.type}
-                        onChange={(e) => setCf((p) => ({ ...p, type: e.target.value }))}
+                        onChange={(e) =>
+                          setCf((p) => ({ ...p, type: e.target.value }))
+                        }
                       >
                         <option value="css">CSS</option>
                         <option value="html">HTML</option>
@@ -653,9 +672,12 @@ function Dashboard({ token }) {
                     <div className="admin-field">
                       <label>Week Start (Monday)</label>
                       <input
-                        type="date" required
+                        type="date"
+                        required
                         value={cf.week_start}
-                        onChange={(e) => setCf((p) => ({ ...p, week_start: e.target.value }))}
+                        onChange={(e) =>
+                          setCf((p) => ({ ...p, week_start: e.target.value }))
+                        }
                       />
                     </div>
                   </div>
@@ -663,9 +685,13 @@ function Dashboard({ token }) {
                   <div className="admin-field">
                     <label>Description</label>
                     <textarea
-                      rows={3} required maxLength={2000}
+                      rows={3}
+                      required
+                      maxLength={2000}
                       value={cf.description}
-                      onChange={(e) => setCf((p) => ({ ...p, description: e.target.value }))}
+                      onChange={(e) =>
+                        setCf((p) => ({ ...p, description: e.target.value }))
+                      }
                       placeholder="Explain what the user needs to build, step by step…"
                     />
                   </div>
@@ -679,7 +705,8 @@ function Dashboard({ token }) {
                     <div className="admin-cf-tabs">
                       {["html", "css", "js"].map((t) => (
                         <button
-                          key={t} type="button"
+                          key={t}
+                          type="button"
                           className={`admin-cf-tab${cfStTab === t ? " active" : ""}`}
                           onClick={() => setCfStTab(t)}
                         >
@@ -689,9 +716,15 @@ function Dashboard({ token }) {
                     </div>
                     <textarea
                       className="admin-cf-code"
-                      spellCheck={false} rows={10}
+                      spellCheck={false}
+                      rows={10}
                       value={cf[`starter_${cfStTab}`]}
-                      onChange={(e) => setCf((p) => ({ ...p, [`starter_${cfStTab}`]: e.target.value }))}
+                      onChange={(e) =>
+                        setCf((p) => ({
+                          ...p,
+                          [`starter_${cfStTab}`]: e.target.value,
+                        }))
+                      }
                       placeholder={`Starter ${cfStTab.toUpperCase()} — leave empty if not needed`}
                     />
                   </div>
@@ -700,12 +733,15 @@ function Dashboard({ token }) {
                   <div className="admin-cf-code-section admin-cf-code-section--sol">
                     <div className="admin-cf-code-label admin-cf-code-label--sol">
                       Solution / Target Code
-                      <span>Optional — enables "Preview Target" button for users</span>
+                      <span>
+                        Optional — enables "Preview Target" button for users
+                      </span>
                     </div>
                     <div className="admin-cf-tabs">
                       {["html", "css", "js"].map((t) => (
                         <button
-                          key={t} type="button"
+                          key={t}
+                          type="button"
                           className={`admin-cf-tab${cfSolTab === t ? " active" : ""}`}
                           onClick={() => setCfSolTab(t)}
                         >
@@ -715,26 +751,38 @@ function Dashboard({ token }) {
                     </div>
                     <textarea
                       className="admin-cf-code"
-                      spellCheck={false} rows={10}
+                      spellCheck={false}
+                      rows={10}
                       value={cf[`solution_${cfSolTab}`]}
-                      onChange={(e) => setCf((p) => ({ ...p, [`solution_${cfSolTab}`]: e.target.value }))}
+                      onChange={(e) =>
+                        setCf((p) => ({
+                          ...p,
+                          [`solution_${cfSolTab}`]: e.target.value,
+                        }))
+                      }
                       placeholder={`Expected final ${cfSolTab.toUpperCase()} — what the finished result looks like`}
                     />
                   </div>
 
                   {cfError && <p className="admin-cf-error">{cfError}</p>}
 
-                  <button type="submit" className="admin-save-btn" disabled={cfSaving}>
+                  <button
+                    type="submit"
+                    className="admin-save-btn"
+                    disabled={cfSaving}
+                  >
                     {cfSaving ? "Publishing…" : "Publish Challenge"}
                   </button>
                 </form>
               )}
 
-              {(!data.challenges || data.challenges.length === 0) && !cfOpen && (
-                <p className="admin-empty">
-                  No challenges yet. Click "New Challenge" to create the first one.
-                </p>
-              )}
+              {(!data.challenges || data.challenges.length === 0) &&
+                !cfOpen && (
+                  <p className="admin-empty">
+                    No challenges yet. Click "New Challenge" to create the first
+                    one.
+                  </p>
+                )}
               {(data.challenges || []).map((c) => (
                 <div
                   key={c.id}

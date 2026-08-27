@@ -8503,7 +8503,9 @@ textarea {
   padding: 7px 16px;
   border-radius: 8px;
   cursor: pointer;
-  transition: background 0.2s, border-color 0.2s;
+  transition:
+    background 0.2s,
+    border-color 0.2s;
   white-space: nowrap;
 }
 .admin-add-btn:hover {
@@ -8583,7 +8585,9 @@ textarea {
   cursor: pointer;
   text-transform: uppercase;
   letter-spacing: 0.06em;
-  transition: color 0.15s, background 0.15s;
+  transition:
+    color 0.15s,
+    background 0.15s;
 }
 .admin-cf-tab:last-child {
   border-right: none;
