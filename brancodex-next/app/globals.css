@@ -7670,7 +7670,11 @@ textarea {
   margin: 0;
 }
 .wc-footer {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
   padding: 1rem 1.75rem 1.5rem;
+  border-top: 1px solid rgba(148, 163, 184, 0.08);
 }
 .wc-cta-btn {
   display: inline-flex;
@@ -7683,6 +7687,7 @@ textarea {
   padding: 10px 22px;
   border-radius: 8px;
   text-decoration: none;
+  white-space: nowrap;
   transition:
     background 0.2s ease,
     transform 0.2s ease;
@@ -7701,6 +7706,14 @@ textarea {
   }
   .wc-footer {
     padding: 0.875rem 1.25rem 1.25rem;
+    /* stack vertically on mobile — primary CTA on top */
+    flex-direction: column-reverse;
+    align-items: stretch;
+  }
+  .wc-cta-btn,
+  .wc-preview-btn {
+    justify-content: center;
+    width: 100%;
   }
   .wc-title {
     font-size: 1.05rem;
@@ -7867,28 +7880,29 @@ textarea {
   width: 100%;
   min-height: calc(100vh - 130px);
 }
-/* --- Weekly challenge: Preview Target button --- */
+/* --- Weekly challenge: Preview Target button (secondary action) --- */
 .wc-preview-btn {
   display: inline-flex;
   align-items: center;
   gap: 0.45rem;
   background: transparent;
-  border: 1px solid rgba(148, 163, 184, 0.3);
-  color: #94a3b8;
-  font-size: 0.875rem;
+  border: 1px solid rgba(148, 163, 184, 0.18);
+  color: #64748b;
+  font-size: 0.82rem;
   font-weight: 600;
-  padding: 10px 18px;
+  padding: 10px 16px;
   border-radius: 8px;
   cursor: pointer;
+  white-space: nowrap;
   transition:
     border-color 0.2s,
     color 0.2s,
     background 0.2s;
 }
 .wc-preview-btn:hover {
-  border-color: #64748b;
-  color: #f1f5f9;
-  background: rgba(255, 255, 255, 0.04);
+  border-color: rgba(148, 163, 184, 0.45);
+  color: #94a3b8;
+  background: rgba(255, 255, 255, 0.03);
 }
 /* --- Target preview overlay/modal --- */
 .wc-preview-overlay {
