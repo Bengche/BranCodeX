@@ -1,11 +1,17 @@
 /**
  * app/api/chat/route.js
  *
- * Secure server-side proxy for the Groq API.
- * Keeps GROQ_API_KEY out of the client bundle.
+ * Secure server-side proxy for the Groq API with automatic model fallback.
  */
 
 import { NextResponse } from "next/server";
+
+// Fallback chain in order of preference
+const GROQ_MODELS = [
+  "llama-3.3-70b-versatile",
+  "llama-3.1-70b-versatile",
+  "llama-3.1-8b-instant",
+];
 
 export async function POST(request) {
   try {
@@ -18,24 +24,53 @@ export async function POST(request) {
       );
     }
 
-    const groqRes = await fetch(
-      "https://api.groq.com/openai/v1/chat/completions",
-      {
-        method: "POST",
-        headers: {
-          Authorization: `Bearer ${process.env.GROQ_API_KEY}`,
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({
-          model: "llama-3.3-70b-versatile",
-          messages,
-          temperature: 0.65,
-        }),
-      },
-    );
+    let lastData = null;
 
-    const data = await groqRes.json();
-    return NextResponse.json(data);
+    for (const model of GROQ_MODELS) {
+      try {
+        const groqRes = await fetch(
+          "https://api.groq.com/openai/v1/chat/completions",
+          {
+            method: "POST",
+            headers: {
+              Authorization: `Bearer ${process.env.GROQ_API_KEY}`,
+              "Content-Type": "application/json",
+            },
+            body: JSON.stringify({
+              model,
+              messages,
+              temperature: 0.65,
+            }),
+          },
+        );
+
+        const data = await groqRes.json();
+
+        // If Groq returns 200 and has choices, return immediately
+        if (groqRes.ok && data.choices?.[0]?.message) {
+          return NextResponse.json(data);
+        }
+
+        lastData = data;
+        console.warn(
+          `[Groq Fallback] Model ${model} failed:`,
+          data.error?.message || groqRes.statusText,
+        );
+      } catch (networkErr) {
+        console.warn(
+          `[Groq Fallback] Network error on model ${model}:`,
+          networkErr.message,
+        );
+      }
+    }
+
+    // If every model fails, return the error structure expected by the frontend
+    return NextResponse.json(
+      lastData || {
+        error: { message: "All AI models are currently unavailable." },
+      },
+      { status: 503 },
+    );
   } catch (err) {
     return NextResponse.json(
       { error: { message: "Internal server error" } },
