@@ -34,13 +34,13 @@ const faqData = [
     icon: "fa-dollar-sign",
     question: "What is the cost of a typical project?",
     answer:
-      "We don't do one-size-fits-all pricing. Our websites are built around your needs, so we'd love to know more about your project before talking numbers.",
+      "Websites start at $189 and online stores at $589. The price depends on the number of pages, features and payment options. See the pricing section on the home page, or tell us about your project and we will send an exact quote.",
   },
   {
     icon: "fa-sync-alt",
     question: "Do you offer revisions?",
     answer:
-      "Yes, we offer up to 3 rounds of revisions to ensure your satisfaction.",
+      "Yes. Every package includes 2 rounds of revisions, and Premium and Pro Store include 3.",
   },
   {
     icon: "fa-tools",
@@ -143,7 +143,7 @@ const faqData = [
     icon: "fa-rotate-left",
     question: "How do revisions work?",
     answer:
-      "Every package includes up to 3 rounds of revisions at no extra cost. We keep refining until you are completely satisfied. Additional revisions beyond that are billed at a transparent hourly rate.",
+      "Every package includes 2 rounds of revisions at no extra cost (3 for Premium and Pro Store). Additional revisions beyond that are billed at a transparent hourly rate.",
   },
   {
     icon: "fa-comments",

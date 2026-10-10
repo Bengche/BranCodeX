@@ -19,7 +19,7 @@ export const metadata = {
   metadataBase: new URL(SITE_URL),
   title: {
     default: "Web Development Agency in Bamenda, Cameroon | BranCodeX",
-    template: "%s | BranCodeX",
+    template: "%s",
   },
   description:
     "BranCodeX builds fast websites, online stores and web apps for businesses in Cameroon and worldwide. Prices from $189, delivered in days. Get a free quote.",

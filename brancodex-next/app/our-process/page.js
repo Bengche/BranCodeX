@@ -1,80 +1,60 @@
+import Link from "next/link";
 import Navbar from "../../components/Navbar";
 import Footer from "../../components/Footer";
-import HowWeWork from "../../components/HowWeWork";
+
+const steps = [
+  {
+    title: "Discovery call",
+    text: "A free call to understand your business, your customers and what the website needs to do. We ask a lot of questions so we build the right thing the first time.",
+  },
+  {
+    title: "Proposal and agreement",
+    text: "You receive a written proposal with the scope, the timeline and a fixed price. Payment is split into 50% to start and 50% on delivery.",
+  },
+  {
+    title: "Design",
+    text: "We create a mockup of your key pages. You review it, ask for changes, and approve the design before any code is written.",
+  },
+  {
+    title: "Build and review",
+    text: "We build the site and send you a private preview link, usually within 5 to 7 days. You test every page on your phone and computer and send us your changes. Packages include 2 or 3 rounds of revisions.",
+  },
+  {
+    title: "Launch",
+    text: "We connect your domain, set up hosting and SSL, run final speed and mobile checks, and go live. You own the site, and we stay available for support afterwards.",
+  },
+];
 
 const howToSchema = {
   "@context": "https://schema.org",
   "@type": "HowTo",
-  name: "How BranCodeX Builds Your Website",
+  name: "How BranCodeX builds your website",
   description:
-    "A transparent, step-by-step process from the first consultation to your website going live — with no surprises and a 14-day delivery guarantee.",
+    "The steps from the first consultation to your website going live.",
   estimatedCost: {
     "@type": "MonetaryAmount",
     currency: "USD",
-    minValue: "189",
-    maxValue: "1899",
+    value: "189",
   },
-  totalTime: "P14D",
-  step: [
-    {
-      "@type": "HowToStep",
-      position: 1,
-      name: "Discovery Call",
-      text: "We have a free consultation to understand your business, goals, and target audience. We ask the right questions to ensure we build exactly what you need.",
-    },
-    {
-      "@type": "HowToStep",
-      position: 2,
-      name: "Proposal & Agreement",
-      text: "We send you a clear project proposal with scope, timeline, and price. Once you approve and pay the deposit, we get started immediately.",
-    },
-    {
-      "@type": "HowToStep",
-      position: 3,
-      name: "Design & Development",
-      text: "We build your website using modern technologies. You receive a staging link to review the design within 5–7 days.",
-    },
-    {
-      "@type": "HowToStep",
-      position: 4,
-      name: "Review & Revisions",
-      text: "You review the site and provide feedback. We make up to 3 rounds of revisions until the site is exactly how you want it.",
-    },
-    {
-      "@type": "HowToStep",
-      position: 5,
-      name: "Launch",
-      text: "Once you approve, we deploy your site to your domain, configure hosting, and hand over full ownership. Post-launch support included.",
-    },
-  ],
+  step: steps.map((step, i) => ({
+    "@type": "HowToStep",
+    position: i + 1,
+    name: step.title,
+    text: step.text,
+  })),
 };
 
 export const metadata = {
-  title: "Our Process — How We Build Your Website | BranCodeX",
+  title: "Our Process: How We Build Your Website | BranCodeX",
   description:
-    "See exactly how BranCodeX builds your website — from the first consultation to launch. A transparent, step-by-step process with no surprises and a 14-day delivery guarantee.",
-  keywords: [
-    "web development process cameroon",
-    "how we build websites",
-    "website development steps",
-    "web agency process bamenda",
-    "BranCodeX how we work",
-    "website development timeline cameroon",
-    "website design process africa",
-  ],
+    "From the first call to launch day: how BranCodeX designs, builds and delivers your website in Cameroon, step by step, with a fixed price and clear timelines.",
   alternates: { canonical: "https://brancodex.com/our-process" },
   openGraph: {
-    title: "Our Process — How We Build Your Website | BranCodeX",
+    title: "Our Process: How We Build Your Website | BranCodeX",
     description:
-      "A clear, transparent 5-step process from consultation to launch. No surprises. Professional web development in Cameroon.",
+      "Five clear steps from consultation to launch, with a fixed price and no surprises.",
     url: "https://brancodex.com/our-process",
     siteName: "BranCodeX",
-  },
-  twitter: {
-    card: "summary",
-    title: "Our Process | BranCodeX",
-    description:
-      "A clear 5-step process from consultation to launch. Professional web development in Cameroon.",
   },
 };
 
@@ -86,21 +66,43 @@ export default function OurProcessPage() {
         dangerouslySetInnerHTML={{ __html: JSON.stringify(howToSchema) }}
       />
       <Navbar />
-      <main>
-        {/* Page hero */}
-        <header className="hww-page-hero">
-          <div className="hww-page-hero-inner">
-            <span className="hww-badge">OUR PROCESS</span>
-            <h1>How We Build Your Website</h1>
+      <main id="main-content">
+        <header className="page-head">
+          <div className="sec-inner">
+            <h1>How we build your website</h1>
             <p>
-              A clear, structured process from our first conversation to your
-              website going live — with full transparency at every step.
+              Five steps from the first conversation to a live site. You know
+              the price and the timeline before we start, and you approve each
+              stage before we move on.
             </p>
           </div>
         </header>
 
-        {/* Reuse the full process section */}
-        <HowWeWork />
+        <section className="sec sec--alt" aria-label="Process steps">
+          <div className="sec-inner">
+            <ol className="timeline">
+              {steps.map((step) => (
+                <li key={step.title}>
+                  <h2>{step.title}</h2>
+                  <p>{step.text}</p>
+                </li>
+              ))}
+            </ol>
+
+            <div className="page-cta">
+              <div>
+                <h2>After launch</h2>
+                <p>
+                  Monthly maintenance covers security updates, backups, content
+                  edits and monitoring, so your site stays fast and safe.
+                </p>
+              </div>
+              <Link href="/#contact" className="btn btn--primary">
+                Start with a free call
+              </Link>
+            </div>
+          </div>
+        </section>
       </main>
       <Footer />
     </>
