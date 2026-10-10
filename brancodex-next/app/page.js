@@ -11,7 +11,6 @@ import ResultsStrip from "../components/ResultsStrip";
 import About from "../components/About";
 import Services from "../components/Services";
 import Plans from "../components/Plans";
-import PriceCalculator from "../components/PriceCalculator";
 import Skills from "../components/Skills";
 import Projects from "../components/Projects";
 import PlaygroundTeaser from "../components/PlaygroundTeaser";
@@ -60,7 +59,6 @@ export default function HomePage() {
         </div>
 
         <Plans />
-        <PriceCalculator />
         <Skills />
         <Projects />
         <PlaygroundTeaser />

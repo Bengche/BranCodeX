@@ -9480,3 +9480,269 @@ textarea {
   font-weight: bold;
   cursor: pointer;
 }
+
+/* =========================================================================
+   PRICING (components/Plans.jsx)
+   ========================================================================= */
+.pricing {
+  padding: 5.5rem 1.5rem;
+  background: #0f172a;
+  color: #cbd5e1;
+  border-top: 1px solid #1e293b;
+}
+
+.pricing-inner {
+  max-width: 1080px;
+  margin: 0 auto;
+}
+
+.pricing-header {
+  max-width: 600px;
+  margin-bottom: 2.5rem;
+}
+
+.pricing-header h2 {
+  font-size: 2rem;
+  font-weight: 700;
+  color: #f1f5f9;
+}
+
+.pricing-header p {
+  margin-top: 0.75rem;
+  line-height: 1.7;
+  color: #94a3b8;
+}
+
+.pricing-controls {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: flex-end;
+  justify-content: space-between;
+  gap: 1rem;
+  margin-bottom: 1.5rem;
+  border-bottom: 1px solid #1e293b;
+}
+
+.pricing-tabs,
+.pricing-currency {
+  display: flex;
+  gap: 1.75rem;
+}
+
+.pricing-tabs button,
+.pricing-currency button {
+  padding: 0 0 0.75rem;
+  margin-bottom: -1px;
+  border: 0;
+  border-bottom: 2px solid transparent;
+  background: none;
+  color: #64748b;
+  font-size: 0.95rem;
+  font-weight: 600;
+  cursor: pointer;
+}
+
+.pricing-currency button {
+  font-size: 0.85rem;
+}
+
+.pricing-tabs button:hover,
+.pricing-currency button:hover {
+  color: #e2e8f0;
+}
+
+.pricing-tabs button[aria-selected="true"],
+.pricing-currency button[aria-pressed="true"] {
+  color: #f1f5f9;
+  border-bottom-color: #22c55e;
+}
+
+.pricing-tabs button:focus-visible,
+.pricing-currency button:focus-visible,
+.pricing-btn:focus-visible,
+.pricing-custom a:focus-visible,
+.pricing-footnote a:focus-visible {
+  outline: 2px solid #22c55e;
+  outline-offset: 3px;
+}
+
+.pricing-table {
+  display: grid;
+  border: 1px solid #1e293b;
+  border-radius: 6px;
+  overflow: hidden;
+}
+
+.pricing-table--3 {
+  grid-template-columns: repeat(3, 1fr);
+}
+
+.pricing-table--2 {
+  grid-template-columns: repeat(2, 1fr);
+}
+
+.pricing-col {
+  display: flex;
+  flex-direction: column;
+  padding: 1.75rem 1.75rem 2rem;
+  border-left: 1px solid #1e293b;
+}
+
+.pricing-col:first-child {
+  border-left: 0;
+}
+
+.pricing-col--featured {
+  background: #131e36;
+  box-shadow: inset 0 2px 0 #22c55e;
+}
+
+.pricing-flag {
+  margin-bottom: 0.5rem;
+  font-size: 0.75rem;
+  font-weight: 600;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: #22c55e;
+}
+
+.pricing-col h3 {
+  font-size: 1.25rem;
+  font-weight: 700;
+  color: #f1f5f9;
+}
+
+.pricing-tagline {
+  min-height: 3em;
+  margin-top: 0.35rem;
+  font-size: 0.92rem;
+  line-height: 1.5;
+  color: #94a3b8;
+}
+
+.pricing-price {
+  margin-top: 1.5rem;
+  font-size: 2rem;
+  font-weight: 700;
+  line-height: 1.1;
+  color: #f1f5f9;
+}
+
+.pricing-price span {
+  margin-right: 0.2rem;
+  font-size: 0.85rem;
+  font-weight: 400;
+  color: #64748b;
+}
+
+.pricing-note {
+  min-height: 2.8em;
+  margin-top: 0.5rem;
+  font-size: 0.82rem;
+  line-height: 1.4;
+  color: #64748b;
+}
+
+.pricing-btn {
+  display: block;
+  margin: 1.25rem 0 1.5rem;
+  padding: 0.7rem 1rem;
+  border: 1px solid #334155;
+  border-radius: 6px;
+  color: #f1f5f9;
+  font-size: 0.92rem;
+  font-weight: 600;
+  text-align: center;
+  text-decoration: none;
+}
+
+.pricing-btn:hover {
+  border-color: #22c55e;
+  color: #22c55e;
+}
+
+.pricing-col--featured .pricing-btn {
+  border-color: #22c55e;
+  background: #22c55e;
+  color: #052e16;
+}
+
+.pricing-col--featured .pricing-btn:hover {
+  background: #4ade80;
+  border-color: #4ade80;
+  color: #052e16;
+}
+
+.pricing-col ul {
+  flex: 1;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.pricing-col li {
+  padding: 0.65rem 0;
+  border-top: 1px solid #1e293b;
+  font-size: 0.9rem;
+  line-height: 1.45;
+  color: #cbd5e1;
+}
+
+.pricing-delivery {
+  margin-top: 1.25rem;
+  padding-top: 1rem;
+  border-top: 1px solid #1e293b;
+  font-size: 0.82rem;
+  line-height: 1.7;
+  color: #64748b;
+}
+
+.pricing-custom {
+  margin-top: 2rem;
+  color: #94a3b8;
+}
+
+.pricing-custom a,
+.pricing-footnote a {
+  color: #22c55e;
+  text-decoration: underline;
+  text-underline-offset: 3px;
+}
+
+.pricing-custom a:hover,
+.pricing-footnote a:hover {
+  color: #4ade80;
+}
+
+.pricing-footnote {
+  margin-top: 0.75rem;
+  font-size: 0.85rem;
+  line-height: 1.6;
+  color: #64748b;
+}
+
+@media (max-width: 900px) {
+  .pricing {
+    padding: 4rem 1.25rem;
+  }
+
+  .pricing-table--3,
+  .pricing-table--2 {
+    grid-template-columns: 1fr;
+  }
+
+  .pricing-col {
+    border-left: 0;
+    border-top: 1px solid #1e293b;
+  }
+
+  .pricing-col:first-child {
+    border-top: 0;
+  }
+
+  .pricing-tagline,
+  .pricing-note {
+    min-height: 0;
+  }
+}
+

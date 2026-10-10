@@ -1,476 +1,248 @@
 /**
  * components/Plans.jsx
  *
- * 'use client' — needed for the "Show all features" toggle on each plan card.
+ * Pricing: a plain comparison table with a Websites / Online Stores switch
+ * and a USD / FCFA switch (the live rate is only fetched when FCFA is chosen).
  */
 
 "use client";
 
 import { useState, useEffect } from "react";
 import Link from "next/link";
-import CurrencyBadge from "./CurrencyBadge";
-
-// ─── Live XAF rate ──────────────────────────────────────────────────────────
 
 const FALLBACK_RATE = 620;
 
-function useXafRate() {
+const CATEGORIES = {
+  websites: {
+    label: "Websites",
+    plans: [
+      {
+        name: "Launch",
+        tagline: "One to three pages to get your business online.",
+        usd: 189,
+        note: "$189 for 1 page, $199 for 3 pages",
+        delivery: "Ready in under 3 days",
+        features: [
+          "Responsive design on every device",
+          "Hosting and domain free for the first year",
+          "SSL certificate and a business email",
+          "Basic SEO and Google Analytics",
+          "WhatsApp and email contact buttons",
+        ],
+        revisions: "2 rounds of revisions",
+      },
+      {
+        name: "Business",
+        tagline: "A full website for a company that is growing.",
+        usd: 269,
+        note: "$269 for 5 pages, $469 for 10 pages with a blog",
+        delivery: "Ready in under 7 days",
+        featured: true,
+        features: [
+          "Everything in Launch",
+          "Contact form that goes to your inbox",
+          "Sitemap and Google Search Console setup",
+          "Page speed optimisation",
+          "Blog you can update yourself (10 pages)",
+        ],
+        revisions: "2 rounds of revisions",
+      },
+      {
+        name: "Premium",
+        tagline: "Custom design, built around your brand.",
+        usd: 999,
+        note: "Up to 15 pages",
+        delivery: "Ready in under 14 days",
+        features: [
+          "Everything in Business",
+          "Custom design and animations",
+          "MTN MoMo, Orange Money and card payments",
+          "Admin dashboard",
+          "Monthly check-up and priority support",
+        ],
+        revisions: "3 rounds of revisions",
+      },
+    ],
+    custom: {
+      text: "Web apps, databases, integrations or anything that does not fit the packages above?",
+      cta: "Ask for a custom quote",
+    },
+  },
+  stores: {
+    label: "Online stores",
+    plans: [
+      {
+        name: "Starter Store",
+        tagline: "Everything you need to start selling.",
+        usd: 589,
+        note: "Up to 20 products",
+        delivery: "Ready in 5 to 7 days",
+        features: [
+          "Cart and checkout",
+          "Search and category filters",
+          "Order alerts on WhatsApp",
+          "Bank transfer payments",
+          "Order confirmation emails",
+        ],
+        revisions: "2 rounds of revisions",
+      },
+      {
+        name: "Pro Store",
+        tagline: "A complete store with online payments.",
+        usd: 1899,
+        note: "Up to 110 products",
+        delivery: "Ready in 7 to 14 days",
+        featured: true,
+        features: [
+          "Everything in Starter Store",
+          "MTN MoMo and Orange Money",
+          "Card payments through Stripe or PayPal",
+          "Customer accounts and order history",
+          "Admin panel with low-stock alerts",
+        ],
+        revisions: "3 rounds of revisions",
+      },
+    ],
+    custom: {
+      text: "Selling from several vendors, or need escrow payments and delivery tracking?",
+      cta: "Tell us about your marketplace",
+    },
+  },
+};
+
+function useXafRate(enabled) {
   const [rate, setRate] = useState(null);
+
   useEffect(() => {
+    if (!enabled || rate) return;
+    let cancelled = false;
     fetch("https://open.er-api.com/v6/latest/USD")
       .then((r) => r.json())
       .then((d) => {
-        if (d.result === "success" && d.rates?.XAF) setRate(d.rates.XAF);
-        else setRate(FALLBACK_RATE);
+        if (!cancelled) setRate(d?.rates?.XAF || FALLBACK_RATE);
       })
-      .catch(() => setRate(FALLBACK_RATE));
-  }, []);
+      .catch(() => {
+        if (!cancelled) setRate(FALLBACK_RATE);
+      });
+    return () => {
+      cancelled = true;
+    };
+  }, [enabled, rate]);
+
   return rate;
 }
 
-// Converts "$189" → dollar amount, returns null for non-numeric strings
-function parseDollars(priceStr) {
-  const n = Number(priceStr.replace(/[$,]/g, ""));
-  return isNaN(n) || n === 0 ? null : n;
+function formatPrice(usd, currency, rate) {
+  if (currency === "XAF") {
+    const xaf = Math.round((usd * (rate || FALLBACK_RATE)) / 500) * 500;
+    return `${xaf.toLocaleString("en-US")} FCFA`;
+  }
+  return `$${usd.toLocaleString("en-US")}`;
 }
-
-// ─── Data ──────────────────────────────────────────────────────────────────
-// features  — always visible (top 5)
-// extras    — revealed on toggle (green check)
-// notIncluded — revealed on toggle (red × — drives upgrade)
-
-const websitePlans = [
-  {
-    title: "Landing Page",
-    tagline: "High-conversion single-page site.",
-    price: "$189",
-    aiLabel: "Includes AI Chat Assistant",
-    guarantee: "2 free revision rounds included",
-    features: [
-      "1 fully responsive page",
-      "Hosting & domain (12 months free)",
-      "SSL security certificate",
-      "Professional business email (1st year free)",
-      "Basic SEO (meta tags, title, description)",
-    ],
-    extras: [
-      "WhatsApp & Email contact integration",
-      "Google Analytics setup",
-      "Mobile-first performance optimization",
-      "Favicon + social share image",
-      "Delivery in < 3 days",
-      "⚡ Higher search ranking / off-page SEO — available as add-on",
-    ],
-    notIncluded: ["Blog / CMS", "MoMo payment integration", "Multiple pages"],
-  },
-  {
-    title: "Starter Plan",
-    tagline: "Professional 3-page business presence.",
-    price: "$199",
-    aiLabel: "Includes Smart AI Support Bot",
-    note: "Everything in Landing Page, plus:",
-    guarantee: "2 free revision rounds included",
-    features: [
-      "Up to 3 responsive pages",
-      "Hosting & domain (12 months free)",
-      "SSL security certificate",
-      "Professional business email (1st year free)",
-      "Basic SEO + Google Analytics",
-    ],
-    extras: [
-      "WhatsApp & Email integration",
-      "Social media & Open Graph tags",
-      "Mobile-first design",
-      "Favicon + social share image",
-      "Delivery in < 3 days",
-      "⚡ Higher search ranking / off-page SEO — available as add-on",
-    ],
-    notIncluded: ["Blog / CMS", "MoMo payment integration"],
-  },
-  {
-    title: "Basic Plan",
-    tagline: "The complete 5-page startup toolkit.",
-    price: "$269",
-    aiLabel: "Includes Custom AI Assistant",
-    note: "Everything in Starter, plus:",
-    guarantee: "2 free revision rounds included",
-    features: [
-      "Up to 5 responsive pages",
-      "Hosting & domain (12 months free)",
-      "SSL certificate + page speed optimization",
-      "Professional business email (1st year free)",
-      "Basic on-page SEO",
-    ],
-    extras: [
-      "WhatsApp click-to-chat button",
-      "Google Analytics + Search Console setup",
-      "Contact form with email routing",
-      "Sitemap & robots.txt",
-      "Delivery in < 7 days",
-      "⚡ Higher search ranking / off-page SEO — available as add-on",
-    ],
-    notIncluded: ["CMS / Blog", "MoMo payment gateway"],
-  },
-  {
-    title: "Standard Plan",
-    tagline: "Scalable solution for growing businesses.",
-    price: "$469",
-    aiLabel: "AI Customer Lead-Gen Chatbot",
-    note: "Everything in Basic, plus:",
-    featured: true,
-    badge: "Most Popular",
-    guarantee: "2 free revision rounds + satisfaction guarantee",
-    features: [
-      "Up to 10 responsive pages",
-      "CMS / Blog (post articles yourself)",
-      "Professional business email (1st year free)",
-      "Google Maps & Analytics",
-      "Advanced on-page SEO",
-    ],
-    extras: [
-      "Search Console + sitemap submission",
-      "Social media links + Open Graph tags",
-      "WhatsApp click-to-chat + lead form",
-      "Newsletter subscribe form",
-      "Delivery in < 7 days",
-      "⚡ Higher search ranking / off-page SEO — available as add-on",
-    ],
-    notIncluded: [
-      "MoMo / card payment gateway",
-      "Custom UI animations",
-      "Admin panel dashboard",
-    ],
-  },
-  {
-    title: "Premium Plan",
-    tagline: "Tailored high-end experience.",
-    price: "$999",
-    aiLabel: "Advanced AI Integration",
-    note: "Everything in Standard, plus:",
-    badge: "Best Value",
-    guarantee: "3 free revision rounds + satisfaction guarantee",
-    features: [
-      "Up to 15 custom-designed pages",
-      "Custom UI design + micro-animations",
-      "MTN MoMo + Orange Money + card payments",
-      "Professional business email (1st year free)",
-      "Advanced SEO + structured data markup",
-    ],
-    extras: [
-      "Dark / light mode toggle",
-      "Full admin panel dashboard",
-      "Newsletter + subscriber management",
-      "Priority support + monthly site checkup",
-      "Speed & Core Web Vitals optimization",
-      "Delivery in < 14 days",
-      "⚡ Higher search ranking / off-page SEO — available as add-on",
-    ],
-    notIncluded: [],
-  },
-];
-
-const ecommercePlans = [
-  {
-    title: "Basic E-Commerce",
-    tagline: "Start selling online today.",
-    price: "$589",
-    aiLabel: "Includes AI Shopping Assistant",
-    featured: true,
-    guarantee: "2 free revision rounds included",
-    features: [
-      "Up to 20 products + shopping cart",
-      "Product search & category filters",
-      "WhatsApp order notifications",
-      "Manual payment support (bank transfer)",
-      "Order confirmation emails",
-    ],
-    extras: [
-      "Basic inventory management",
-      "Mobile-first & SEO-optimized",
-      "SSL certificate + security setup",
-      "Product image gallery per item",
-      "Delivery in 5–7 days",
-    ],
-    notIncluded: [
-      "Automated MoMo / card gateway",
-      "Customer accounts & order history",
-      "Bulk product import",
-    ],
-  },
-  {
-    title: "Advanced E-Commerce",
-    tagline: "Full-scale digital storefront.",
-    price: "$1,899",
-    aiLabel: "Personal Shopper AI",
-    note: "Everything in Basic E-Commerce, plus:",
-    guarantee: "3 free revision rounds + satisfaction guarantee",
-    features: [
-      "Up to 110 products + full admin panel",
-      "MTN MoMo + Orange Money gateways",
-      "Card payments (Stripe / PayPal)",
-      "Customer accounts + order history",
-      "Advanced inventory + low-stock alerts",
-    ],
-    extras: [
-      "Cart abandonment email automation",
-      "Advanced SEO + product schema markup",
-      "Shipping zone configuration",
-      "Discount codes & promotions module",
-      "Delivery in 7–14 days",
-    ],
-    notIncluded: ["Multi-vendor marketplace"],
-  },
-];
-
-// ─── Card component ─────────────────────────────────────────────────────────
-
-function PlanCard({ plan, xafRate }) {
-  const [open, setOpen] = useState(false);
-
-  const dollars = parseDollars(plan.price);
-  const xafAmount =
-    xafRate && dollars
-      ? Math.round(dollars * xafRate).toLocaleString("en") + " FCFA"
-      : null;
-
-  const moreCount =
-    (plan.extras?.length || 0) + (plan.notIncluded?.length || 0);
-  const hasMore = moreCount > 0;
-
-  return (
-    <div className={`plan-item${plan.featured ? " plan-item--featured" : ""}`}>
-      {plan.badge && (
-        <span
-          className={`plan-badge${
-            plan.badge === "Best Value" ? " plan-badge--gold" : ""
-          }`}
-        >
-          {plan.badge}
-        </span>
-      )}
-
-      <div className="plan-card">
-        <h3 className="plan-title">{plan.title}</h3>
-        <p className="plan-tagline">{plan.tagline}</p>
-
-        <div className="plan-price-block">
-          <span className="plan-price-label">Starting from</span>
-          <div className="plan-price-amount">
-            <span className="plan-price-currency">US$</span>
-            <span className="plan-price-num">
-              {plan.price.replace("$", "")}
-            </span>
-          </div>
-        </div>
-
-        {xafAmount && (
-          <p className="plan-xaf-price">
-            <span className="xaf-live-dot" aria-hidden="true" />
-            ≈&nbsp;<span className="xaf-val">{xafAmount}</span>
-            &nbsp;· live rate
-          </p>
-        )}
-
-        <p className="ai-highlight">
-          <i className="fa fa-robot"></i>
-          <strong>{plan.aiLabel}</strong>
-        </p>
-
-        {plan.note && <p className="plan-note-label">{plan.note}</p>}
-
-        {/* Top features — always visible */}
-        <ul className="plan-features plan-features-visible">
-          {plan.features.map((f) => (
-            <li key={f}>
-              <i className="fa fa-check-circle"></i> {f}
-            </li>
-          ))}
-        </ul>
-
-        {/* Extras + not-included — collapsible */}
-        {hasMore && (
-          <div
-            className={`features-wrapper${
-              open ? " features-wrapper--open" : ""
-            }`}
-          >
-            <ul className="plan-features">
-              {plan.extras?.map((f) =>
-                f.startsWith("\u26a1") ? (
-                  <li key={f} className="plan-feature--addon">
-                    <i className="fa fa-bolt"></i> {f.replace("\u26a1 ", "")}
-                  </li>
-                ) : (
-                  <li key={f}>
-                    <i className="fa fa-check-circle"></i> {f}
-                  </li>
-                ),
-              )}
-              {plan.notIncluded?.map((f) => (
-                <li key={f} className="plan-feature--no">
-                  <i className="fa fa-times-circle"></i> {f}
-                </li>
-              ))}
-            </ul>
-          </div>
-        )}
-
-        {plan.guarantee && (
-          <div className="plan-guarantee">
-            <i className="fa fa-shield-halved"></i>
-            <span>{plan.guarantee}</span>
-          </div>
-        )}
-
-        {/* Footer: toggle + CTA grouped — prevents collision */}
-        <div className="plan-card-footer">
-          {hasMore && (
-            <button
-              className="plan-features-toggle"
-              type="button"
-              onClick={() => setOpen((prev) => !prev)}
-            >
-              {open ? "Show less" : `+ ${moreCount} more details`}
-            </button>
-          )}
-          <Link href="/#contact" className="plan-cta-btn">
-            Start This Plan <i className="fa fa-arrow-right"></i>
-          </Link>
-        </div>
-      </div>
-    </div>
-  );
-}
-
-// ─── Main component ──────────────────────────────────────────────────────────
 
 export default function Plans() {
-  const xafRate = useXafRate();
-  const [tab, setTab] = useState("website"); // "website" | "ecommerce"
+  const [category, setCategory] = useState("websites");
+  const [currency, setCurrency] = useState("USD");
+  const rate = useXafRate(currency === "XAF");
 
-  const activePlans = tab === "website" ? websitePlans : ecommercePlans;
-
-  const customCard =
-    tab === "website" ? (
-      <div className="plan-item plan-card custom-quote-card" key="custom">
-        <h3 className="plan-title">Custom Solutions</h3>
-        <p className="plan-tagline">Complex web apps &amp; unique logic.</p>
-        <p className="plan-price">Tailored Pricing</p>
-        <ul className="plan-features mb-6">
-          <li>
-            <i className="fa fa-robot" style={{ color: "#22c55e" }}></i>{" "}
-            <strong>Custom AI Agent Workflows</strong>
-          </li>
-          <li>
-            <i className="fa fa-check-circle" style={{ color: "green" }}></i>{" "}
-            Bespoke Database Architecture
-          </li>
-          <li>
-            <i className="fa fa-check-circle" style={{ color: "green" }}></i>{" "}
-            API &amp; Full-Stack Engineering
-          </li>
-        </ul>
-        <Link href="/#contact" className="btn-custom-cta">
-          Request a Custom Quote
-        </Link>
-      </div>
-    ) : (
-      <div className="plan-item plan-card custom-quote-card" key="enterprise">
-        <h3 className="plan-title">Enterprise Commerce</h3>
-        <p className="plan-tagline">Multi-vendor or high-volume stores.</p>
-        <p className="plan-price">Tailored Pricing</p>
-        <ul className="plan-features mb-6">
-          <li>
-            <i className="fa fa-robot" style={{ color: "#22c55e" }}></i>{" "}
-            <strong>AI Inventory Automation</strong>
-          </li>
-          <li>
-            <i className="fa fa-check-circle" style={{ color: "green" }}></i>{" "}
-            Advanced Payment Escrow
-          </li>
-          <li>
-            <i className="fa fa-check-circle" style={{ color: "green" }}></i>{" "}
-            Vendor Dashboards &amp; Logistics
-          </li>
-        </ul>
-        <Link href="/#contact" className="btn-custom-cta">
-          Start Enterprise Project
-        </Link>
-      </div>
-    );
+  const active = CATEGORIES[category];
 
   return (
-    <section id="plans" className="plans-section">
-      {/* Header */}
-      <div className="plans-header">
-        <h2 className="section-title">Packages</h2>
-        <p className="plans-intro">
-          Scalable digital solutions designed for modern brands. Every project
-          is engineered for conversion, performance, security, and growth.
-        </p>
-        <p className="plans-note">
-          Prices represent <strong>base investments</strong>. Final quotes are
-          tailored to your specific feature requirements and scope.
-        </p>
-        <div
-          style={{
-            marginTop: "16px",
-            display: "flex",
-            justifyContent: "center",
-          }}
-        >
-          <CurrencyBadge />
+    <section id="plans" className="pricing" aria-labelledby="pricing-title">
+      <div className="pricing-inner">
+        <header className="pricing-header">
+          <h2 id="pricing-title">Pricing</h2>
+          <p>
+            Every package includes hosting and a domain for the first year, an
+            SSL certificate and a business email. The prices below are where
+            each package starts. The final quote depends on what you need
+            built.
+          </p>
+        </header>
+
+        <div className="pricing-controls">
+          <div className="pricing-tabs" role="tablist" aria-label="Category">
+            {Object.entries(CATEGORIES).map(([key, cat]) => (
+              <button
+                key={key}
+                type="button"
+                role="tab"
+                aria-selected={category === key}
+                onClick={() => setCategory(key)}
+              >
+                {cat.label}
+              </button>
+            ))}
+          </div>
+
+          <div className="pricing-currency" role="group" aria-label="Currency">
+            {[
+              ["USD", "USD"],
+              ["XAF", "FCFA"],
+            ].map(([code, label]) => (
+              <button
+                key={code}
+                type="button"
+                aria-pressed={currency === code}
+                onClick={() => setCurrency(code)}
+              >
+                {label}
+              </button>
+            ))}
+          </div>
         </div>
-      </div>
 
-      {/* ── Category tabs ── */}
-      <div className="plans-tabs" role="tablist" aria-label="Plan categories">
-        <button
-          role="tab"
-          aria-selected={tab === "website"}
-          className={`plans-tab-btn${tab === "website" ? " plans-tab-btn--active" : ""}`}
-          onClick={() => setTab("website")}
+        <div
+          className={`pricing-table pricing-table--${active.plans.length}`}
+          role="tabpanel"
         >
-          <i className="fa fa-globe" />
-          Website Plans
-        </button>
-        <button
-          role="tab"
-          aria-selected={tab === "ecommerce"}
-          className={`plans-tab-btn${tab === "ecommerce" ? " plans-tab-btn--active" : ""}`}
-          onClick={() => setTab("ecommerce")}
-        >
-          <i className="fa fa-shopping-cart" />
-          E-Commerce
-        </button>
-      </div>
+          {active.plans.map((plan) => (
+            <article
+              key={plan.name}
+              className={`pricing-col${plan.featured ? " pricing-col--featured" : ""}`}
+            >
+              <p className="pricing-flag">
+                {plan.featured ? "Most chosen" : "\u00a0"}
+              </p>
+              <h3>{plan.name}</h3>
+              <p className="pricing-tagline">{plan.tagline}</p>
 
-      {/* ── Plan cards (grid on desktop, snap-scroll on mobile) ── */}
-      <div className="plans-grid" role="tabpanel">
-        {activePlans.map((plan) => (
-          <PlanCard key={plan.title} plan={plan} xafRate={xafRate} />
-        ))}
-        {customCard}
-      </div>
+              <p className="pricing-price">
+                <span>From</span> {formatPrice(plan.usd, currency, rate)}
+              </p>
+              <p className="pricing-note">{plan.note}</p>
 
-      {/* Mobile scroll hint */}
-      <p className="plans-scroll-hint" aria-hidden="true">
-        <i className="fa fa-hand-pointer" /> Swipe to see more plans
-      </p>
+              <Link href="/#contact" className="pricing-btn">
+                Get a quote
+              </Link>
 
-      {/* Trust signal */}
-      <div className="plans-trust-bar">
-        <span>
-          <i className="fa fa-shield-alt"></i> No hidden fees
-        </span>
-        <span className="trust-sep">·</span>
-        <span>
-          <i className="fa fa-comments"></i> Free consultation
-        </span>
-        <span className="trust-sep">·</span>
-        <span>
-          <i className="fa fa-check-double"></i> 100% transparent scoping
-        </span>
+              <ul>
+                {plan.features.map((feature) => (
+                  <li key={feature}>{feature}</li>
+                ))}
+              </ul>
+
+              <p className="pricing-delivery">
+                {plan.delivery}
+                <br />
+                {plan.revisions}
+              </p>
+            </article>
+          ))}
+        </div>
+
+        <p className="pricing-custom">
+          {active.custom.text}{" "}
+          <Link href="/#contact">{active.custom.cta}</Link>
+        </p>
+
+        <p className="pricing-footnote">
+          {currency === "XAF" &&
+            "FCFA amounts are rounded and based on today's exchange rate. "}
+          Not sure which package fits?{" "}
+          <Link href="/#booking">Book a free call</Link> and we will work it out
+          together.
+        </p>
       </div>
     </section>
   );
