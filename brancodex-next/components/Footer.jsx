@@ -1,102 +1,82 @@
 /**
  * components/Footer.jsx
  *
- * Shared footer used on every page.
- * No interactivity needed, so this is a Server Component (no 'use client').
+ * Shared footer. Server component.
  */
 
 import Link from "next/link";
 import Image from "next/image";
 
-const quickLinks = [
-  { label: "Home", href: "/" },
-  { label: "About", href: "/#about" },
-  { label: "Services", href: "/#services" },
-  { label: "Skills", href: "/#skills" },
-  { label: "Projects", href: "/#projects" },
-  { label: "Blog", href: "/blog" },
-  { label: "Our Process", href: "/our-process" },
-  { label: "Guide", href: "/guide" },
-  { label: "FAQ's", href: "/faq" },
-  { label: "Playground", href: "/playground" },
-  { label: "Contact", href: "/contact" },
-  { label: "Sign In", href: "/auth/login" },
-  { label: "Register", href: "/auth/register" },
-  { label: "Privacy Policy", href: "/privacy-policy" },
-  { label: "Terms of Service", href: "/terms" },
+const columns = [
+  {
+    title: "Company",
+    links: [
+      { label: "Work", href: "/#projects" },
+      { label: "Services", href: "/#services" },
+      { label: "Pricing", href: "/#plans" },
+      { label: "Our process", href: "/our-process" },
+      { label: "Contact", href: "/contact" },
+    ],
+  },
+  {
+    title: "Learn",
+    links: [
+      { label: "Blog", href: "/blog" },
+      { label: "Website guide", href: "/guide" },
+      { label: "FAQ", href: "/faq" },
+      { label: "Playground", href: "/playground" },
+    ],
+  },
+  {
+    title: "Legal",
+    links: [
+      { label: "Privacy policy", href: "/privacy-policy" },
+      { label: "Terms of service", href: "/terms" },
+    ],
+  },
 ];
 
-const socialLinks = [
+const social = [
+  { label: "WhatsApp", href: "https://wa.me/237654155218", icon: "fab fa-whatsapp" },
   {
-    icon: "fab fa-whatsapp",
-    href: "https://wa.link/fhyxfh",
-    label: "WhatsApp",
-  },
-  {
-    icon: "fas fa-envelope",
-    href: "mailto:contact@brancodex.com",
-    label: "Email",
-  },
-  {
-    icon: "fab fa-linkedin-in",
-    href: "https://www.linkedin.com/in/beng-brandon-338382291",
     label: "LinkedIn",
+    href: "https://www.linkedin.com/in/beng-brandon-338382291",
+    icon: "fab fa-linkedin-in",
   },
+  { label: "GitHub", href: "https://github.com/Bengche", icon: "fab fa-github" },
   {
-    icon: "fab fa-github",
-    href: "https://github.com/Bengche",
-    label: "GitHub",
-  },
-  {
-    icon: "fab fa-facebook-f",
-    href: "https://www.facebook.com/bengbrandonche",
     label: "Facebook",
+    href: "https://www.facebook.com/bengbrandonche",
+    icon: "fab fa-facebook-f",
   },
 ];
 
 export default function Footer() {
-  const currentYear = new Date().getFullYear();
+  const year = new Date().getFullYear();
 
   return (
-    <footer className="footer-section" data-aos="fade-up">
-      <div className="footer-container">
-        {/* Brand */}
+    <footer className="footer">
+      <div className="footer-inner">
         <div className="footer-brand">
-          <Link href="/">
-            <h3 className="flex items-center gap-2">
-              <Image
-                src="/images/favicon.png"
-                alt="BranCodeX"
-                width={35}
-                height={35}
-              />
-              <span className="font-bold text-xl tracking-wide">
-                <span className="bran">Bran</span>
-                <span className="code">Code</span>
-                <span className="x">X</span>
-              </span>
-            </h3>
+          <Link href="/" className="footer-logo" aria-label="BranCodeX home">
+            <Image src="/images/favicon.png" alt="" width={32} height={32} />
+            <span>
+              <span className="bran">Bran</span>
+              <span className="code">Code</span>
+              <span className="x">X</span>
+            </span>
           </Link>
-          <p>Crafting Interactive Experiences with Passion &amp; Precision.</p>
-        </div>
-
-        {/* Quick links */}
-        <div className="footer-links">
-          <h4>Quick Links</h4>
-          <ul>
-            {quickLinks.map((link) => (
-              <li key={link.href}>
-                <Link href={link.href}>{link.label}</Link>
-              </li>
-            ))}
-          </ul>
-        </div>
-
-        {/* Social icons */}
-        <div className="footer-social">
-          <h4>Follow Us</h4>
-          <div className="social-icons">
-            {socialLinks.map((s) => (
+          <p>
+            Websites, online stores and web apps for businesses in Cameroon and
+            worldwide.
+          </p>
+          <p className="footer-contact">
+            <a href="mailto:contact@brancodex.com">contact@brancodex.com</a>
+            <br />
+            <a href="tel:+237654155218">+237 654 155 218</a>
+          </p>
+          <div className="footer-social">
+            {social.map((s) => (
               <a
                 key={s.href}
                 href={s.href}
@@ -104,90 +84,33 @@ export default function Footer() {
                 rel="noopener noreferrer"
                 aria-label={s.label}
               >
-                <i className={s.icon}></i>
+                <i className={s.icon} aria-hidden="true"></i>
               </a>
             ))}
           </div>
         </div>
-      </div>
 
-      {/* Legal registration bar */}
-      <div
-        style={{
-          borderTop: "1px solid #1e293b",
-          padding: "0.75rem 2rem",
-          display: "flex",
-          flexWrap: "wrap",
-          justifyContent: "center",
-          alignItems: "center",
-          gap: "0.4rem 1.5rem",
-          textAlign: "center",
-        }}
-      >
-        <span
-          style={{
-            color: "#475569",
-            fontSize: "0.72rem",
-            letterSpacing: "0.04em",
-            textTransform: "uppercase",
-            fontWeight: 600,
-          }}
-        >
-          BRANCODEX SARL &mdash; Registered in Cameroon
-        </span>
-        <span
-          style={{
-            color: "#334155",
-            fontSize: "0.68rem",
-            letterSpacing: "0.03em",
-          }}
-        >
-          RCCM&nbsp;RC/EBWA/2026/B/65
-        </span>
-        <span
-          style={{
-            color: "#334155",
-            fontSize: "0.68rem",
-            letterSpacing: "0.03em",
-          }}
-        >
-          NIU&nbsp;M052618656154Z
-        </span>
+        {columns.map((col) => (
+          <nav key={col.title} className="footer-col" aria-label={col.title}>
+            <h4>{col.title}</h4>
+            <ul>
+              {col.links.map((link) => (
+                <li key={link.href}>
+                  <Link href={link.href}>{link.label}</Link>
+                </li>
+              ))}
+            </ul>
+          </nav>
+        ))}
       </div>
 
       <div className="footer-bottom">
         <p>
-          &copy; 2025&ndash;{currentYear} <span className="bran">Bran</span>
-          <span className="code">Code</span>
-          <span className="x">X</span> | All Rights Reserved.
+          &copy; 2025&ndash;{year} BranCodeX. All rights reserved.
         </p>
-        <p style={{ marginTop: "0.5rem", fontSize: "0.78rem" }}>
-          <Link
-            href="/privacy-policy"
-            style={{
-              color: "#64748b",
-              textDecoration: "none",
-              marginRight: "1rem",
-            }}
-          >
-            Privacy Policy
-          </Link>
-          <Link
-            href="/terms"
-            style={{
-              color: "#64748b",
-              textDecoration: "none",
-              marginRight: "1rem",
-            }}
-          >
-            Terms of Service
-          </Link>
-          <a
-            href="mailto:contact@brancodex.com"
-            style={{ color: "#64748b", textDecoration: "none" }}
-          >
-            contact@brancodex.com
-          </a>
+        <p>
+          BRANCODEX SARL, registered in Cameroon. RCCM RC/EBWA/2026/B/65, NIU
+          M052618656154Z.
         </p>
       </div>
     </footer>

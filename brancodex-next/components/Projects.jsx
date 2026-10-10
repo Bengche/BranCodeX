@@ -1,339 +1,103 @@
-"use client";
+/**
+ * components/Projects.jsx
+ *
+ * Two featured builds with real screenshots, plus smaller builds as links.
+ */
 
-import { useRef, useState, useEffect } from "react";
+import Image from "next/image";
 
-const BACKEND_URL = process.env.NEXT_PUBLIC_BACKEND_URL || "http://localhost:4000";
-const PROJECT_SLUGS = ["njimbong", "fonlok", "jobvibe", "country"];
+const featured = [
+  {
+    name: "Njimbong",
+    url: "https://www.njimbong.com/",
+    image: "/images/work/njimbong.jpg",
+    alt: "Njimbong marketplace home page showing the search bar and categories",
+    summary:
+      "A buy-and-sell marketplace for Cameroon. Sellers are identity-verified and payments are held in escrow until the buyer is satisfied.",
+    stack: "Next.js, Node.js",
+  },
+  {
+    name: "Fonlok",
+    url: "https://www.fonlok.com/",
+    image: "/images/work/fonlok.jpg",
+    alt: "Fonlok escrow payment service home page",
+    summary:
+      "An escrow service for MTN MoMo and Orange Money deals. Fonlok holds the money until buyer and seller are both happy, so neither side has to trust a stranger.",
+    stack: "Web app, mobile money integration",
+  },
+];
 
-function formatViews(n) {
-  if (n >= 1000) return (n / 1000).toFixed(1).replace(/\.0$/, "") + "k";
-  return String(n);
-}
-
-function useProjectViews() {
-  const [views, setViews] = useState({});
-
-  useEffect(() => {
-    const stored = (() => {
-      try { return JSON.parse(localStorage.getItem("viewedProjects") || "{}"); }
-      catch { return {}; }
-    })();
-
-    PROJECT_SLUGS.forEach(async (slug) => {
-      try {
-        // Record view if first visit
-        if (!stored[slug]) {
-          const res = await fetch(`${BACKEND_URL}/api/projects/${slug}/view`, { method: "POST" });
-          const data = await res.json();
-          if (data.views) setViews((v) => ({ ...v, [slug]: data.views }));
-          stored[slug] = true;
-          localStorage.setItem("viewedProjects", JSON.stringify(stored));
-        } else {
-          const res = await fetch(`${BACKEND_URL}/api/projects/${slug}/views`);
-          const data = await res.json();
-          if (data.views) setViews((v) => ({ ...v, [slug]: data.views }));
-        }
-      } catch { /* non-fatal */ }
-    });
-  }, []); // eslint-disable-line react-hooks/exhaustive-deps
-
-  return views;
-}
+const smaller = [
+  {
+    name: "Job Finder",
+    url: "https://jobvibe.netlify.app/",
+    note: "React, live job search by country and category",
+  },
+  {
+    name: "Country Information",
+    url: "https://country-info-searcher.netlify.app/",
+    note: "JavaScript and a REST API, facts about any country",
+  },
+];
 
 export default function Projects() {
-  const viewportRef = useRef(null);
-  const [loadedIframes, setLoadedIframes] = useState({});
-  const views = useProjectViews();
-
-  function scrollSlider(direction) {
-    const viewport = viewportRef.current;
-    const card = viewport ? viewport.querySelector(".project-card") : null;
-    if (viewport && card) {
-      const scrollAmount = card.offsetWidth + 20;
-      viewport.scrollBy({ left: direction * scrollAmount, behavior: "smooth" });
-    }
-  }
-
-  function loadIframe(id, url) {
-    setLoadedIframes((prev) => ({ ...prev, [id]: url }));
-  }
-
-  function ViewBadge({ slug }) {
-    const count = views[slug];
-    if (!count) return null;
-    return (
-      <span className="project-views-badge">
-        <i className="fa fa-eye" /> {formatViews(count)}
-      </span>
-    );
-  }
-
   return (
-    <section
-      id="projects"
-      className="projects-section py-16 bg-gray-900 text-white overflow-hidden mt-6"
-    >
-      <div className="max-w-7xl mx-auto px-4">
-        <div className="text-center mb-10">
-          <h2
-            className="text-4xl font-bold mb-4"
-            style={{ fontFamily: "'Playfair Display', serif", color: "yellow" }}
-          >
-            Projects
-          </h2>
-          <p className="text-gray-300 max-w-2xl mx-auto">
-            Focused results, clean UX, and fast performance for clients in
-            Bamenda, Cameroon, and the world.
+    <section id="projects" className="sec sec--alt" aria-labelledby="work-title">
+      <div className="sec-inner">
+        <header className="sec-head">
+          <h2 id="work-title">Selected work</h2>
+          <p>
+            Two products we built and run for real users in Cameroon. Open them
+            and try them.
           </p>
-        </div>
-        <div className="projects-viewport" ref={viewportRef}>
-          <div className="projects-track" id="projectTrack">
-            {/* Card 1: Njimbong */}
-            <div className="project-card">
-              <div className="media-container" id="media-njimbong">
-                {loadedIframes["media-njimbong"] ? (
-                  <iframe
-                    src={loadedIframes["media-njimbong"]}
-                    title="Njimbong"
-                    className="w-full h-full"
-                    sandbox="allow-scripts allow-same-origin allow-forms"
-                  />
-                ) : (
-                  <>
-                    <div
-                      className="overlay-play"
-                      onClick={() =>
-                        loadIframe(
-                          "media-njimbong",
-                          "https://www.njimbong.com/",
-                        )
-                      }
-                    >
-                      <i className="fas fa-play-circle text-5xl"></i>
-                      <span className="mt-2 font-bold">Interact with Site</span>
-                    </div>
-                    <img
-                      src="/images/coder.jpg"
-                      alt="Njimbong"
-                      className="w-full h-full object-cover"
-                    />
-                  </>
-                )}
-              </div>
-              <div className="p-6">
-                <div className="flex items-start justify-between gap-2 mb-1">
-                  <h3 className="text-xl font-bold">Njimbong Marketplace</h3>
-                  <ViewBadge slug="njimbong" />
-                </div>
-                <span className="text-xs bg-blue-600 px-2 py-1 rounded">
-                  Next.js + Node.js
-                </span>
-                <p className="text-gray-400 text-sm mt-3">
-                  Secure buy-and-sell platform for the Cameroonian market.
-                </p>
-                <a
-                  href="https://www.njimbong.com/"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="mt-4 block text-center bg-yellow-500 text-black py-2 rounded font-bold"
-                >
-                  View Live
-                </a>
-              </div>
-            </div>
+        </header>
 
-            {/* Card 2: Fonlok */}
-            <div className="project-card">
-              <div className="media-container" id="media-fonlok">
-                {loadedIframes["media-fonlok"] ? (
-                  <iframe
-                    src={loadedIframes["media-fonlok"]}
-                    title="Fonlok"
-                    className="w-full h-full"
-                    sandbox="allow-scripts allow-same-origin allow-forms"
-                  />
-                ) : (
-                  <>
-                    <div
-                      className="overlay-play"
-                      onClick={() =>
-                        loadIframe("media-fonlok", "https://www.fonlok.com/")
-                      }
-                    >
-                      <i className="fas fa-play-circle text-5xl"></i>
-                      <span className="mt-2 font-bold">Interact with Site</span>
-                    </div>
-                    <img
-                      src="/images/coder.jpg"
-                      alt="Fonlok"
-                      className="w-full h-full object-cover"
-                    />
-                  </>
-                )}
-              </div>
-              <div className="p-6">
-                <div className="flex items-start justify-between gap-2 mb-1">
-                  <h3 className="text-xl font-bold">Fonlok Escrow</h3>
-                  <ViewBadge slug="fonlok" />
-                </div>
-                <span className="text-xs bg-green-600 px-2 py-1 rounded">
-                  FinTech
-                </span>
-                <p className="text-gray-400 text-sm mt-3">
-                  Trust-as-a-service middleman for MoMo transactions.
-                </p>
-                <a
-                  href="https://www.fonlok.com/"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="mt-4 block text-center bg-yellow-500 text-black py-2 rounded font-bold"
-                >
-                  View Live
-                </a>
-              </div>
-            </div>
-
-            {/* Card 3: Job Finder */}
-            <div className="project-card">
-              <div className="media-container" id="media-jobvibe">
-                {loadedIframes["media-jobvibe"] ? (
-                  <iframe
-                    src={loadedIframes["media-jobvibe"]}
-                    title="Job Vibe"
-                    className="w-full h-full"
-                    sandbox="allow-scripts allow-same-origin allow-forms"
-                  />
-                ) : (
-                  <>
-                    <div
-                      className="overlay-play"
-                      onClick={() =>
-                        loadIframe(
-                          "media-jobvibe",
-                          "https://jobvibe.netlify.app/",
-                        )
-                      }
-                    >
-                      <i className="fas fa-play-circle text-5xl"></i>
-                      <span className="mt-2 font-bold">Interact with Site</span>
-                    </div>
-                    <img
-                      src="/images/coder.jpg"
-                      alt="Job Vibe"
-                      className="w-full h-full object-cover"
-                    />
-                  </>
-                )}
-              </div>
-              <div className="p-6">
-                <div className="flex items-start justify-between gap-2 mb-1">
-                  <h3 className="text-xl font-bold">Job Finder App</h3>
-                  <ViewBadge slug="jobvibe" />
-                </div>
-                <span className="text-xs bg-purple-600 px-2 py-1 rounded">
-                  React
-                </span>
-                <p className="text-gray-400 text-sm mt-3">
-                  Global job search tool with real-time API filtering.
-                </p>
-                <a
-                  href="https://jobvibe.netlify.app/"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="mt-4 block text-center bg-yellow-500 text-black py-2 rounded font-bold"
-                >
-                  View Live
-                </a>
-              </div>
-            </div>
-
-            {/* Card 4: Country */}
-            <div className="project-card">
-              <div className="media-container" id="media-country">
-                {loadedIframes["media-country"] ? (
-                  <iframe
-                    src={loadedIframes["media-country"]}
-                    title="Country Search"
-                    className="w-full h-full"
-                    sandbox="allow-scripts allow-same-origin allow-forms"
-                  />
-                ) : (
-                  <>
-                    <div
-                      className="overlay-play"
-                      onClick={() =>
-                        loadIframe(
-                          "media-country",
-                          "https://country-info-searcher.netlify.app/",
-                        )
-                      }
-                    >
-                      <i className="fas fa-play-circle text-5xl"></i>
-                      <span className="mt-2 font-bold">Interact with Site</span>
-                    </div>
-                    <img
-                      src="/images/country-information-searcher.jpg"
-                      alt="Country Search"
-                      className="w-full h-full object-cover"
-                    />
-                  </>
-                )}
-              </div>
-              <div className="p-6">
-                <div className="flex items-start justify-between gap-2 mb-1">
-                  <h3 className="text-xl font-bold">Country Information</h3>
-                  <ViewBadge slug="country" />
-                </div>
-                <span className="text-xs bg-orange-600 px-2 py-1 rounded">
-                  JS API
-                </span>
-                <p className="text-gray-400 text-sm mt-3">
-                  Data visualization tool for global geographic stats.
-                </p>
-                <a
-                  href="https://country-info-searcher.netlify.app/"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="mt-4 block text-center bg-yellow-500 text-black py-2 rounded font-bold"
-                >
-                  View Live
-                </a>
-              </div>
-            </div>
-
-            {/* Card 5: School */}
-            <div className="project-card">
-              <div className="media-container">
-                <div className="coming-soon">Coming Soon</div>
-                <img
-                  src="/images/coming_soon.jpg"
-                  alt="School System"
-                  className="w-full h-full object-cover opacity-50"
+        <div className="work-grid">
+          {featured.map((p) => (
+            <article key={p.name} className="work-card">
+              <a
+                href={p.url}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="work-shot"
+                aria-label={`Visit ${p.name}`}
+              >
+                <Image
+                  src={p.image}
+                  alt={p.alt}
+                  width={1280}
+                  height={600}
+                  sizes="(max-width: 900px) 100vw, 520px"
                 />
+              </a>
+              <div className="work-body">
+                <h3>{p.name}</h3>
+                <p>{p.summary}</p>
+                <p className="work-stack">{p.stack}</p>
+                <a
+                  href={p.url}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="text-link"
+                >
+                  Visit {p.name} <span aria-hidden="true">&rarr;</span>
+                </a>
               </div>
-              <div className="p-6">
-                <h3 className="text-xl font-bold">School Management</h3>
-                <span className="text-xs bg-gray-600 px-2 py-1 rounded">
-                  Next.js
-                </span>
-                <p className="text-gray-400 text-sm mt-3">
-                  Enterprise-grade admin tool for educational centers.
-                </p>
-                <button className="mt-4 w-full bg-gray-700 text-gray-400 py-2 rounded cursor-not-allowed">
-                  In Development
-                </button>
-              </div>
-            </div>
-          </div>
+            </article>
+          ))}
         </div>
-        <div className="flex justify-center items-center gap-6 mt-10">
-          <button className="slider-nav" onClick={() => scrollSlider(-1)}>
-            ❮
-          </button>
-          <button className="slider-nav" onClick={() => scrollSlider(1)}>
-            ❯
-          </button>
-        </div>
+
+        <p className="work-more">
+          Smaller builds:{" "}
+          {smaller.map((p, i) => (
+            <span key={p.name}>
+              <a href={p.url} target="_blank" rel="noopener noreferrer">
+                {p.name}
+              </a>{" "}
+              ({p.note}){i < smaller.length - 1 ? "; " : "."}
+            </span>
+          ))}
+        </p>
       </div>
     </section>
   );

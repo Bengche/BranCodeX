@@ -16,8 +16,8 @@ export default function AOSProvider({ children }) {
   useEffect(() => {
     AOS.init({
       once: true,
-      duration: 1000,
-      easing: "ease-in-out",
+      duration: 500,
+      easing: "ease-out",
       // Disable mutation observer — prevents "Node cannot be found" errors
       // caused by React replacing DOM nodes between renders
       disableMutationObserver: true,

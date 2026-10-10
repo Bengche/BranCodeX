@@ -1,159 +1,160 @@
+/**
+ * components/Contact.jsx
+ *
+ * One place to get in touch: project form, plus direct channels and the
+ * booking link. Used on the home page and on /contact (asPage).
+ */
+
 "use client";
 
 import { useState } from "react";
 
-const BACKEND_URL = process.env.NEXT_PUBLIC_BACKEND_URL || "http://localhost:4000";
+const BACKEND_URL =
+  process.env.NEXT_PUBLIC_BACKEND_URL || "http://localhost:4000";
+const CALENDLY_URL = "https://calendly.com/bengc102/30min";
 
-export default function Contact() {
+export default function Contact({ asPage = false }) {
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [message, setMessage] = useState("");
-  const [statusMsg, setStatusMsg] = useState("");
+  const [status, setStatus] = useState({ type: "", text: "" });
   const [sending, setSending] = useState(false);
-  const [success, setSuccess] = useState(false);
 
-  async function sendMessage(e) {
+  const Heading = asPage ? "h1" : "h2";
+
+  async function submit(e) {
     e.preventDefault();
-    if (!name.trim() || !email.trim() || !message.trim()) return;
     setSending(true);
-    setStatusMsg("Sending your message…");
-    setSuccess(false);
+    setStatus({ type: "", text: "" });
     try {
       const res = await fetch(`${BACKEND_URL}/api/contact`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ name: name.trim(), email: email.trim(), message: message.trim() }),
+        body: JSON.stringify({
+          name: name.trim(),
+          email: email.trim(),
+          message: message.trim(),
+        }),
       });
-      if (res.ok) {
-        setSuccess(true);
-        setStatusMsg("Message sent! You'll receive a confirmation email shortly.");
-        setName("");
-        setEmail("");
-        setMessage("");
-      } else {
-        const data = await res.json();
-        setStatusMsg(data?.error || "Something went wrong. Please try again.");
-      }
+      if (!res.ok) throw new Error("failed");
+      setStatus({
+        type: "success",
+        text: "Message sent. A confirmation is on its way to your inbox and we will reply within 24 hours.",
+      });
+      setName("");
+      setEmail("");
+      setMessage("");
     } catch {
-      setStatusMsg("Network error. Please check your connection and try again.");
+      setStatus({
+        type: "error",
+        text: "Your message could not be sent. Please try again, or write to contact@brancodex.com.",
+      });
+    } finally {
+      setSending(false);
     }
-    setSending(false);
   }
 
   return (
-    <section id="contact" className="contact-section" data-aos="fade-up">
-      <div className="contact-container">
-        <h2>💌 Let&#39;s Connect</h2>
-        <p className="contact-intro">
-          Got a project in mind, a question to ask, or just want to say hi?{" "}
-          I&#39;d love to hear from you. Fill out the form and let&#39;s build
-          something amazing!
-        </p>
+    <section
+      id="contact"
+      className={`sec sec--alt${asPage ? " sec--page" : ""}`}
+      aria-labelledby="contact-title"
+    >
+      <div className="sec-inner contact">
+        <div>
+          <header className="sec-head">
+            <Heading id="contact-title">Tell us about your project</Heading>
+            <p>
+              Say what you need built and when you need it. We reply within 24
+              hours with next steps and a price.
+            </p>
+          </header>
 
-        <form id="contact-form" className="contact-form" onSubmit={sendMessage}>
-          <div className="form-group">
-            <label htmlFor="name">
-              <i className="fas fa-user"></i> Your Name
-            </label>
-            <input
-              type="text"
-              id="name"
-              required
-              placeholder="Enter your name"
-              name="name"
-              value={name}
-              onChange={(e) => setName(e.target.value)}
-            />
-          </div>
-
-          <div className="form-group">
-            <label htmlFor="email">
-              <i className="fas fa-envelope"></i> Your Email
-            </label>
-            <input
-              type="email"
-              id="email"
-              required
-              placeholder="Enter your email"
-              name="email"
-              value={email}
-              onChange={(e) => setEmail(e.target.value)}
-            />
-          </div>
-
-          <div className="form-group">
-            <label htmlFor="message">
-              <i className="fas fa-comment-dots"></i> Message
-            </label>
-            <textarea
-              id="message"
-              rows="5"
-              required
-              placeholder="What&#39;s on your mind?"
-              name="message"
-              value={message}
-              onChange={(e) => setMessage(e.target.value)}
-            ></textarea>
-          </div>
-          <button type="submit" className="contact-btn" disabled={sending}>
-            <i className="fas fa-paper-plane"></i>{" "}
-            {sending ? "Sending…" : "Send Message"}
-          </button>
-        </form>
-
-        {statusMsg && (
-          <div
-            id="message-status"
-            className={`message-status${success ? " success" : " error"}`}
-          >
-            {success ? <i className="fas fa-circle-check" /> : <i className="fas fa-triangle-exclamation" />}
-            {" "}{statusMsg}
-          </div>
-        )}
-
-        <div className="social-links" data-aos="fade-up">
-          <p>Or connect with us on social media 👇</p>
-          <div className="icons">
-            <a
-              href="https://wa.link/fhyxfh"
-              target="_blank"
-              rel="noopener noreferrer"
-            >
-              <i className="fab fa-whatsapp"></i>
-            </a>
-            <a href="mailto:contact@brancodex.com">
-              <i className="fas fa-envelope"></i>
-            </a>
-            <a
-              href="https://wa.link/fhyxfh"
-              target="_blank"
-              rel="noopener noreferrer"
-            >
-              <i className="fab fa-x-twitter"></i>
-            </a>
-            <a
-              href="https://www.linkedin.com/in/beng-brandon-338382291?utm_source=share&utm_campaign=share_via&utm_content=profile&utm_medium=android_app"
-              target="_blank"
-              rel="noopener noreferrer"
-            >
-              <i className="fab fa-linkedin-in"></i>
-            </a>
-            <a
-              href="https://github.com/Bengche"
-              target="_blank"
-              rel="noopener noreferrer"
-            >
-              <i className="fab fa-github"></i>
-            </a>
-            <a
-              href="https://www.facebook.com/bengbrandonche?mibextid=ZbWKwL"
-              target="_blank"
-              rel="noopener noreferrer"
-            >
-              <i className="fab fa-facebook-f"></i>
-            </a>
-          </div>
+          <form className="form" onSubmit={submit}>
+            <div className="field">
+              <label htmlFor="contact-name">Name</label>
+              <input
+                id="contact-name"
+                name="name"
+                autoComplete="name"
+                required
+                maxLength={120}
+                value={name}
+                onChange={(e) => setName(e.target.value)}
+              />
+            </div>
+            <div className="field">
+              <label htmlFor="contact-email">Email</label>
+              <input
+                id="contact-email"
+                name="email"
+                type="email"
+                autoComplete="email"
+                required
+                value={email}
+                onChange={(e) => setEmail(e.target.value)}
+              />
+            </div>
+            <div className="field">
+              <label htmlFor="contact-message">Your project</label>
+              <textarea
+                id="contact-message"
+                name="message"
+                rows="6"
+                required
+                maxLength={5000}
+                placeholder="What do you need, and when do you need it?"
+                value={message}
+                onChange={(e) => setMessage(e.target.value)}
+              />
+            </div>
+            <button type="submit" className="btn btn--primary" disabled={sending}>
+              {sending ? "Sending…" : "Send message"}
+            </button>
+            {status.text && (
+              <p role="status" className={`form-status form-status--${status.type}`}>
+                {status.text}
+              </p>
+            )}
+          </form>
         </div>
+
+        <aside id="booking" className="contact-side" aria-label="Other ways to reach us">
+          <h3>Prefer to talk?</h3>
+          <p>
+            Book a free 30-minute call and we will go through your idea
+            together. No commitment.
+          </p>
+          <a
+            href={CALENDLY_URL}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="btn btn--ghost"
+          >
+            Book a free call
+          </a>
+
+          <ul className="contact-list">
+            <li>
+              <span>WhatsApp</span>
+              <a href="https://wa.me/237654155218" target="_blank" rel="noopener noreferrer">
+                +237 654 155 218
+              </a>
+            </li>
+            <li>
+              <span>Phone</span>
+              <a href="tel:+237654155218">+237 654 155 218</a>
+            </li>
+            <li>
+              <span>Email</span>
+              <a href="mailto:contact@brancodex.com">contact@brancodex.com</a>
+            </li>
+            <li>
+              <span>Based in</span>
+              Bamenda, Cameroon
+            </li>
+          </ul>
+        </aside>
       </div>
     </section>
   );

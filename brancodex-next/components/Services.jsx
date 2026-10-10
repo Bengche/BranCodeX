@@ -1,102 +1,45 @@
 /**
  * components/Services.jsx
- *
- * 'use client' — needed for the scroll slider button interactivity.
  */
-
-"use client";
-
-import { useRef } from "react";
-import Link from "next/link";
 
 const services = [
   {
-    icon: "fas fa-layer-group",
-    title: "Custom Web Development",
-    description:
-      "Responsive, lightning-fast, and brand-aligned architectures built using Next.js and Node.js to maximize conversion.",
+    title: "Business websites",
+    text: "Company sites and landing pages built with Next.js or WordPress. They load quickly on mobile data, are set up to be found on Google, and are easy for you to update.",
   },
   {
-    icon: "fab fa-wordpress",
-    title: "Premium WordPress Design",
-    description:
-      "Beyond templates. We build custom, editable WordPress ecosystems that look premium and scale with your business needs.",
+    title: "Online stores",
+    text: "Product catalogue, cart and checkout, with MTN MoMo, Orange Money and card payments, and an admin panel to manage products and orders.",
   },
   {
-    icon: "fas fa-chart-line",
-    title: "Strategic SEO & Growth",
-    description:
-      "Technical on-page SEO, speed tuning, and data-driven optimization to ensure your brand dominates search results.",
+    title: "Custom web apps",
+    text: "Marketplaces, dashboards, booking systems and internal tools, with the database and backend built to fit how your business works.",
   },
   {
-    icon: "fas fa-tools",
-    title: "Maintenance & Tuning",
-    description:
-      "Continuous security updates, performance monitoring, and reliability support to keep your digital assets running 24/7.",
+    title: "SEO and maintenance",
+    text: "Technical SEO and speed tuning before launch, then security updates, backups and content edits on a monthly plan.",
   },
 ];
 
 export default function Services() {
-  const sliderRef = useRef(null);
-
-  function moveSlider(direction) {
-    if (!sliderRef.current) return;
-    const card = sliderRef.current.querySelector(".service-card-new");
-    if (!card) return;
-    const cardWidth = card.offsetWidth + 24; // card width + gap
-    sliderRef.current.scrollBy({
-      left: direction * cardWidth,
-      behavior: "smooth",
-    });
-  }
-
   return (
-    <section
-      id="services"
-      className="plans-section"
-      style={{ backgroundColor: "#0f172a", overflow: "hidden" }}
-    >
-      <div className="plans-header text-center mb-10">
-        <h2 className="section-title" style={{ color: "#ffffff" }}>
-          Our Expertise
-        </h2>
-        <p className="plans-intro" style={{ color: "#94a3b8" }}>
-          High-performance digital engineering tailored for growth. We
-          don&apos;t just build websites; we build business tools.
-        </p>
-      </div>
+    <section id="services" className="sec" aria-labelledby="services-title">
+      <div className="sec-inner">
+        <header className="sec-head">
+          <h2 id="services-title">What we build</h2>
+          <p>
+            Most clients start with a website or a store. If you need something
+            more specific, we can build that too.
+          </p>
+        </header>
 
-      <div className="services-slider-container">
-        <div className="services-wrapper" ref={sliderRef}>
+        <div className="services-grid">
           {services.map((service) => (
-            <div key={service.title} className="service-card-new">
-              <div className="service-icon">
-                <i className={service.icon}></i>
-              </div>
+            <article key={service.title} className="service">
               <h3>{service.title}</h3>
-              <p>{service.description}</p>
-              <Link href="/faq" className="services-link">
-                View Full Scope <i className="fas fa-arrow-right"></i>
-              </Link>
-            </div>
+              <p>{service.text}</p>
+            </article>
           ))}
-        </div>
-
-        <div className="slider-controls">
-          <button
-            className="ctrl-btn prev"
-            onClick={() => moveSlider(-1)}
-            aria-label="Previous service"
-          >
-            <i className="fas fa-chevron-left"></i>
-          </button>
-          <button
-            className="ctrl-btn next"
-            onClick={() => moveSlider(1)}
-            aria-label="Next service"
-          >
-            <i className="fas fa-chevron-right"></i>
-          </button>
         </div>
       </div>
     </section>

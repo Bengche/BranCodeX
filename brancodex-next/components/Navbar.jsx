@@ -19,16 +19,12 @@ import Link from "next/link";
 import Image from "next/image";
 
 const navLinks = [
-  { label: "Home", href: "/#hero" },
-  { label: "About", href: "/#about" },
+  { label: "Work", href: "/#projects" },
   { label: "Services", href: "/#services" },
-  { label: "Skills", href: "/#skills" },
-  { label: "Projects", href: "/#projects" },
-  { label: "Testimonials", href: "/#testimonials" },
+  { label: "Pricing", href: "/#plans" },
+  { label: "Process", href: "/our-process" },
   { label: "Blog", href: "/blog" },
-  { label: "Our Process", href: "/our-process" },
-  { label: "Playground", href: "/playground" },
-  { label: "FAQ's", href: "/faq" },
+  { label: "FAQ", href: "/faq" },
   { label: "Contact", href: "/#contact" },
 ];
 
@@ -40,16 +36,7 @@ export default function Navbar() {
   const [currentUser, setCurrentUser] = useState(null);
   const accountMenuRef = useRef(null);
 
-  const desktopNavLinks = navLinks.filter((link) =>
-    [
-      "Home",
-      "Services",
-      "Projects",
-      "Testimonials",
-      "Blog",
-      "Contact",
-    ].includes(link.label),
-  );
+  const desktopNavLinks = navLinks.filter((link) => link.label !== "FAQ");
 
   // Glass effect on scroll
   useEffect(() => {
@@ -230,28 +217,9 @@ export default function Navbar() {
                 </button>
               </div>
             </div>
-          ) : (
-            <>
-              <Link
-                href="/auth/login"
-                className="nav-link text-sm text-slate-200 hover:text-emerald-300 transition-colors"
-              >
-                Sign In
-              </Link>
-              <Link href="/auth/register" className="nav-register-btn">
-                Register
-              </Link>
-            </>
-          )}
-          <Link href="/#booking" className="nav-book-btn">
-            <i
-              className="fa fa-calendar-check"
-              style={{ marginRight: "5px" }}
-            />
-            Book a Call
-          </Link>
+          ) : null}
           <Link href="/#contact" className="contact-btn1">
-            Hire Us
+            Get a quote
           </Link>
         </div>
 
@@ -283,8 +251,7 @@ export default function Navbar() {
         <nav className="mobile-nav-content" aria-label="Mobile navigation">
           {/* ── Primary CTAs — always visible at the top ───────────────── */}
           <div className="mobile-menu-ctas">
-            {/* Auth row — side by side */}
-            {isLoggedIn ? (
+            {isLoggedIn && (
               <button
                 type="button"
                 className="mobile-cta-secondary mobile-cta-secondary--danger"
@@ -293,46 +260,17 @@ export default function Navbar() {
                 <i className="fa fa-right-from-bracket" />
                 Sign Out
               </button>
-            ) : (
-              <div className="mobile-auth-row">
-                <Link
-                  href="/auth/login"
-                  className="mobile-cta-secondary mobile-cta-secondary--half"
-                  onClick={closeMenu}
-                >
-                  <i className="fa fa-right-to-bracket" />
-                  Sign In
-                </Link>
-                <Link
-                  href="/auth/register"
-                  className="mobile-cta-secondary mobile-cta-secondary--purple mobile-cta-secondary--half"
-                  onClick={closeMenu}
-                >
-                  <i className="fa fa-user-plus" />
-                  Register
-                </Link>
-              </div>
             )}
 
-            {/* Primary action buttons */}
-            <Link
-              href="/#booking"
-              className="mobile-cta-secondary mobile-cta-secondary--green"
-              onClick={closeMenu}
-            >
-              <i className="fa fa-calendar-check" />
-              Book a Free Call
-            </Link>
             <Link
               href="/#contact"
               className="hire-btn-mobile"
               onClick={closeMenu}
             >
-              Hire Us
+              Get a quote
             </Link>
           </div>
 
-          {/* ── Nav links — below the fold with a divider ─────────────── */}
           <div className="mobile-nav-divider">
             <span>Navigate</span>
           </div>

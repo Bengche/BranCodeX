@@ -1,330 +1,191 @@
-﻿"use client";
+/**
+ * components/Testimonials.jsx
+ *
+ * Shows approved reviews from the backend. If there are none (or the backend
+ * is unreachable) the section does not render at all.
+ */
 
-import { useState, useEffect, useRef } from "react";
+"use client";
 
-const IMGBB_API_KEY = "69c45289e2873d6bd5719277ac377ceb";
+import { useState, useEffect } from "react";
+
 const BACKEND_URL =
   process.env.NEXT_PUBLIC_BACKEND_URL || "http://localhost:4000";
 
+// The backend HTML-escapes text before saving it; React escapes again on render.
+function decode(text = "") {
+  return text
+    .replace(/&lt;/g, "<")
+    .replace(/&gt;/g, ">")
+    .replace(/&quot;/g, '"')
+    .replace(/&#x27;|&#39;/g, "'")
+    .replace(/&#x2F;/g, "/")
+    .replace(/&amp;/g, "&");
+}
+
+function initials(name) {
+  return decode(name)
+    .split(/\s+/)
+    .filter(Boolean)
+    .slice(0, 2)
+    .map((part) => part[0].toUpperCase())
+    .join("");
+}
+
 export default function Testimonials() {
-  const [testimonials, setTestimonials] = useState([]);
-  const [loading, setLoading] = useState(true);
-  const [showModal, setShowModal] = useState(false);
-  const [filter, setFilter] = useState("all");
-  const [formName, setFormName] = useState("");
-  const [formReview, setFormReview] = useState("");
-  const [formRating, setFormRating] = useState("");
-  const [photoFile, setPhotoFile] = useState(null);
-  const [photoPreview, setPhotoPreview] = useState("");
-  const [submitting, setSubmitting] = useState(false);
-  const listRef = useRef(null);
+  const [reviews, setReviews] = useState([]);
+  const [formOpen, setFormOpen] = useState(false);
+  const [name, setName] = useState("");
+  const [review, setReview] = useState("");
+  const [rating, setRating] = useState("5");
+  const [status, setStatus] = useState({ type: "", text: "" });
+  const [sending, setSending] = useState(false);
 
   useEffect(() => {
-    loadAllTestimonials();
+    let cancelled = false;
+    fetch(`${BACKEND_URL}/api/testimonials`)
+      .then((res) => (res.ok ? res.json() : []))
+      .then((data) => {
+        if (!cancelled && Array.isArray(data)) {
+          setReviews(data.filter((t) => Number(t.rating) >= 4).slice(0, 6));
+        }
+      })
+      .catch(() => {});
+    return () => {
+      cancelled = true;
+    };
   }, []);
 
-  // Attach IntersectionObserver to cards for scroll-in animation
-  useEffect(() => {
-    if (!listRef.current) return;
-    const cards = listRef.current.querySelectorAll(".testimonial-card");
-    const observer = new IntersectionObserver(
-      (entries, obs) => {
-        entries.forEach((entry) => {
-          if (entry.isIntersecting) {
-            entry.target.classList.add("visible");
-            obs.unobserve(entry.target);
-          }
-        });
-      },
-      { threshold: 0.15 },
-    );
-    cards.forEach((card) => {
-      card.classList.remove("visible");
-      observer.observe(card);
-    });
-    return () => observer.disconnect();
-  }, [testimonials, filter]);
-
-  async function loadAllTestimonials() {
-    setLoading(true);
-    try {
-      const res = await fetch(`${BACKEND_URL}/api/testimonials`);
-      const data = await res.json();
-      setTestimonials(Array.isArray(data) ? data : []);
-    } catch {
-      setTestimonials([]);
-    } finally {
-      setLoading(false);
-    }
-  }
-
-  function openModal() {
-    setFormName("");
-    setFormReview("");
-    setFormRating("");
-    setPhotoFile(null);
-    setPhotoPreview("");
-    setShowModal(true);
-  }
-
-  function closeModal() {
-    setShowModal(false);
-  }
-
-  function handlePhotoChange(e) {
-    const file = e.target.files?.[0];
-    if (!file) return;
-    setPhotoFile(file);
-    const reader = new FileReader();
-    reader.onload = (ev) => setPhotoPreview(ev.target.result);
-    reader.readAsDataURL(file);
-  }
-
-  async function handleSubmit(e) {
+  async function submit(e) {
     e.preventDefault();
-    if (!formRating) {
-      alert("Please select a rating.");
-      return;
-    }
-    setSubmitting(true);
+    setSending(true);
+    setStatus({ type: "", text: "" });
     try {
-      let photo_url = "";
-      if (photoFile) {
-        const formData = new FormData();
-        formData.append("image", photoFile);
-        const res = await fetch(
-          `https://api.imgbb.com/1/upload?key=${IMGBB_API_KEY}`,
-          { method: "POST", body: formData },
-        );
-        const data = await res.json();
-        if (data?.data?.url) photo_url = data.data.url;
-      }
-      await fetch(`${BACKEND_URL}/api/testimonials`, {
+      const res = await fetch(`${BACKEND_URL}/api/testimonials`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({
-          data: [
-            {
-              name: formName,
-              review: formReview,
-              rating: formRating,
-              photo_url,
-              created_at: new Date().toISOString(),
-            },
-          ],
-        }),
+        body: JSON.stringify({ name, review, rating: Number(rating) }),
       });
-      alert(
-        "✅ Thank you! Your review is pending approval and will appear on the site shortly.",
-      );
-      closeModal();
-      loadAllTestimonials();
+      if (!res.ok) throw new Error("failed");
+      setStatus({
+        type: "success",
+        text: "Thank you. Your review will appear once we have approved it.",
+      });
+      setName("");
+      setReview("");
+      setRating("5");
     } catch {
-      alert("❌ Submission failed. Please try again.");
+      setStatus({
+        type: "error",
+        text: "Your review could not be sent. Please try again.",
+      });
     } finally {
-      setSubmitting(false);
+      setSending(false);
     }
   }
 
-  const filtered =
-    filter === "all"
-      ? testimonials
-      : testimonials.filter((t) => String(t.rating) === String(filter));
+  if (!reviews.length) return null;
 
   return (
-    <section
-      id="testimonials"
-      className="bg-gray-900 mb-16 mt-16 text-white min-h-screen"
-    >
-      <div className="max-w-4xl mx-auto py-12 px-4">
-        <div className="flex items-center justify-between mb-6">
-          <h2 className="text-3xl md:text-4xl font-extrabold tracking-tight">
-            🌟 Reviews
-          </h2>
-          <button
-            id="openModal"
-            className="bg-yellow-400 hover:bg-yellow-500 text-gray-900 font-bold px-5 py-2 rounded-lg shadow transition"
-            onClick={openModal}
-          >
-            ➕ Add a Review
-          </button>
+    <section id="testimonials" className="sec" aria-labelledby="reviews-title">
+      <div className="sec-inner">
+        <header className="sec-head">
+          <h2 id="reviews-title">What clients say</h2>
+        </header>
+
+        <div className="reviews">
+          {reviews.map((t) => (
+            <figure key={t.id ?? t.created_at} className="review">
+              <blockquote>
+                <p>{decode(t.review)}</p>
+              </blockquote>
+              <figcaption>
+                {t.photo_url ? (
+                  // eslint-disable-next-line @next/next/no-img-element
+                  <img src={t.photo_url} alt="" width="40" height="40" loading="lazy" />
+                ) : (
+                  <span className="review-avatar" aria-hidden="true">
+                    {initials(t.name)}
+                  </span>
+                )}
+                <span>
+                  <strong>{decode(t.name)}</strong>
+                  <span className="review-rating">
+                    {Number(t.rating)} out of 5
+                  </span>
+                </span>
+              </figcaption>
+            </figure>
+          ))}
         </div>
 
-        <div className="flex flex-wrap gap-3 mb-8">
-          <select
-            id="testimonialFilter"
-            className="bg-yellow-400 hover:bg-yellow-500 text-gray-900 font-bold px-5 py-2 rounded-lg shadow transition"
-            value={filter}
-            onChange={(e) => setFilter(e.target.value)}
-          >
-            <option value="all">All</option>
-            <option value="1">⭐ 1 Star</option>
-            <option value="2">⭐⭐ 2 Stars</option>
-            <option value="3">⭐⭐⭐ 3 Stars</option>
-            <option value="4">⭐⭐⭐⭐ 4 Stars</option>
-            <option value="5">⭐⭐⭐⭐⭐ 5 Stars</option>
-          </select>
-        </div>
-
-        <div className="relative">
-          <div
-            id="testimonialScrollArea"
-            style={{
-              maxHeight: "80vh",
-              overflowY: "auto",
-              paddingRight: "0.5rem",
-            }}
-          >
-            {loading ? (
-              <div className="text-center text-gray-400 py-8">Loading...</div>
-            ) : filtered.length === 0 ? (
-              <div className="text-center text-gray-400 col-span-2 py-8">
-                No testimonials found for this filter.
-              </div>
-            ) : (
-              <div
-                id="testimonialList"
-                className="grid grid-cols-1 md:grid-cols-2 gap-8"
-                ref={listRef}
-              >
-                {filtered.map((t, i) => (
-                  <div
-                    key={i}
-                    className="testimonial-card flex flex-col md:flex-row items-center gap-4"
-                  >
-                    <span className="testimonial-quote">&ldquo;</span>
-                    <img
-                      src={
-                        t.photo_url ||
-                        `https://ui-avatars.com/api/?name=${encodeURIComponent(t.name)}`
-                      }
-                      className="testimonial-img mb-2 md:mb-0"
-                      alt="User Photo"
-                    />
-                    <div className="flex-1">
-                      <div className="flex items-center gap-2 mb-1">
-                        <strong className="text-lg">{t.name}</strong>
-                        <span className="testimonial-stars text-yellow-400">
-                          {"★".repeat(Number(t.rating))}
-                        </span>
-                      </div>
-                      <p className="italic text-gray-200 mb-2">
-                        &ldquo;{t.review}&rdquo;
-                      </p>
-                      <div className="text-xs text-gray-400">
-                        {new Date(t.created_at).toLocaleString()}
-                      </div>
-                    </div>
-                  </div>
-                ))}
-              </div>
-            )}
-          </div>
-        </div>
-      </div>
-
-      {showModal && (
-        <div
-          id="testimonialModal"
-          className="modal-overlay fixed inset-0 z-50 bg-black bg-opacity-70 flex items-center justify-center"
-          onClick={(e) => {
-            if (e.target === e.currentTarget) closeModal();
-          }}
-        >
-          <div className="modal-content bg-gray-800 rounded-2xl shadow-2xl p-8 w-full max-w-md relative">
+        <div className="review-add">
+          {!formOpen ? (
             <button
               type="button"
-              id="closeModal"
-              className="absolute top-3 right-3 text-gray-400 hover:text-red-500 text-2xl font-bold transition"
-              onClick={closeModal}
+              className="text-link text-link--button"
+              onClick={() => setFormOpen(true)}
             >
-              &times;
+              Worked with us? Leave a review
             </button>
-            <h3 className="text-2xl font-bold mb-6 text-center text-yellow-400">
-              📝 Add Your Review
-            </h3>
-            <form
-              id="testimonialForm"
-              className="space-y-5"
-              onSubmit={handleSubmit}
-            >
-              <div>
-                <label htmlFor="t-name" className="block font-semibold mb-1">
-                  Name
-                </label>
+          ) : (
+            <form className="form review-form" onSubmit={submit}>
+              <div className="field">
+                <label htmlFor="review-name">Your name</label>
                 <input
-                  type="text"
-                  id="t-name"
-                  placeholder="Your Name"
-                  className="w-full px-4 py-2 border border-gray-600 rounded focus:outline-none focus:ring-2 focus:ring-yellow-400 bg-gray-900 text-white"
+                  id="review-name"
                   required
-                  value={formName}
-                  onChange={(e) => setFormName(e.target.value)}
+                  maxLength={120}
+                  value={name}
+                  onChange={(e) => setName(e.target.value)}
                 />
               </div>
-              <div>
-                <label htmlFor="t-review" className="block font-semibold mb-1">
-                  Review
-                </label>
+              <div className="field">
+                <label htmlFor="review-text">Your review</label>
                 <textarea
-                  id="t-review"
-                  placeholder="Your Review"
-                  className="w-full px-4 py-2 border border-gray-600 rounded focus:outline-none focus:ring-2 focus:ring-yellow-400 bg-gray-900 text-white"
+                  id="review-text"
+                  rows="4"
                   required
-                  value={formReview}
-                  onChange={(e) => setFormReview(e.target.value)}
-                ></textarea>
-              </div>
-              <div>
-                <label htmlFor="t-photo" className="block font-semibold mb-1">
-                  Photo
-                </label>
-                <input
-                  type="file"
-                  id="t-photo"
-                  accept="image/*"
-                  className="w-full"
-                  onChange={handlePhotoChange}
+                  maxLength={2000}
+                  value={review}
+                  onChange={(e) => setReview(e.target.value)}
                 />
-                {photoPreview && (
-                  <img
-                    src={photoPreview}
-                    className="mt-2 testimonial-img"
-                    alt="Preview"
-                  />
-                )}
               </div>
-              <div>
-                <label className="block font-semibold mb-1">Rating</label>
+              <div className="field">
+                <label htmlFor="review-rating">Rating</label>
                 <select
-                  id="t-rating"
-                  required
-                  className="w-full px-4 py-2 border border-gray-600 rounded bg-gray-900 text-white"
-                  value={formRating}
-                  onChange={(e) => setFormRating(e.target.value)}
+                  id="review-rating"
+                  value={rating}
+                  onChange={(e) => setRating(e.target.value)}
                 >
-                  <option value="">Select</option>
-                  <option value="1">⭐</option>
-                  <option value="2">⭐⭐</option>
-                  <option value="3">⭐⭐⭐</option>
-                  <option value="4">⭐⭐⭐⭐</option>
-                  <option value="5">⭐⭐⭐⭐⭐</option>
+                  {[5, 4, 3, 2, 1].map((n) => (
+                    <option key={n} value={n}>
+                      {n} out of 5
+                    </option>
+                  ))}
                 </select>
               </div>
-              <button
-                type="submit"
-                id="addReviewBtn"
-                disabled={submitting}
-                className={`w-full bg-yellow-400 hover:bg-yellow-500 text-gray-900 py-2 rounded font-bold transition${
-                  submitting ? " btn-disabled" : ""
-                }`}
-              >
-                {submitting ? "⏳ Submitting..." : "✅ Add Review"}
-              </button>
+              <div className="form-row">
+                <button type="submit" className="btn btn--primary" disabled={sending}>
+                  {sending ? "Sending…" : "Send review"}
+                </button>
+                <button
+                  type="button"
+                  className="text-link text-link--button"
+                  onClick={() => setFormOpen(false)}
+                >
+                  Cancel
+                </button>
+              </div>
+              {status.text && (
+                <p role="status" className={`form-status form-status--${status.type}`}>
+                  {status.text}
+                </p>
+              )}
             </form>
-          </div>
+          )}
         </div>
-      )}
+      </div>
     </section>
   );
 }
